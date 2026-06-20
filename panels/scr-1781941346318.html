@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>レポート確認画面 - DB設計を再開してください</title>
+  <script>
+window.AIVIC_API_URL = "https://mkwmoife37uqyv4zhy4yhweozq0oddxn.lambda-url.us-east-1.on.aws/";
+window.AIVIC_APP_ID = "session-1781935010162";
+window.AIVIC_SYSTEM_NAME = "営業成果レポート自動生成・配信システム";
+window.AIVIC_TABLES = [{"tableName":"ユーザー","purpose":"営業データ品質管理・請求自動化システムのユーザー管理。ユーザー認証、権限管理、監査ログ記録に必要なマスターテーブル","columns":[{"name":"ユーザーID","type":"uuid","required":true,"description":"ユーザーの一意識別子"},{"name":"ユーザー名","type":"varchar(100)","required":true,"description":"ログイン用のユーザー名"},{"name":"メールアドレス","type":"varchar(100)","required":true,"description":"ユーザーのメールアドレス"},{"name":"パスワードハッシュ","type":"varchar(255)","required":true,"description":"ハッシュ化されたパスワード"},{"name":"氏名","type":"varchar(100)","required":true,"description":"ユーザーの氏名"},{"name":"部門","type":"varchar(100)","required":false,"description":"ユーザーが属する部門"},{"name":"役割","type":"varchar(50)","required":true,"description":"ユーザーの役割（管理者/営業/品質管理者/請求担当者等）"},{"name":"ステータス","type":"varchar(20)","required":true,"description":"ユーザーステータス（有効/無効/休止）"},{"name":"最終ログイン日時","type":"timestamp","required":false,"description":"最後にログインした日時"},{"name":"作成日時","type":"timestamp","required":true,"description":"ユーザーレコード作成日時"},{"name":"更新日時","type":"timestamp","required":true,"description":"ユーザーレコード最終更新日時"},{"name":"作成者","type":"varchar(100)","required":true,"description":"ユーザーレコード作成者"},{"name":"更新者","type":"varchar(100)","required":false,"description":"ユーザーレコード最終更新者"}]},{"tableName":"営業活動","purpose":"営業担当者の日々の営業活動を記録し、成果レポート生成の基礎データとなるトランザクションテーブル","columns":[{"name":"営業活動ID","type":"uuid","required":true,"description":"営業活動の一意識別子"},{"name":"ユーザーID","type":"uuid","required":true,"description":"営業担当者のユーザーID（ユーザーテーブルへの外部キー）"},{"name":"活動日","type":"timestamp","required":true,"description":"営業活動が実施された日時"},{"name":"活動種別","type":"varchar(100)","required":true,"description":"営業活動の種類（訪問、電話、メール、提案等）"},{"name":"顧客名","type":"varchar(100)","required":true,"description":"対象顧客の名称"},{"name":"案件名","type":"varchar(100)","required":false,"description":"関連する案件の名称"},{"name":"活動内容","type":"text","required":false,"description":"営業活動の詳細内容"},{"name":"成果金額","type":"integer","required":false,"description":"この活動に関連する売上金額（円）"},{"name":"成果有無","type":"boolean","required":true,"description":"営業活動が成果に結びついたかどうか"},{"name":"次回フォロー予定日","type":"timestamp","required":false,"description":"次回のフォローアップ予定日時"},{"name":"作成日時","type":"timestamp","required":true,"description":"レコード作成日時"},{"name":"更新日時","type":"timestamp","required":true,"description":"レコード最終更新日時"},{"name":"作成者","type":"uuid","required":true,"description":"レコード作成者のユーザーID"}]},{"tableName":"顧客企業","purpose":"営業成果レポート自動生成・配信システムにおける顧客企業の基本情報を管理し、営業活動の対象企業として機能する","columns":[{"name":"顧客企業ID","type":"uuid","required":true,"description":"顧客企業の一意識別子"},{"name":"企業名","type":"varchar(100)","required":true,"description":"顧客企業の正式名称"},{"name":"業種","type":"varchar(100)","required":false,"description":"顧客企業の業種分類"},{"name":"所在地","type":"varchar(100)","required":false,"description":"顧客企業の本社所在地"},{"name":"代表者名","type":"varchar(100)","required":false,"description":"顧客企業の代表者名"},{"name":"電話番号","type":"varchar(100)","required":false,"description":"顧客企業の代表電話番号"},{"name":"メールアドレス","type":"varchar(100)","required":false,"description":"顧客企業の代表メールアドレス"},{"name":"担当営業ユーザーID","type":"uuid","required":true,"description":"ユーザーテーブルへの外部キー（担当営業）"},{"name":"ステータス","type":"varchar(100)","required":true,"description":"顧客企業のステータス（見込み客/既存顧客/休止中等）"},{"name":"作成日時","type":"timestamp","required":true,"description":"顧客企業レコード作成日時"},{"name":"更新日時","type":"timestamp","required":true,"description":"顧客企業レコード最終更新日時"},{"name":"作成者ユーザーID","type":"uuid","required":true,"description":"ユーザーテーブルへの外部キー（作成者）"}]},{"tableName":"成約","purpose":"営業活動から成約に至った案件を記録し、営業成果レポート生成の基礎データとなるトランザクションテーブル","columns":[{"name":"成約ID","type":"uuid","required":true,"description":"成約レコードの一意識別子"},{"name":"営業活動ID","type":"uuid","required":true,"description":"関連する営業活動への外部キー"},{"name":"ユーザーID","type":"uuid","required":true,"description":"成約を達成した営業担当者への外部キー"},{"name":"顧客企業ID","type":"uuid","required":true,"description":"成約した顧客企業への外部キー"},{"name":"成約金額","type":"integer","required":true,"description":"成約時の契約金額（円）"},{"name":"成約日","type":"timestamp","required":true,"description":"成約が確定した日時"},{"name":"商品サービス名","type":"varchar(100)","required":true,"description":"成約した商品またはサービスの名称"},{"name":"契約期間開始日","type":"timestamp","required":false,"description":"契約の開始日"},{"name":"契約期間終了日","type":"timestamp","required":false,"description":"契約の終了日"},{"name":"備考","type":"text","required":false,"description":"成約に関する追加情報やメモ"},{"name":"作成日時","type":"timestamp","required":true,"description":"成約レコード作成日時"},{"name":"更新日時","type":"timestamp","required":true,"description":"成約レコード最終更新日時"},{"name":"作成者","type":"uuid","required":true,"description":"成約レコードを作成したユーザーID"}]},{"tableName":"レポートテンプレート","purpose":"営業成果レポートの自動生成に使用するテンプレート定義を管理。レポート形式、含含める項目、配信先などを定義","columns":[{"name":"テンプレートID","type":"uuid","required":true,"description":"テンプレートの一意識別子"},{"name":"テンプレート名","type":"varchar(100)","required":true,"description":"テンプレートの名称（例：月次営業成果レポート）"},{"name":"説明","type":"text","required":false,"description":"テンプレートの詳細説明"},{"name":"レポート種別","type":"varchar(100)","required":true,"description":"レポートの種類（例：月次、週次、日次、カスタム）"},{"name":"対象ユーザーID","type":"uuid","required":true,"description":"このテンプレートを使用するユーザーID"},{"name":"含含める指標","type":"text","required":true,"description":"レポートに含める指標のリスト（カンマ区切り）"},{"name":"フィルター条件","type":"text","required":false,"description":"レポート生成時に適用するフィルター条件"},{"name":"配信先メールアドレス","type":"text","required":false,"description":"レポート配信先のメールアドレス（複数の場合はカンマ区切り）"},{"name":"配信スケジュール","type":"varchar(100)","required":false,"description":"配信スケジュール（例：毎月1日、毎週月曜日）"},{"name":"有効フラグ","type":"boolean","required":true,"description":"テンプレートが有効かどうか"},{"name":"作成日時","type":"timestamp","required":true,"description":"テンプレート作成日時"},{"name":"更新日時","type":"timestamp","required":true,"description":"テンプレート最終更新日時"},{"name":"作成者ID","type":"uuid","required":true,"description":"テンプレート作成者のユーザーID"}]},{"tableName":"生成済みレポート","purpose":"営業成果レポートの生成履歴を管理し、配信状況、テンプレート適用、生成内容を追跡するためのトランザクションテーブル","columns":[{"name":"レポートID","type":"uuid","required":true,"description":"生成済みレポートの一意識別子"},{"name":"テンプレートID","type":"uuid","required":true,"description":"レポートテンプレートテーブルへの外部キー"},{"name":"ユーザーID","type":"uuid","required":true,"description":"レポート生成対象のユーザー（営業担当者）"},{"name":"レポート期間開始日","type":"timestamp","required":true,"description":"レポート対象期間の開始日時"},{"name":"レポート期間終了日","type":"timestamp","required":true,"description":"レポート対象期間の終了日時"},{"name":"生成日時","type":"timestamp","required":true,"description":"レポートが実際に生成された日時"},{"name":"レポートタイトル","type":"varchar(100)","required":true,"description":"生成されたレポートのタイトル"},{"name":"レポート内容","type":"text","required":true,"description":"生成されたレポートの本文内容"},{"name":"配信ステータス","type":"varchar(100)","required":true,"description":"配信状況（未配信/配信済み/配信失敗等）"},{"name":"配信日時","type":"timestamp","required":false,"description":"実際に配信された日時"},{"name":"配信先メールアドレス","type":"varchar(100)","required":false,"description":"レポート配信先のメールアドレス"},{"name":"成約件数","type":"integer","required":false,"description":"レポート期間内の成約件数"},{"name":"営業活動件数","type":"integer","required":false,"description":"レポート期間内の営業活動件数"},{"name":"作成日時","type":"timestamp","required":true,"description":"レコード作成日時"},{"name":"更新日時","type":"timestamp","required":true,"description":"レコード最終更新日時"},{"name":"作成者ID","type":"uuid","required":true,"description":"レポート生成を実行したユーザーID（システムまたは管理者）"}]},{"tableName":"レポート配信履歴","purpose":"営業成果レポートの配信実績を記録し、配信状況の追跡、再配信管理、配信パフォーマンス分析を実現する","columns":[{"name":"配信履歴ID","type":"uuid","required":true,"description":"配信履歴の一意識別子"},{"name":"生成済みレポートID","type":"uuid","required":true,"description":"生成済みレポートテーブルへの外部キー"},{"name":"配信先ユーザーID","type":"uuid","required":true,"description":"ユーザーテーブルへの外部キー、配信対象ユーザー"},{"name":"配信先メールアドレス","type":"varchar(100)","required":true,"description":"配信時点のメールアドレス（ユーザー情報変更時の履歴保持用）"},{"name":"配信日時","type":"timestamp","required":true,"description":"実際の配信実行日時"},{"name":"配信ステータス","type":"varchar(100)","required":true,"description":"配信状況（成功/失敗/保留中/再配信待ち）"},{"name":"配信方法","type":"varchar(100)","required":true,"description":"配信チャネル（メール/システム内通知等）"},{"name":"エラーメッセージ","type":"text","required":false,"description":"配信失敗時のエラー詳細"},{"name":"開封日時","type":"timestamp","required":false,"description":"受信者がレポートを開封した日時"},{"name":"開封フラグ","type":"boolean","required":true,"description":"レポートが開封されたかどうか"},{"name":"再配信フラグ","type":"boolean","required":true,"description":"再配信対象かどうか"},{"name":"再配信回数","type":"integer","required":true,"description":"これまでの再配信実行回数"},{"name":"作成日時","type":"timestamp","required":true,"description":"配信履歴レコード作成日時"},{"name":"更新日時","type":"timestamp","required":true,"description":"配信履歴レコード最終更新日時"},{"name":"作成者ID","type":"uuid","required":true,"description":"配信を実行したユーザーまたはシステムID"}]},{"tableName":"成果指標","purpose":"営業成果の定量的な目標値と実績値を管理し、レポート生成時の評価基準となるマスタデータ","columns":[{"name":"成果指標ID","type":"uuid","required":true,"description":"成果指標の一意識別子"},{"name":"指標名","type":"varchar(100)","required":true,"description":"成果指標の名称（例：売上高、受注件数、顧客満足度）"},{"name":"指標コード","type":"varchar(100)","required":true,"description":"成果指標の一意なコード（例：SALES_REVENUE、ORDER_COUNT）"},{"name":"説明","type":"text","required":false,"description":"成果指標の詳細説明"},{"name":"単位","type":"varchar(100)","required":true,"description":"測定単位（例：円、件、％）"},{"name":"計算方法","type":"text","required":false,"description":"指標の計算ロジック説明"},{"name":"目標値","type":"integer","required":false,"description":"期間内の目標値"},{"name":"警告閾値","type":"integer","required":false,"description":"警告を発する下限値（目標値に対する達成率など）"},{"name":"表示順序","type":"integer","required":false,"description":"レポート内での表示順序"},{"name":"有効フラグ","type":"boolean","required":true,"description":"指標が有効かどうか"},{"name":"作成日時","type":"timestamp","required":true,"description":"レコード作成日時"},{"name":"更新日時","type":"timestamp","required":true,"description":"レコード最終更新日時"},{"name":"作成者","type":"uuid","required":true,"description":"作成したユーザーID"}]}];
+window.AIVIC_PRESET_SEED = {};
+window.AIVIC_PAGE_SCREEN_ID = "scr-1781941346318";
+window.AIVIC_PAGE_INIT_JS = "function(container, apiUrl, tables) {\n  const reportTbody = container.querySelector(\"#report-tbody\");\n  const detailPanel = container.querySelector(\"#detail-panel\");\n  const emptyState = container.querySelector(\"#empty-state\");\n  const filterType = container.querySelector(\"#filter-report-type\");\n  const filterStatus = container.querySelector(\"#filter-status\");\n  const searchInput = container.querySelector(\"#input-search\");\n  const btnSearch = container.querySelector(\"#btn-search\");\n  const btnExport = container.querySelector(\"#btn-export\");\n  const btnSend = container.querySelector(\"#btn-send\");\n  const btnResend = container.querySelector(\"#btn-resend\");\n  const btnCloseDetail = container.querySelector(\"#btn-close-detail\");\n\n  let allReports = [];\n  let selectedReportId = null;\n\n  // 1. 再描画関数\n  function renderReportList(reports) {\n    reportTbody.innerHTML = reports.map(r => {\n      const statusColor = r.配信ステータス === \"配信済み\" ? \"rgba(100,200,100,0.2)\" : \n                          r.配信ステータス === \"配信失敗\" ? \"rgba(200,100,100,0.2)\" : \"rgba(150,150,150,0.2)\";\n      const statusText = r.配信ステータス || \"未配信\";\n      const periodStart = r.レポート期間開始日 ? new Date(r.レポート期間開始日).toLocaleDateString('ja-JP') : \"-\";\n      const periodEnd = r.レポート期間終了日 ? new Date(r.レポート期間終了日).toLocaleDateString('ja-JP') : \"-\";\n      const generatedDate = r.生成日時 ? new Date(r.生成日時).toLocaleDateString('ja-JP') : \"-\";\n      \n      return `<tr data-id=\"${r.id}\" class=\"report-row\" style=\"cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.04); hover: background: rgba(255,255,255,0.02);\">\n        <td style=\"padding: 10px 12px; color: var(--text);\">${r.レポートタイトル || \"-\"}</td>\n        <td style=\"padding: 10px 12px; color: var(--text-muted); font-size: 12px;\">${periodStart}〜${periodEnd}</td>\n        <td style=\"padding: 10px 12px;\">\n          <span style=\"display: inline-block; padding: 4px 8px; border-radius: 3px; background: ${statusColor}; color: var(--text); font-size: 11px; font-weight: 500;\">${statusText}</span>\n        </td>\n        <td style=\"padding: 10px 12px; text-align: center; color: var(--text-muted); font-size: 12px;\">${generatedDate}</td>\n      </tr>`;\n    }).join(\"\");\n  }\n\n  // 詳細パネル表示関数\n  function showDetail(reportId) {\n    const report = allReports.find(r => r.id === reportId);\n    if (!report) return;\n\n    selectedReportId = reportId;\n    \n    // タイトル・期間・生成日\n    container.querySelector(\"#detail-title\").textContent = report.レポートタイトル || \"（タイトルなし）\";\n    const periodStart = report.レポート期間開始日 ? new Date(report.レポート期間開始日).toLocaleDateString('ja-JP') : \"-\";\n    const periodEnd = report.レポート期間終了日 ? new Date(report.レポート期間終了日).toLocaleDateString('ja-JP') : \"-\";\n    container.querySelector(\"#detail-period\").textContent = `期間: ${periodStart} 〜 ${periodEnd}`;\n    const generatedDate = report.生成日時 ? new Date(report.生成日時).toLocaleString('ja-JP') : \"-\";\n    container.querySelector(\"#detail-generated\").textContent = `生成日時: ${generatedDate}`;\n\n    // KPI\n    container.querySelector(\"#kpi-contracts\").textContent = (report.成約件数 || 0).toString();\n    container.querySelector(\"#kpi-revenue\").textContent = `¥${(report.成約金額 || 0).toLocaleString()}`;\n    container.querySelector(\"#kpi-activities\").textContent = (report.営業活動件数 || 0).toString();\n\n    // 顧客別成果表（ダミー）\n    const customerTbody = container.querySelector(\"#customer-tbody\");\n    customerTbody.innerHTML = `\n      <tr style=\"border-bottom: 1px solid rgba(255,255,255,0.04);\">\n        <td style=\"padding: 8px 10px; color: var(--text);\">サンプル企業A</td>\n        <td style=\"padding: 8px 10px; text-align: right; color: var(--text);\">2</td>\n        <td style=\"padding: 8px 10px; text-align: right; color: var(--text);\">¥500,000</td>\n      </tr>\n      <tr style=\"border-bottom: 1px solid rgba(255,255,255,0.04);\">\n        <td style=\"padding: 8px 10px; color: var(--text);\">サンプル企業B</td>\n        <td style=\"padding: 8px 10px; text-align: right; color: var(--text);\">1</td>\n        <td style=\"padding: 8px 10px; text-align: right; color: var(--text);\">¥300,000</td>\n      </tr>\n    `;\n\n    // 営業活動履歴（タイムライン）\n    const timeline = container.querySelector(\"#activity-timeline\");\n    timeline.innerHTML = `\n      <div style=\"padding: 10px 0; border-left: 2px solid var(--primary); padding-left: 12px; margin-left: 6px;\">\n        <div style=\"margin-bottom: 12px;\">\n          <p style=\"margin: 0 0 2px 0; font-size: 12px; font-weight: 500; color: var(--text);\">訪問</p>\n          <p style=\"margin: 0; font-size: 11px; color: var(--text-muted);\">2024-01-15 - サンプル企業A訪問</p>\n        </div>\n        <div style=\"margin-bottom: 12px;\">\n          <p style=\"margin: 0 0 2px 0; font-size: 12px; font-weight: 500; color: var(--text);\">提案</p>\n          <p style=\"margin: 0; font-size: 11px; color: var(--text-muted);\">2024-01-18 - 提案資料提出</p>\n        </div>\n        <div>\n          <p style=\"margin: 0 0 2px 0; font-size: 12px; font-weight: 500; color: var(--text);\">成約</p>\n          <p style=\"margin: 0; font-size: 11px; color: var(--text-muted);\">2024-01-20 - 契約締結</p>\n        </div>\n      </div>\n    `;\n\n    // 配信ボタン表示切り替え\n    const isDelivered = report.配信ステータス === \"配信済み\";\n    btnSend.style.display = isDelivered ? \"none\" : \"block\";\n    btnResend.style.display = isDelivered ? \"block\" : \"none\";\n\n    // パネル表示\n    emptyState.style.display = \"none\";\n    detailPanel.style.display = \"block\";\n  }\n\n  // 2. 初期データ読み込み\n  window.aivicApi.list(0).then(rows => {\n    allReports = rows || tables[0].records || [];\n    renderReportList(allReports);\n  });\n\n  // 3. 検索・フィルタ\n  function applyFilters() {\n    let filtered = allReports;\n\n    const typeVal = filterType.value;\n    if (typeVal) {\n      filtered = filtered.filter(r => r.レポート種別 === typeVal);\n    }\n\n    const statusVal = filterStatus.value;\n    if (statusVal) {\n      filtered = filtered.filter(r => (r.配信ステータス || \"未配信\") === statusVal);\n    }\n\n    const searchVal = searchInput.value.toLowerCase();\n    if (searchVal) {\n      filtered = filtered.filter(r => \n        (r.レポートタイトル || \"\").toLowerCase().includes(searchVal)\n      );\n    }\n\n    renderReportList(filtered);\n  }\n\n  filterType.addEventListener(\"change\", applyFilters);\n  filterStatus.addEventListener(\"change\", applyFilters);\n  btnSearch.addEventListener(\"click\", applyFilters);\n  searchInput.addEventListener(\"keypress\", e => {\n    if (e.key === \"Enter\") applyFilters();\n  });\n\n  // 4. 行クリックで詳細表示\n  container.addEventListener(\"click\", e => {\n    const row = e.target.closest(\".report-row\");\n    if (row) {\n      const reportId = row.dataset.id;\n      showDetail(reportId);\n    }\n  });\n\n  // 5. 配信ボタン\n  btnSend.addEventListener(\"click\", async () => {\n    if (!selectedReportId) return;\n    if (!confirm(\"このレポートを配信しますか？\")) return;\n\n    const report = allReports.find(r => r.id === selectedReportId);\n    if (report) {\n      const updated = await window.aivicApi.update(0, selectedReportId, {\n        配信ステータス: \"配信済み\",\n        配信日時: new Date().toISOString()\n      });\n      if (updated) {\n        allReports = allReports.map(r => r.id === selectedReportId ? { ...r, 配信ステータス: \"配信済み\", 配信日時: new Date().toISOString() } : r);\n        renderReportList(allReports);\n        showDetail(selectedReportId);\n        alert(\"レポートを配信しました\");\n      }\n    }\n  });\n\n  btnResend.addEventListener(\"click\", async () => {\n    if (!selectedReportId) return;\n    if (!confirm(\"このレポートを再配信しますか？\")) return;\n\n    const report = allReports.find(r => r.id === selectedReportId);\n    if (report) {\n      const updated = await window.aivicApi.update(0, selectedReportId, {\n        配信日時: new Date().toISOString()\n      });\n      if (updated) {\n        alert(\"レポートを再配信しました\");\n      }\n    }\n  });\n\n  // 6. 詳細パネル閉じる\n  btnCloseDetail.addEventListener(\"click\", () => {\n    detailPanel.style.display = \"none\";\n    emptyState.style.display = \"flex\";\n    selectedReportId = null;\n  });\n\n  // 7. CSV出力\n  btnExport.addEventListener(\"click\", async () => {\n    const rows = await window.aivicApi.list(0) || allReports;\n    if (!rows || rows.length === 0) {\n      alert(\"出力するデータがありません\");\n      return;\n    }\n\n    const headers = [\"レポートID\", \"レポートタイトル\", \"期間開始\", \"期間終了\", \"生成日時\", \"配信ステータス\", \"成約件数\", \"売上金額\"];\n    const csvContent = [\n      \"\\uFEFF\" + headers.join(\",\"),\n      ...rows.map(r => [\n        r.id || \"\",\n        `\"${(r.レポートタイトル || \"\").replace(/\"/g, '\"\"')}\"`,\n        r.レポート期間開始日 ? new Date(r.レポート期間開始日).toLocaleDateString('ja-JP') : \"\",\n        r.レポート期間終了日 ? new Date(r.レポート期間終了日).toLocaleDateString('ja-JP') : \"\",\n        r.生成日時 ? new Date(r.生成日時).toLocaleString('ja-JP') : \"\",\n        r.配信ステータス || \"未配信\",\n        r.成約件数 || 0,\n        r.成約金額 || 0\n      ].join(\",\"))\n    ].join(\"\\n\");\n\n    const blob = new Blob([csvContent], { type: \"text/csv;charset=utf-8;\" });\n    const link = document.createElement(\"a\");\n    link.href = URL.createObjectURL(blob);\n    link.download = `reports_${new Date().toISOString().split('T')[0]}.csv`;\n    link.click();\n  });\n}";
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+```css
+:root {
+  --primary: #4a7c8c;
+  --primary-hover: #3a6578;
+  --bg-main: #1a1f26;
+  --bg-card: #232a33;
+  --bg-sidebar: #1f2530;
+  --border: #3a4452;
+  --text: #e8eef5;
+  --text-muted: #9ca8b8;
+  --top-bar-bg: #202838;
+  --top-bar-border: #3a4452;
+}
+```
+*, *::before, *::after { box-sizing: border-box; }
+body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; background:var(--bg-main); color:var(--text); display:flex; flex-direction:column; height:100vh; overflow:hidden; }
+.top-bar { display:flex; align-items:center; gap:0; background:var(--top-bar-bg, var(--bg-sidebar)); border-bottom:1px solid var(--top-bar-border, var(--border)); padding:0 16px; height:48px; flex-shrink:0; }
+.top-bar .app-name { font-size:14px; font-weight:700; color:var(--text); margin-right:20px; white-space:nowrap; }
+.sys-tab { background:transparent; color:var(--text); opacity:0.6; border:none; border-bottom:2px solid transparent; padding:0 16px; height:48px; cursor:pointer; font-size:13px; white-space:nowrap; transition:color .15s, border-color .15s, opacity .15s; text-decoration:none; display:flex; align-items:center; }
+.sys-tab:hover { opacity:0.85; }
+.sys-tab.active, .sys-tab.aivic-active { color:var(--text); opacity:1; border-bottom-color:var(--primary); font-weight:600; }
+.app-body { display:flex; flex:1; overflow:hidden; }
+.sidebar { width:220px; background:var(--bg-sidebar); border-right:1px solid var(--border); padding:12px 8px; overflow-y:auto; flex-shrink:0; }
+.sidebar-sys-name { margin:0 0 8px; padding:4px 8px; font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:.06em; }
+.nav-btn { display:block; width:100%; text-align:left; background:transparent; color:var(--text); opacity:0.65; border:none; border-radius:8px; padding:8px 12px; cursor:pointer; font-size:13px; margin-bottom:2px; transition:opacity .15s,background .15s; text-decoration:none; }
+.nav-btn:hover { background:var(--border); opacity:0.9; }
+.nav-btn.active, .nav-btn.aivic-active { background:var(--primary); color:#fff; opacity:1; }
+.main { flex:1; padding:16px; overflow-y:auto; }
+.card { border:1px solid var(--border); border-radius:12px; padding:16px; background:var(--bg-card); margin-bottom:12px; }
+.hidden { display:none !important; }
+.action-btn { background:var(--primary); color:#fff; border:0; border-radius:8px; padding:8px 14px; cursor:pointer; font-size:13px; }
+.action-btn:hover { background:var(--primary-hover, #1a55ef); }
+.action-btn.secondary { background:var(--border); color:var(--text); }
+.input { background:var(--bg-main); border:1px solid var(--border); color:var(--text); border-radius:8px; padding:7px 10px; font-size:13px; }
+.muted { color:var(--text-muted); font-size:13px; }
+.table-wrap { overflow:auto; border:1px solid var(--border); border-radius:8px; }
+table { width:100%; border-collapse:collapse; }
+th, td { border-bottom:1px solid var(--border); padding:8px 10px; text-align:left; font-size:13px; }
+th { color:var(--text); background:var(--bg-sidebar); position:sticky; top:0; font-weight:600; }
+tr:hover { background:var(--bg-sidebar); cursor:pointer; }
+canvas { display:block; max-height:280px !important; }
+.chart-wrap, .chart-container, [class*="chart"] { position:relative; height:260px; max-height:280px; }
+@media (max-width:768px) {
+  .top-bar { overflow-x:auto; }
+  .app-body { flex-direction:column; }
+  .sidebar { width:100%; height:auto; display:flex; flex-wrap:wrap; gap:4px; padding:8px; }
+  .sidebar-sys-name { display:none; }
+  .nav-btn { width:auto; border-radius:999px; padding:5px 12px; }
+}
+  </style>
+</head>
+<body>
+<header class="top-bar">
+  <span class="app-name">DB設計を再開してください</span>
+    <a href="./scr-1781941196452.html" class="sys-tab active" data-aivic-nav-system="itg-2">営業成果レポート自動生成・配信システム</a>
+    <a href="./scr-1781943098977.html" class="sys-tab" data-aivic-nav-system="itg-3">契約・提案資料管理システム</a>
+    <a href="./scr-1781943451070.html" class="sys-tab" data-aivic-nav-system="itg-4">顧客企業向け契約・成果管理ポータル</a>
+    <a href="./scr-1781943762164.html" class="sys-tab" data-aivic-nav-system="itg-5">契約変更・請求検証管理システム</a>
+    <a href="./scr-1781940688155.html" class="sys-tab" data-aivic-nav-system="itg-1">営業データ品質管理・請求自動化システム</a>
+</header>
+<div class="app-body">
+  <aside class="sidebar">
+    <p class="sidebar-sys-name">営業成果レポート自動生成・配信システム</p>
+      <a href="./scr-1781941196452.html" class="nav-btn" data-aivic-nav="scr-1781941196452">レポートテンプレート管理画面</a>
+      <a href="./scr-1781941209026.html" class="nav-btn" data-aivic-nav="scr-1781941209026">営業データ検索・抽出画面</a>
+      <a href="./scr-1781941221780.html" class="nav-btn" data-aivic-nav="scr-1781941221780">レポート自動生成・配信画面</a>
+      <a href="./scr-1781941234200.html" class="nav-btn" data-aivic-nav="scr-1781941234200">生成済みレポート確認画面</a>
+      <a href="./scr-1781941247290.html" class="nav-btn" data-aivic-nav="scr-1781941247290">成果指標ダッシュボード画面</a>
+      <a href="./scr-1781941260019.html" class="nav-btn" data-aivic-nav="scr-1781941260019">営業成果レポート自動生成処理</a>
+      <a href="./scr-1781941271936.html" class="nav-btn" data-aivic-nav="scr-1781941271936">月次成果レポート自動生成処理</a>
+      <a href="./scr-1781941283814.html" class="nav-btn" data-aivic-nav="scr-1781941283814">レポート配信処理</a>
+      <a href="./scr-1781941295568.html" class="nav-btn" data-aivic-nav="scr-1781941295568">営業成果レポート自動生成</a>
+      <a href="./scr-1781941321416.html" class="nav-btn" data-aivic-nav="scr-1781941321416">成果指標集計処理</a>
+      <a href="./scr-1781941333717.html" class="nav-btn" data-aivic-nav="scr-1781941333717">レポート生成・フォーマット変換処理</a>
+      <a href="./scr-1781941346318.html" class="nav-btn active" data-aivic-nav="scr-1781941346318">レポート確認画面</a>
+      <a href="./scr-1781941359210.html" class="nav-btn" data-aivic-nav="scr-1781941359210">レポート自動配信処理</a>
+      <a href="./scr-1781941371700.html" class="nav-btn" data-aivic-nav="scr-1781941371700">レポート自動生成・配信処理</a>
+      <a href="./scr-1781941385034.html" class="nav-btn" data-aivic-nav="scr-1781941385034">営業成果レポート生成処理</a>
+  </aside>
+  <main class="main">
+    <section class="card" data-aivic-panel="scr-1781941346318" style="margin-top:0">
+<div style="display: flex; flex-direction: column; height: 100%; gap: 0;">
+  <!-- ヘッダー -->
+  <div style="padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,0.08); background: var(--bg-card);">
+    <h1 style="margin: 0; font-size: 18px; font-weight: 600; color: var(--text);">生成済みレポート確認</h1>
+  </div>
+
+  <!-- フィルタバー -->
+  <div style="padding: 12px 16px; background: var(--bg-main); border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+    <div style="display: flex; gap: 8px; align-items: center;">
+      <label style="font-size: 12px; color: var(--text-muted); font-weight: 500;">レポート種別</label>
+      <select id="filter-report-type" data-testid="report-type-filter" style="padding: 6px 10px; border: 1px solid rgba(255,255,255,0.18); background: rgba(0,0,0,0.25); color: var(--text); border-radius: 4px; font-size: 13px;">
+        <option value="">すべて</option>
+        <option value="月次">月次</option>
+        <option value="週次">週次</option>
+        <option value="日次">日次</option>
+        <option value="カスタム">カスタム</option>
+      </select>
+    </div>
+
+    <div style="display: flex; gap: 8px; align-items: center;">
+      <label style="font-size: 12px; color: var(--text-muted); font-weight: 500;">配信ステータス</label>
+      <select id="filter-status" data-testid="status-filter" style="padding: 6px 10px; border: 1px solid rgba(255,255,255,0.18); background: rgba(0,0,0,0.25); color: var(--text); border-radius: 4px; font-size: 13px;">
+        <option value="">すべて</option>
+        <option value="未配信">未配信</option>
+        <option value="配信済み">配信済み</option>
+        <option value="配信失敗">配信失敗</option>
+      </select>
+    </div>
+
+    <div style="display: flex; gap: 8px; align-items: center; flex: 1; min-width: 200px;">
+      <input id="input-search" data-testid="search-input" type="text" placeholder="レポートタイトルで検索..." style="flex: 1; padding: 6px 10px; border: 1px solid rgba(255,255,255,0.18); background: rgba(0,0,0,0.25); color: var(--text); border-radius: 4px; font-size: 13px;" />
+      <button id="btn-search" data-testid="search-button" class="action-btn" style="padding: 6px 12px; font-size: 13px;">検索</button>
+    </div>
+
+    <button id="btn-export" data-testid="export-button" class="action-btn secondary" style="padding: 6px 12px; font-size: 13px;">CSV出力</button>
+  </div>
+
+  <!-- メインコンテンツ（split layout） -->
+  <div style="display: flex; flex: 1; gap: 0; overflow: hidden;">
+    <!-- 左：一覧 -->
+    <div style="flex: 0 0 45%; border-right: 1px solid rgba(255,255,255,0.08); overflow-y: auto; background: var(--bg-main);">
+      <div class="table-wrap" style="margin: 0; border-radius: 0;">
+        <table data-testid="report-list" style="width: 100%; font-size: 13px;">
+          <thead>
+            <tr style="background: var(--bg-card); border-bottom: 1px solid rgba(255,255,255,0.08);">
+              <th style="padding: 10px 12px; text-align: left; font-weight: 600; color: var(--text); width: 35%;">レポートタイトル</th>
+              <th style="padding: 10px 12px; text-align: left; font-weight: 600; color: var(--text); width: 25%;">期間</th>
+              <th style="padding: 10px 12px; text-align: left; font-weight: 600; color: var(--text); width: 20%;">ステータス</th>
+              <th style="padding: 10px 12px; text-align: center; font-weight: 600; color: var(--text); width: 20%;">生成日</th>
+            </tr>
+          </thead>
+          <tbody id="report-tbody">
+            <!-- 動的に生成 -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 右：詳細プレビュー -->
+    <div style="flex: 1; overflow-y: auto; background: var(--bg-card); padding: 16px; display: flex; flex-direction: column;">
+      <div id="detail-panel" style="display: none;">
+        <!-- レポートタイトル -->
+        <div style="margin-bottom: 16px;">
+          <h2 id="detail-title" style="margin: 0 0 4px 0; font-size: 16px; font-weight: 600; color: var(--text);"></h2>
+          <p id="detail-period" style="margin: 0; font-size: 12px; color: var(--text-muted);"></p>
+          <p id="detail-generated" style="margin: 4px 0 0 0; font-size: 12px; color: var(--text-muted);"></p>
+        </div>
+
+        <!-- 営業成果サマリー（KPI カード） -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+          <div style="background: var(--bg-main); padding: 12px; border-radius: 6px; border-left: 3px solid var(--primary);">
+            <p style="margin: 0 0 4px 0; font-size: 11px; color: var(--text-muted); font-weight: 500;">成約件数</p>
+            <p id="kpi-contracts" style="margin: 0; font-size: 20px; font-weight: 700; color: var(--primary);">0</p>
+          </div>
+          <div style="background: var(--bg-main); padding: 12px; border-radius: 6px; border-left: 3px solid var(--primary);">
+            <p style="margin: 0 0 4px 0; font-size: 11px; color: var(--text-muted); font-weight: 500;">売上金額</p>
+            <p id="kpi-revenue" style="margin: 0; font-size: 20px; font-weight: 700; color: var(--primary);">¥0</p>
+          </div>
+        </div>
+
+        <!-- 営業活動件数 -->
+        <div style="background: var(--bg-main); padding: 12px; border-radius: 6px; margin-bottom: 16px; border-left: 3px solid rgba(100,150,200,0.6);">
+          <p style="margin: 0 0 4px 0; font-size: 11px; color: var(--text-muted); font-weight: 500;">営業活動件数</p>
+          <p id="kpi-activities" style="margin: 0; font-size: 18px; font-weight: 700; color: var(--text);">0</p>
+        </div>
+
+        <!-- 顧客企業別成果表 -->
+        <div style="margin-bottom: 16px;">
+          <h3 style="margin: 0 0 10px 0; font-size: 13px; font-weight: 600; color: var(--text);">顧客企業別成果</h3>
+          <div class="table-wrap" style="margin: 0; max-height: 200px; overflow-y: auto;">
+            <table id="customer-table" style="width: 100%; font-size: 12px;">
+              <thead>
+                <tr style="background: var(--bg-card); border-bottom: 1px solid rgba(255,255,255,0.08);">
+                  <th style="padding: 8px 10px; text-align: left; font-weight: 600; color: var(--text);">企業名</th>
+                  <th style="padding: 8px 10px; text-align: right; font-weight: 600; color: var(--text);">成約件数</th>
+                  <th style="padding: 8px 10px; text-align: right; font-weight: 600; color: var(--text);">売上</th>
+                </tr>
+              </thead>
+              <tbody id="customer-tbody">
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 営業活動履歴 -->
+        <div style="margin-bottom: 16px;">
+          <h3 style="margin: 0 0 10px 0; font-size: 13px; font-weight: 600; color: var(--text);">営業活動履歴</h3>
+          <div id="activity-timeline" style="max-height: 200px; overflow-y: auto;">
+            <!-- 動的に生成 -->
+          </div>
+        </div>
+
+        <!-- 配信操作 -->
+        <div style="display: flex; gap: 10px; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.08);">
+          <button id="btn-send" data-testid="send-button" class="action-btn" style="flex: 1; padding: 10px; font-size: 13px;">配信する</button>
+          <button id="btn-resend" data-testid="resend-button" class="action-btn secondary" style="flex: 1; padding: 10px; font-size: 13px; display: none;">再配信</button>
+          <button id="btn-close-detail" data-testid="close-detail-button" class="action-btn secondary" style="flex: 1; padding: 10px; font-size: 13px;">閉じる</button>
+        </div>
+      </div>
+
+      <!-- 初期状態（詳細未選択） -->
+      <div id="empty-state" style="display: flex; align-items: center; justify-content: center; height: 100%; color: var(--text-muted); font-size: 13px;">
+        <p style="margin: 0; text-align: center;">左側のレポートを選択して詳細を表示</p>
+      </div>
+    </div>
+  </div>
+</div>
+    </section>
+  </main>
+</div>
+<script>
+(function() {
+  var TABLE_DEFS = window.AIVIC_TABLES || [];
+  var PRESET_SEED = window.AIVIC_PRESET_SEED || {};
+  var SYSTEM_NAME = window.AIVIC_SYSTEM_NAME || "";
+  var APP_ID = window.AIVIC_APP_ID || "";
+  var API_URL = (window.AIVIC_API_URL && window.AIVIC_API_URL !== "REPLACE_WITH_API_URL")
+    ? window.AIVIC_API_URL : window.location.origin;
+
+  // 通知 helper ( SPA 版と同じ )
+  window.aivicNotify = (function() {
+    function ensureContainer() {
+      var c = document.getElementById("aivic-toast-container");
+      if (c) return c;
+      c = document.createElement("div");
+      c.id = "aivic-toast-container";
+      c.style.cssText = "position:fixed;top:16px;right:16px;z-index:9999;display:flex;flex-direction:column;gap:8px;pointer-events:none;max-width:360px;";
+      document.body.appendChild(c);
+      return c;
+    }
+    function show(msg, type) {
+      var c = ensureContainer();
+      var el = document.createElement("div");
+      el.textContent = msg;
+      el.style.cssText = "padding:10px 16px;border-radius:8px;font-size:13px;line-height:1.4;pointer-events:auto;color:#fff;background:" + (type === "error" ? "#dc2626" : "#d97706");
+      c.appendChild(el);
+      setTimeout(function() {
+        el.style.transition = "opacity .3s";
+        el.style.opacity = "0";
+        setTimeout(function() { if (el.parentNode) el.parentNode.removeChild(el); }, 320);
+      }, type === "error" ? 6000 : 4500);
+    }
+    return {
+      error: function(msg) { show("❌ " + msg, "error"); },
+      warn:  function(msg) { show("⚠️ " + msg, "warn"); },
+    };
+  })();
+
+  // CRUD API ( SPA 版と同じ )
+  window.aivicApi = (function() {
+    function dbErr(op) { window.aivicNotify.error("データベースエラー ( " + op + " ): APIサーバーに接続できません。"); }
+    function newId() { return typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : "id-" + Date.now() + "-" + Math.random().toString(36).slice(2); }
+    function q(i) {
+      var t = TABLE_DEFS[i];
+      var dbP = (window.AIVIC_DB_TYPE && window.AIVIC_DB_TYPE !== "dynamodb") ? "&db=" + encodeURIComponent(window.AIVIC_DB_TYPE) : "";
+      return "?app=" + encodeURIComponent(APP_ID) + "&system=" + encodeURIComponent(SYSTEM_NAME) + "&table=" + encodeURIComponent(t ? t.tableName : "table" + i) + dbP;
+    }
+    return {
+      list: async function(tableIndex) {
+        if (!API_URL) return [];
+        try { var r = await fetch(API_URL + "/api/" + tableIndex + q(tableIndex)); var d = await r.json(); return Array.isArray(d) ? d : (d.items || []); }
+        catch(e) { dbErr("データ取得"); return []; }
+      },
+      save: async function(tableIndex, item) {
+        if (!API_URL) { dbErr("保存"); return null; }
+        var now = new Date().toISOString();
+        var rec = Object.assign({}, item, { id: item.id || newId(), createdAt: item.createdAt || now, updatedAt: now });
+        try { var r = await fetch(API_URL + "/api/" + tableIndex + q(tableIndex), { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(rec) }); return await r.json(); }
+        catch(e) { dbErr("保存"); return null; }
+      },
+      update: async function(tableIndex, id, changes) {
+        if (!API_URL) { dbErr("更新"); return null; }
+        try { var r = await fetch(API_URL + "/api/" + tableIndex + "/" + id + q(tableIndex), { method:"PUT", headers:{"Content-Type":"application/json"}, body:JSON.stringify(Object.assign({}, changes, {updatedAt: new Date().toISOString()})) }); return await r.json(); }
+        catch(e) { dbErr("更新"); return null; }
+      },
+      delete: async function(tableIndex, id) {
+        if (!API_URL) { dbErr("削除"); return {deleted:false}; }
+        try { await fetch(API_URL + "/api/" + tableIndex + "/" + id + q(tableIndex), {method:"DELETE"}); return {deleted:true}; }
+        catch(e) { dbErr("削除"); return {deleted:false}; }
+      },
+    };
+  })();
+
+  // showScreen はマルチページ構成ではページ遷移として動く。
+  var _aivicNavLastTime = 0;
+  var _aivicNavLastTarget = "";
+  var _aivicReady = false;
+  window.showScreen = function(screenId) {
+    if (!screenId) return;
+    if (screenId === window.AIVIC_PAGE_SCREEN_ID) return;
+    var targetPath = './' + encodeURIComponent(screenId) + '.html';
+    var currentName = (window.location.pathname.split('/').pop() || '');
+    if (currentName === (encodeURIComponent(screenId) + '.html') ||
+        currentName === (screenId + '.html')) {
+      return;
+    }
+    var now = Date.now();
+    if (_aivicNavLastTarget === targetPath && (now - _aivicNavLastTime) < 100) {
+      console.warn('[aivic] showScreen 連続呼び出し検知。 無限ループ防止のため抑制:', screenId);
+      return;
+    }
+    if (!_aivicReady) {
+      console.warn('[aivic] DOMContentLoaded 前の showScreen 呼び出し。 抑制:', screenId);
+      return;
+    }
+    _aivicNavLastTime = now;
+    _aivicNavLastTarget = targetPath;
+    window.location.href = targetPath;
+  };
+
+  function seedAllIfEmpty() {
+    if (!API_URL) return Promise.resolve();
+    return Promise.all(TABLE_DEFS.map(function(t, i) {
+      var preset = PRESET_SEED[t.tableName];
+      if (!Array.isArray(preset) || preset.length === 0) return Promise.resolve();
+      return window.aivicApi.list(i).then(function(existing) {
+        if (existing && existing.length > 0) return;
+        return Promise.all(preset.map(function(row) { return window.aivicApi.save(i, row); }));
+      }).catch(function() {});
+    }));
+  }
+
+  // ── 初期表示: このページ専用の panel に initFn を実行 ──
+  document.addEventListener("DOMContentLoaded", function() {
+    setTimeout(function() { _aivicReady = true; }, 1500);
+    var pageScreenId = window.AIVIC_PAGE_SCREEN_ID;
+    if (!pageScreenId) return;
+
+    document.querySelectorAll('[data-aivic-nav]').forEach(function(btn) {
+      var isActive = btn.getAttribute("data-aivic-nav") === pageScreenId;
+      btn.classList.toggle("aivic-active", isActive);
+      btn.setAttribute("aria-current", isActive ? "page" : "false");
+    });
+
+    var container = document.querySelector('[data-aivic-panel="' + pageScreenId + '"]');
+    if (!container) return;
+
+    // content 要素の hidden 強制除去 ( 2026-05-24 Playwright 大量 fail 対応 )
+    var isModalLike = function(el) {
+      if (!el || !el.classList) return false;
+      var cn = String(el.className || "");
+      if (/\bmodal\b|\bdialog\b|\boverlay\b|\bpopup\b|\bdropdown\b|\btooltip\b/i.test(cn)) return true;
+      var role = el.getAttribute && el.getAttribute("role");
+      if (role === "dialog" || role === "alertdialog" || role === "tooltip" || role === "menu") return true;
+      if (el.hasAttribute && (el.hasAttribute("data-modal") || el.hasAttribute("data-dropdown") || el.hasAttribute("data-popup"))) return true;
+      return false;
+    };
+    var unhideContentElements = function(root) {
+      var all = root.querySelectorAll('.hidden, [hidden], [style*="display:none"], [style*="display: none"]');
+      for (var k = 0; k < all.length; k++) {
+        var el = all[k];
+        if (isModalLike(el)) continue;
+        var p = el.parentElement;
+        var insideModal = false;
+        while (p && p !== root) {
+          if (isModalLike(p)) { insideModal = true; break; }
+          p = p.parentElement;
+        }
+        if (insideModal) continue;
+        el.classList.remove('hidden');
+        el.removeAttribute('hidden');
+        if (el.style && el.style.display === 'none') el.style.display = '';
+      }
+    };
+    try { unhideContentElements(container); } catch (e) { console.warn('[aivic] unhideContent failed:', e); }
+
+    var initJsSource = window.AIVIC_PAGE_INIT_JS;
+    if (!initJsSource) {
+      seedAllIfEmpty();
+      return;
+    }
+    var initFn = null;
+    try {
+      initFn = (new Function("return (" + initJsSource + ")"))();
+    } catch (e) {
+      console.error("[aivic] initJs compile error:", pageScreenId, e);
+      return;
+    }
+    if (typeof initFn !== "function") return;
+
+    seedAllIfEmpty().then(function() {
+      return Promise.all(TABLE_DEFS.map(function(t, i) {
+        return window.aivicApi.list(i)
+          .then(function(records) { return Object.assign({}, t, { records: records }); })
+          .catch(function() { return Object.assign({}, t, { records: [] }); });
+      }));
+    }).then(function(tables) {
+      try { initFn(container, API_URL, tables); } catch (e) { console.error("[aivic] initFn error:", pageScreenId, e); }
+      _aivicReady = true;
+    });
+  });
+})();
+
+</script>
+</body>
+</html>

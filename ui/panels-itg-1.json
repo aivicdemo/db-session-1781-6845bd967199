@@ -1,7 +1,7 @@
 {
   "systemId": "itg-1",
   "systemName": "営業データ品質管理・請求自動化システム",
-  "cssTheme": "```css\n:root {\n  --primary: #4a7c8c;\n  --primary-hover: #3a6578;\n  --bg-main: #1a1f2e;\n  --bg-card: #232d3f;\n  --bg-sidebar: #1f2937;\n  --border: #3a4556;\n  --text: #e8eef5;\n  --text-muted: #9ca3af;\n  --top-bar-bg: #0f1419;\n  --top-bar-border: #2d3748;\n}\n```",
+  "cssTheme": "```css\n:root {\n  --primary: #4a7c8c;\n  --primary-hover: #3a6578;\n  --bg-main: #1a1f26;\n  --bg-card: #232a33;\n  --bg-sidebar: #1f2530;\n  --border: #3a4452;\n  --text: #e8eef5;\n  --text-muted: #9ca8b8;\n  --top-bar-bg: #202838;\n  --top-bar-border: #3a4452;\n}\n```",
   "screens": [
     {
       "id": "scr-1781940688155",
