@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ポータル上での回答・根拠資料公開 - DB設計を再開してください</title>
+  <script>
+window.AIVIC_API_URL = "https://mkwmoife37uqyv4zhy4yhweozq0oddxn.lambda-url.us-east-1.on.aws/";
+window.AIVIC_APP_ID = "session-1781935010162";
+window.AIVIC_SYSTEM_NAME = "顧客企業向け契約・成果管理ポータル";
+window.AIVIC_TABLES = [{"tableName":"顧客企業","purpose":"営業成果レポート自動生成・配信システムにおける顧客企業の基本情報を管理し、営業活動の対象企業として機能する","columns":[{"name":"顧客企業ID","type":"uuid","required":true,"description":"顧客企業の一意識別子"},{"name":"企業名","type":"varchar(100)","required":true,"description":"顧客企業の正式名称"},{"name":"業種","type":"varchar(100)","required":false,"description":"顧客企業の業種分類"},{"name":"所在地","type":"varchar(100)","required":false,"description":"顧客企業の本社所在地"},{"name":"代表者名","type":"varchar(100)","required":false,"description":"顧客企業の代表者名"},{"name":"電話番号","type":"varchar(100)","required":false,"description":"顧客企業の代表電話番号"},{"name":"メールアドレス","type":"varchar(100)","required":false,"description":"顧客企業の代表メールアドレス"},{"name":"担当営業ユーザーID","type":"uuid","required":true,"description":"ユーザーテーブルへの外部キー（担当営業）"},{"name":"ステータス","type":"varchar(100)","required":true,"description":"顧客企業のステータス（見込み客/既存顧客/休止中等）"},{"name":"作成日時","type":"timestamp","required":true,"description":"顧客企業レコード作成日時"},{"name":"更新日時","type":"timestamp","required":true,"description":"顧客企業レコード最終更新日時"},{"name":"作成者ユーザーID","type":"uuid","required":true,"description":"ユーザーテーブルへの外部キー（作成者）"}]},{"tableName":"契約書","purpose":"契約・提案資料管理システムにおける契約書の基本情報を管理するマスタテーブル","columns":[{"name":"契約書ID","type":"uuid","required":true,"description":"契約書の一意識別子"},{"name":"契約書名","type":"varchar(100)","required":true,"description":"契約書のタイトル"},{"name":"契約書説明","type":"text","required":false,"description":"契約書の詳細説明"},{"name":"契約種別","type":"varchar(100)","required":true,"description":"契約の種類（例：売買契約、サービス契約、NDA等）"},{"name":"契約相手先ID","type":"uuid","required":true,"description":"契約相手先企業の識別子"},{"name":"契約開始日","type":"timestamp","required":true,"description":"契約の開始日"},{"name":"契約終了日","type":"timestamp","required":false,"description":"契約の終了日"},{"name":"契約金額","type":"integer","required":false,"description":"契約金額（円）"},{"name":"ステータス","type":"varchar(100)","required":true,"description":"契約状態（例：草案、承認待ち、有効、終了、キャンセル）"},{"name":"担当者ID","type":"uuid","required":true,"description":"契約の担当ユーザーID"},{"name":"ファイルパス","type":"varchar(100)","required":false,"description":"契約書ファイルの保存パス"},{"name":"作成日時","type":"timestamp","required":true,"description":"レコード作成日時"},{"name":"更新日時","type":"timestamp","required":true,"description":"レコード最終更新日時"},{"name":"作成者ID","type":"uuid","required":true,"description":"レコード作成者のユーザーID"}]},{"tableName":"提案資料","purpose":"契約・提案資料管理システムにおいて、顧客への提案資料の情報を一元管理し、提案から契約への進捗を追跡するためのマスタテーブル","columns":[{"name":"提案資料ID","type":"uuid","required":true,"description":"提案資料の一意識別子"},{"name":"提案資料名","type":"varchar(100)","required":true,"description":"提案資料のタイトル・名称"},{"name":"説明","type":"text","required":false,"description":"提案資料の詳細説明"},{"name":"ユーザーID","type":"uuid","required":true,"description":"提案資料を作成・管理するユーザーの外部キー"},{"name":"ステータス","type":"varchar(100)","required":true,"description":"提案資料のステータス（下書き、提案中、承認待ち、契約済み、却下等）"},{"name":"提案日","type":"timestamp","required":true,"description":"顧客への提案実施日時"},{"name":"契約書ID","type":"uuid","required":false,"description":"関連する契約書の外部キー（契約成立時に設定）"},{"name":"作成日時","type":"timestamp","required":true,"description":"提案資料レコードの作成日時"},{"name":"更新日時","type":"timestamp","required":true,"description":"提案資料レコードの最終更新日時"},{"name":"作成者ID","type":"uuid","required":true,"description":"提案資料を作成したユーザーの外部キー"}]},{"tableName":"契約","purpose":"顧客企業との契約情報を一元管理し、契約の締結、更新、ステータス追跡、成果管理を支援するマスタテーブル","columns":[{"name":"契約ID","type":"uuid","required":true,"description":"契約の一意識別子"},{"name":"顧客企業ID","type":"uuid","required":true,"description":"顧客企業テーブルへの外部キー"},{"name":"契約書ID","type":"uuid","required":false,"description":"契約書テーブルへの外部キー"},{"name":"提案資料ID","type":"uuid","required":false,"description":"提案資料テーブルへの外部キー"},{"name":"契約名","type":"varchar(100)","required":true,"description":"契約の名称"},{"name":"契約ステータス","type":"varchar(100)","required":true,"description":"契約状態（提案中/承認待ち/契約済/完了/終了等）"},{"name":"契約開始日","type":"timestamp","required":true,"description":"契約の開始日"},{"name":"契約終了日","type":"timestamp","required":true,"description":"契約の終了日"},{"name":"契約金額","type":"integer","required":true,"description":"契約金額（円）"},{"name":"契約内容","type":"text","required":false,"description":"契約の詳細内容"},{"name":"成果目標","type":"text","required":false,"description":"契約に基づく成果目標"},{"name":"作成日時","type":"timestamp","required":true,"description":"契約レコード作成日時"},{"name":"更新日時","type":"timestamp","required":true,"description":"契約レコード最終更新日時"},{"name":"作成者","type":"varchar(100)","required":true,"description":"契約レコード作成者"},{"name":"更新者","type":"varchar(100)","required":false,"description":"契約レコード最終更新者"}]},{"tableName":"契約変更履歴","purpose":"契約の変更内容を時系列で記録し、変更前後の状態を追跡管理するための履歴テーブル","columns":[{"name":"変更履歴ID","type":"uuid","required":true,"description":"変更履歴レコードの一意識別子"},{"name":"契約ID","type":"uuid","required":true,"description":"変更対象の契約を特定するための外部キー"},{"name":"変更種別","type":"varchar(100)","required":true,"description":"変更の種類（金額変更、期間延長、条件変更、解除等）"},{"name":"変更前値","type":"text","required":false,"description":"変更前の値または状態"},{"name":"変更後値","type":"text","required":false,"description":"変更後の値または状態"},{"name":"変更理由","type":"text","required":false,"description":"変更の理由や背景"},{"name":"変更ステータス","type":"varchar(100)","required":true,"description":"変更の状態（申請中、承認済、却下、実行済等）"},{"name":"申請者ID","type":"uuid","required":true,"description":"変更を申請したユーザーの識別子"},{"name":"承認者ID","type":"uuid","required":false,"description":"変更を承認したユーザーの識別子"},{"name":"承認日時","type":"timestamp","required":false,"description":"変更が承認された日時"},{"name":"実行日時","type":"timestamp","required":false,"description":"変更が実際に反映された日時"},{"name":"作成日時","type":"timestamp","required":true,"description":"変更履歴レコードが作成された日時"},{"name":"更新日時","type":"timestamp","required":true,"description":"変更履歴レコードが最後に更新された日時"},{"name":"備考","type":"text","required":false,"description":"その他の補足情報"}]},{"tableName":"成果物","purpose":"顧客企業向け契約に基づいて納品される成果物の管理。納品状況、品質、変更履歴を追跡し、契約の履行状況を把握するための中核テーブル","columns":[{"name":"成果物ID","type":"uuid","required":true,"description":"成果物の一意識別子"},{"name":"契約ID","type":"uuid","required":true,"description":"親契約への外部キー"},{"name":"成果物名","type":"varchar(100)","required":true,"description":"成果物の名称"},{"name":"説明","type":"text","required":false,"description":"成果物の詳細説明"},{"name":"ステータス","type":"varchar(100)","required":true,"description":"成果物の状態（計画中/進行中/完了/承認待ち/却下等）"},{"name":"納期","type":"timestamp","required":true,"description":"予定納期"},{"name":"実納期","type":"timestamp","required":false,"description":"実際の納期"},{"name":"品質評価","type":"varchar(100)","required":false,"description":"品質評価結果（合格/不合格/要修正等）"},{"name":"顧客承認状況","type":"varchar(100)","required":true,"description":"顧客による承認状況（未承認/承認/却下）"},{"name":"顧客承認日時","type":"timestamp","required":false,"description":"顧客が承認した日時"},{"name":"作成日時","type":"timestamp","required":true,"description":"成果物レコード作成日時"},{"name":"更新日時","type":"timestamp","required":true,"description":"成果物レコード最終更新日時"},{"name":"作成者","type":"varchar(100)","required":true,"description":"成果物を作成したユーザー"},{"name":"更新者","type":"varchar(100)","required":true,"description":"成果物を最後に更新したユーザー"}]},{"tableName":"成果物納期","purpose":"成果物の納期管理と進捗追跡を行い、契約上の納期義務を履行するための基本台帳","columns":[{"name":"成果物納期ID","type":"uuid","required":true,"description":"成果物納期レコードの一意識別子"},{"name":"成果物ID","type":"uuid","required":true,"description":"成果物テーブルへの外部キー"},{"name":"契約ID","type":"uuid","required":true,"description":"契約テーブルへの外部キー"},{"name":"顧客企業ID","type":"uuid","required":true,"description":"顧客企業テーブルへの外部キー"},{"name":"予定納期日","type":"timestamp","required":true,"description":"契約で定められた成果物の納期予定日"},{"name":"実績納期日","type":"timestamp","required":false,"description":"実際に成果物が納期された日付"},{"name":"納期ステータス","type":"varchar(100)","required":true,"description":"納期状況（予定通り/遅延/完了等）"},{"name":"遅延日数","type":"integer","required":false,"description":"予定納期からの遅延日数（負数は早期納期）"},{"name":"遅延理由","type":"text","required":false,"description":"納期遅延が発生した場合の理由"},{"name":"納期変更履歴ID","type":"uuid","required":false,"description":"契約変更履歴テーブルへの外部キー（納期変更がある場合）"},{"name":"備考","type":"text","required":false,"description":"納期に関する追加情報やメモ"},{"name":"作成日時","type":"timestamp","required":true,"description":"レコード作成日時"},{"name":"更新日時","type":"timestamp","required":true,"description":"レコード最終更新日時"},{"name":"作成者","type":"varchar(100)","required":true,"description":"レコード作成者のユーザーID"},{"name":"更新者","type":"varchar(100)","required":true,"description":"レコード最終更新者のユーザーID"}]},{"tableName":"納期変更履歴","purpose":"成果物の納期変更を履歴として記録し、変更の経緯、理由、承認状況を管理するテーブル","columns":[{"name":"納期変更履歴ID","type":"uuid","required":true,"description":"納期変更履歴の一意識別子"},{"name":"成果物納期ID","type":"uuid","required":true,"description":"成果物納期テーブルへの外部キー"},{"name":"契約ID","type":"uuid","required":true,"description":"契約テーブルへの外部キー"},{"name":"変更前納期","type":"timestamp","required":true,"description":"変更前の納期日時"},{"name":"変更後納期","type":"timestamp","required":true,"description":"変更後の納期日時"},{"name":"変更理由","type":"text","required":true,"description":"納期変更の理由"},{"name":"承認状況","type":"varchar(100)","required":true,"description":"承認状況（申請中/承認/却下）"},{"name":"承認者ID","type":"varchar(100)","required":false,"description":"承認者のユーザーID"},{"name":"承認日時","type":"timestamp","required":false,"description":"承認日時"},{"name":"承認コメント","type":"text","required":false,"description":"承認時のコメント"},{"name":"作成日時","type":"timestamp","required":true,"description":"変更申請の作成日時"},{"name":"作成者","type":"varchar(100)","required":true,"description":"変更申請の作成者ユーザーID"},{"name":"更新日時","type":"timestamp","required":true,"description":"最終更新日時"}]},{"tableName":"請求書","purpose":"顧客企業への請求書を管理し、契約に基づく成果物納期と請求内容を紐付け、請求状況を追跡するトランザクションテーブル","columns":[{"name":"請求書ID","type":"uuid","required":true,"description":"請求書の一意識別子"},{"name":"顧客企業ID","type":"uuid","required":true,"description":"請求対象の顧客企業ID（顧客企業テーブルへの外部キー）"},{"name":"契約ID","type":"uuid","required":true,"description":"請求対象の契約ID（契約テーブルへの外部キー）"},{"name":"請求書番号","type":"varchar(100)","required":true,"description":"請求書の一意な番号（顧客向け表示用）"},{"name":"請求日","type":"timestamp","required":true,"description":"請求書発行日"},{"name":"請求期間開始日","type":"timestamp","required":true,"description":"請求対象期間の開始日"},{"name":"請求期間終了日","type":"timestamp","required":true,"description":"請求対象期間の終了日"},{"name":"請求金額","type":"integer","required":true,"description":"請求総額（税抜き、単位：円）"},{"name":"税額","type":"integer","required":true,"description":"消費税額（単位：円）"},{"name":"請求金額合計","type":"integer","required":true,"description":"請求総額（税込み、単位：円）"},{"name":"請求ステータス","type":"varchar(100)","required":true,"description":"請求状況（未送付/送付済/支払済/期限超過等）"},{"name":"支払期限日","type":"timestamp","required":true,"description":"支払期限日"},{"name":"支払日","type":"timestamp","required":false,"description":"実際の支払日（支払済の場合のみ）"},{"name":"備考","type":"text","required":false,"description":"請求書に関する備考・特記事項"},{"name":"作成日時","type":"timestamp","required":true,"description":"請求書レコード作成日時"},{"name":"更新日時","type":"timestamp","required":true,"description":"請求書レコード最終更新日時"},{"name":"作成者","type":"varchar(100)","required":true,"description":"請求書を作成したユーザーID"}]},{"tableName":"メール履歴","purpose":"顧客企業との契約・成果に関するメール送受信の記録を管理し、コミュニケーション履歴の追跡と監査証跡を提供する","columns":[{"name":"メール履歴ID","type":"uuid","required":true,"description":"メール履歴の一意識別子"},{"name":"顧客企業ID","type":"uuid","required":true,"description":"関連する顧客企業への外部キー"},{"name":"契約ID","type":"uuid","required":false,"description":"関連する契約への外部キー（契約関連のメールの場合）"},{"name":"成果物ID","type":"uuid","required":false,"description":"関連する成果物への外部キー（成果物関連のメールの場合）"},{"name":"請求書ID","type":"uuid","required":false,"description":"関連する請求書への外部キー（請求関連のメールの場合）"},{"name":"送信者メールアドレス","type":"varchar(100)","required":true,"description":"メール送信者のメールアドレス"},{"name":"受信者メールアドレス","type":"varchar(100)","required":true,"description":"メール受信者のメールアドレス"},{"name":"CC","type":"text","required":false,"description":"CC対象のメールアドレス（複数の場合はカンマ区切り）"},{"name":"BCC","type":"text","required":false,"description":"BCC対象のメールアドレス（複数の場合はカンマ区切り）"},{"name":"件名","type":"varchar(100)","required":true,"description":"メールの件名"},{"name":"本文","type":"text","required":true,"description":"メール本文"},{"name":"メール種別","type":"varchar(100)","required":true,"description":"メールの種別（提案、契約確認、成果物納期通知、請求書送付、変更通知等）"},{"name":"送受信区分","type":"varchar(100)","required":true,"description":"送信または受信"},{"name":"送受信日時","type":"timestamp","required":true,"description":"メール送受信の日時"},{"name":"添付ファイル有無","type":"boolean","required":true,"description":"添付ファイルの有無"},{"name":"作成日時","type":"timestamp","required":true,"description":"レコード作成日時"},{"name":"更新日時","type":"timestamp","required":true,"description":"レコード更新日時"},{"name":"作成者","type":"varchar(100)","required":true,"description":"レコード作成者"}]},{"tableName":"通知履歴","purpose":"顧客企業向けポータルで送信した通知の履歴を管理し、通知内容、送信状況、受信者情報を追跡する","columns":[{"name":"通知履歴ID","type":"uuid","required":true,"description":"通知履歴の一意識別子"},{"name":"顧客企業ID","type":"uuid","required":true,"description":"通知対象の顧客企業ID（外部キー）"},{"name":"通知タイプ","type":"varchar(100)","required":true,"description":"通知の種類（契約更新、成果物納期、請求書発行、契約変更等）"},{"name":"関連エンティティタイプ","type":"varchar(100)","required":false,"description":"通知の対象エンティティ種別（契約、成果物、請求書等）"},{"name":"関連エンティティID","type":"uuid","required":false,"description":"通知の対象エンティティID"},{"name":"通知タイトル","type":"varchar(100)","required":true,"description":"通知のタイトル"},{"name":"通知内容","type":"text","required":true,"description":"通知の本文内容"},{"name":"送信方法","type":"varchar(100)","required":true,"description":"通知の送信方法（メール、ポータル画面内通知等）"},{"name":"送信状態","type":"varchar(100)","required":true,"description":"送信状態（送信済、送信失敗、保留中等）"},{"name":"受信者メールアドレス","type":"varchar(100)","required":false,"description":"メール送信の場合の受信者メールアドレス"},{"name":"送信日時","type":"timestamp","required":true,"description":"通知の送信日時"},{"name":"既読フラグ","type":"boolean","required":true,"description":"ポータル内通知の既読状態"},{"name":"既読日時","type":"timestamp","required":false,"description":"ポータル内通知の既読日時"},{"name":"送信失敗理由","type":"text","required":false,"description":"送信失敗時のエラー内容"},{"name":"作成日時","type":"timestamp","required":true,"description":"通知履歴レコードの作成日時"},{"name":"更新日時","type":"timestamp","required":true,"description":"通知履歴レコードの更新日時"}]},{"tableName":"ログインユーザー","purpose":"顧客企業向けポータルのログインユーザー管理。ユーザー認証、アクセス制御、監査ログの基盤となる。","columns":[{"name":"ユーザーID","type":"uuid","required":true,"description":"ログインユーザーの一意識別子"},{"name":"顧客企業ID","type":"uuid","required":true,"description":"所属する顧客企業への外部キー"},{"name":"メールアドレス","type":"varchar(100)","required":true,"description":"ログインID兼連絡先。企業内で一意"},{"name":"ユーザー名","type":"varchar(100)","required":true,"description":"ポータル上に表示されるユーザー名"},{"name":"パスワードハッシュ","type":"varchar(100)","required":true,"description":"認証用のハッシュ化されたパスワード"},{"name":"ロール","type":"varchar(100)","required":true,"description":"ユーザーの権限レベル（管理者/担当者/閲覧者等）"},{"name":"ステータス","type":"varchar(100)","required":true,"description":"ユーザーの状態（有効/無効/招待待機等）"},{"name":"最終ログイン日時","type":"timestamp","required":false,"description":"最後にログインした日時"},{"name":"作成日時","type":"timestamp","required":true,"description":"ユーザーアカウント作成日時"},{"name":"更新日時","type":"timestamp","required":true,"description":"ユーザー情報最終更新日時"},{"name":"作成者","type":"uuid","required":true,"description":"ユーザーを作成したユーザーID"}]},{"tableName":"ユーザー権限","purpose":"ログインユーザーが顧客企業ポータル内で実行可能な操作を制御するための権限管理テーブル。ユーザーごとに契約書閲覧、成果物確認、請求書確認などの権限を付与・管理する。","columns":[{"name":"ユーザー権限ID","type":"uuid","required":true,"description":"ユーザー権限レコードの一意識別子"},{"name":"ログインユーザーID","type":"uuid","required":true,"description":"権限を付与されるログインユーザーへの外部キー"},{"name":"顧客企業ID","type":"uuid","required":true,"description":"権限が適用される顧客企業への外部キー"},{"name":"権限種別","type":"varchar(100)","required":true,"description":"付与する権限の種別（例：契約書閲覧、成果物確認、請求書確認、契約変更申請、通知受信等）"},{"name":"有効フラグ","type":"boolean","required":true,"description":"権限が有効か無効かを示すフラグ"},{"name":"権限開始日","type":"timestamp","required":false,"description":"権限の有効開始日時"},{"name":"権限終了日","type":"timestamp","required":false,"description":"権限の有効終了日時"},{"name":"備考","type":"text","required":false,"description":"権限付与の理由や特記事項"},{"name":"作成日時","type":"timestamp","required":true,"description":"権限レコード作成日時"},{"name":"作成者","type":"uuid","required":true,"description":"権限を作成したユーザーID"},{"name":"更新日時","type":"timestamp","required":true,"description":"権限レコード最終更新日時"},{"name":"更新者","type":"uuid","required":true,"description":"権限を最後に更新したユーザーID"}]}];
+window.AIVIC_PRESET_SEED = {};
+window.AIVIC_PAGE_SCREEN_ID = "scr-1781943603652";
+window.AIVIC_PAGE_INIT_JS = "function(container, apiUrl, tables) {\n  // ===== 1. 再描画関数 =====\n  function renderQuestions(rows) {\n    const tbody = container.querySelector(\"#question-tbody\");\n    tbody.innerHTML = rows.map(r => `\n      <tr style=\"background: var(--bg-card); cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.08);\" class=\"question-row\" data-id=\"${r.id || 'q-' + Math.random().toString(36).substr(2,9)}\" data-status=\"${r.ステータス || '未回答'}\">\n        <td style=\"padding: 10px; color: var(--text);\">\n          <div style=\"font-weight: 500; margin-bottom: 4px;\">${r.質問内容 ? r.質問内容.substring(0, 30) : '質問'}</div>\n          <div style=\"font-size: 12px; color: var(--text-muted); margin-bottom: 4px;\">${r.質問日時 ? new Date(r.質問日時).toLocaleDateString('ja-JP') : '日付未設定'}</div>\n          <span style=\"display: inline-block; padding: 2px 6px; border-radius: 3px; background: ${getStatusColor(r.ステータス || '未回答')}; color: #fff; font-size: 11px;\">${r.ステータス || '未回答'}</span>\n        </td>\n      </tr>\n    `).join(\"\");\n  }\n\n  function getStatusColor(status) {\n    const colors = {\n      '未回答': '#ff6a00',\n      '回答済': '#2196f3',\n      '資料公開待ち': '#ff9800',\n      '公開済': '#4caf50'\n    };\n    return colors[status] || '#9fb0d1';\n  }\n\n  function showDetail(questionId) {\n    const row = container.querySelector(`[data-id=\"${questionId}\"]`);\n    if (!row) return;\n\n    const status = row.dataset.status || '未回答';\n    const titleText = row.querySelector('div').textContent;\n    const dateText = row.querySelectorAll('div')[1].textContent;\n\n    container.querySelector(\"#detail-header\").style.display = \"block\";\n    container.querySelector(\"#no-selection\").style.display = \"none\";\n    container.querySelector(\"#detail-content\").style.display = \"block\";\n    container.querySelector(\"#detail-title\").textContent = titleText;\n    container.querySelector(\"#detail-status-badge\").textContent = status;\n    container.querySelector(\"#detail-status-badge\").style.background = getStatusColor(status);\n    container.querySelector(\"#detail-date\").textContent = dateText;\n\n    // ダミーデータ表示\n    container.querySelector(\"#detail-question\").textContent = \"契約期間は通常どのような期間で設定されますか？また、延長の条件はありますか？\";\n    \n    if (status === '公開済' || status === '回答済') {\n      container.querySelector(\"#answer-section\").style.display = \"block\";\n      container.querySelector(\"#no-answer\").style.display = \"none\";\n      container.querySelector(\"#detail-answer\").textContent = \"契約期間は原則1年間です。延長を希望される場合は、契約満了の30日前までにご連絡ください。延長条件については別途協議させていただきます。\";\n      container.querySelector(\"#detail-answerer\").textContent = \"営業部 田中太郎\";\n      container.querySelector(\"#detail-answer-date\").textContent = \"2025-01-12\";\n      if (status === '公開済') {\n        container.querySelector(\"#publish-info\").style.display = \"block\";\n        container.querySelector(\"#publish-date\").textContent = \"2025-01-12\";\n      } else {\n        container.querySelector(\"#publish-info\").style.display = \"none\";\n      }\n    } else {\n      container.querySelector(\"#answer-section\").style.display = \"none\";\n      container.querySelector(\"#no-answer\").style.display = \"block\";\n    }\n\n    if (status === '公開済') {\n      container.querySelector(\"#materials-section\").style.display = \"block\";\n      container.querySelector(\"#no-materials\").style.display = \"none\";\n      container.querySelector(\"#history-section\").style.display = \"block\";\n      container.querySelector(\"#no-history\").style.display = \"none\";\n    } else {\n      container.querySelector(\"#materials-section\").style.display = \"none\";\n      container.querySelector(\"#no-materials\").style.display = \"block\";\n      container.querySelector(\"#history-section\").style.display = \"none\";\n      container.querySelector(\"#no-history\").style.display = \"block\";\n    }\n  }\n\n  // ===== 2. 初期データ描画 =====\n  const initialRows = tables[0]?.records || [\n    { id: 'q-001', 質問内容: '契約期間について', 質問日時: '2025-01-15', ステータス: '未回答' },\n    { id: 'q-002', 質問内容: '納期変更の条件', 質問日時: '2025-01-10', ステータス: '公開済' },\n    { id: 'q-003', 質問内容: '成果物の品質基準', 質問日時: '2025-01-08', ステータス: '回答済' }\n  ];\n  renderQuestions(initialRows);\n\n  // ===== 3. 検索ボタン =====\n  container.querySelector(\"#btn-search\").addEventListener(\"click\", async () => {\n    const statusFilter = container.querySelector(\"[data-testid='status-filter']\").value;\n    const searchKeyword = container.querySelector(\"[data-testid='question-search']\").value.toLowerCase();\n\n    const rows = await window.aivicApi.list(0) || initialRows;\n    const filtered = rows.filter(r => {\n      const matchStatus = !statusFilter || (r.ステータス || '未回答') === statusFilter;\n      const matchKeyword = !searchKeyword || JSON.stringify(r).toLowerCase().includes(searchKeyword);\n      return matchStatus && matchKeyword;\n    });\n    renderQuestions(filtered);\n  });\n\n  // ===== 4. 質問行クリック =====\n  container.addEventListener(\"click\", (e) => {\n    const row = e.target.closest(\".question-row\");\n    if (row) {\n      showDetail(row.dataset.id);\n    }\n  });\n\n  // ===== 5. ダウンロードボタン =====\n  container.addEventListener(\"click\", (e) => {\n    const dlBtn = e.target.closest(\".download-btn\");\n    if (dlBtn) {\n      const materialId = dlBtn.dataset.id;\n      alert(`資料 ${materialId} をダウンロードします`);\n      // 実装: window.location.href = `${apiUrl}/download/${materialId}`;\n    }\n  });\n\n  // ===== 6. CSV エクスポート =====\n  container.querySelector(\"#btn-export-csv\").addEventListener(\"click\", async () => {\n    const rows = await window.aivicApi.list(0) || initialRows;\n    const headers = ['質問ID', '質問内容', '質問日時', 'ステータス', '回答者', '回答日時'];\n    const csv = [\n      '\\uFEFF' + headers.join(','),\n      ...rows.map(r => [\n        r.id || '',\n        `\"${(r.質問内容 || '').replace(/\"/g, '\"\"')}\"`,\n        r.質問日時 || '',\n        r.ステータス || '',\n        r.回答者 || '',\n        r.回答日時 || ''\n      ].join(','))\n    ].join('\\n');\n\n    const blob = new Blob([csv], { type: 'text/csv; charset=utf-8;' });\n    const link = document.createElement('a');\n    link.href = URL.createObjectURL(blob);\n    link.download = `questions_${new Date().toISOString().split('T')[0]}.csv`;\n    link.click();\n  });\n}";
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+```css
+:root {
+  --primary: #4a7c8c;
+  --primary-hover: #3a6578;
+  --bg-main: #1a1f2e;
+  --bg-card: #232d3f;
+  --bg-sidebar: #1f2937;
+  --border: #3a4556;
+  --text: #e8eef5;
+  --text-muted: #9ca3af;
+  --top-bar-bg: #0f1419;
+  --top-bar-border: #2d3748;
+}
+```
+*, *::before, *::after { box-sizing: border-box; }
+body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; background:var(--bg-main); color:var(--text); display:flex; flex-direction:column; height:100vh; overflow:hidden; }
+.top-bar { display:flex; align-items:center; gap:0; background:var(--top-bar-bg, var(--bg-sidebar)); border-bottom:1px solid var(--top-bar-border, var(--border)); padding:0 16px; height:48px; flex-shrink:0; }
+.top-bar .app-name { font-size:14px; font-weight:700; color:var(--text); margin-right:20px; white-space:nowrap; }
+.sys-tab { background:transparent; color:var(--text); opacity:0.6; border:none; border-bottom:2px solid transparent; padding:0 16px; height:48px; cursor:pointer; font-size:13px; white-space:nowrap; transition:color .15s, border-color .15s, opacity .15s; text-decoration:none; display:flex; align-items:center; }
+.sys-tab:hover { opacity:0.85; }
+.sys-tab.active, .sys-tab.aivic-active { color:var(--text); opacity:1; border-bottom-color:var(--primary); font-weight:600; }
+.app-body { display:flex; flex:1; overflow:hidden; }
+.sidebar { width:220px; background:var(--bg-sidebar); border-right:1px solid var(--border); padding:12px 8px; overflow-y:auto; flex-shrink:0; }
+.sidebar-sys-name { margin:0 0 8px; padding:4px 8px; font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:.06em; }
+.nav-btn { display:block; width:100%; text-align:left; background:transparent; color:var(--text); opacity:0.65; border:none; border-radius:8px; padding:8px 12px; cursor:pointer; font-size:13px; margin-bottom:2px; transition:opacity .15s,background .15s; text-decoration:none; }
+.nav-btn:hover { background:var(--border); opacity:0.9; }
+.nav-btn.active, .nav-btn.aivic-active { background:var(--primary); color:#fff; opacity:1; }
+.main { flex:1; padding:16px; overflow-y:auto; }
+.card { border:1px solid var(--border); border-radius:12px; padding:16px; background:var(--bg-card); margin-bottom:12px; }
+.hidden { display:none !important; }
+.action-btn { background:var(--primary); color:#fff; border:0; border-radius:8px; padding:8px 14px; cursor:pointer; font-size:13px; }
+.action-btn:hover { background:var(--primary-hover, #1a55ef); }
+.action-btn.secondary { background:var(--border); color:var(--text); }
+.input { background:var(--bg-main); border:1px solid var(--border); color:var(--text); border-radius:8px; padding:7px 10px; font-size:13px; }
+.muted { color:var(--text-muted); font-size:13px; }
+.table-wrap { overflow:auto; border:1px solid var(--border); border-radius:8px; }
+table { width:100%; border-collapse:collapse; }
+th, td { border-bottom:1px solid var(--border); padding:8px 10px; text-align:left; font-size:13px; }
+th { color:var(--text); background:var(--bg-sidebar); position:sticky; top:0; font-weight:600; }
+tr:hover { background:var(--bg-sidebar); cursor:pointer; }
+canvas { display:block; max-height:280px !important; }
+.chart-wrap, .chart-container, [class*="chart"] { position:relative; height:260px; max-height:280px; }
+@media (max-width:768px) {
+  .top-bar { overflow-x:auto; }
+  .app-body { flex-direction:column; }
+  .sidebar { width:100%; height:auto; display:flex; flex-wrap:wrap; gap:4px; padding:8px; }
+  .sidebar-sys-name { display:none; }
+  .nav-btn { width:auto; border-radius:999px; padding:5px 12px; }
+}
+  </style>
+</head>
+<body>
+<header class="top-bar">
+  <span class="app-name">DB設計を再開してください</span>
+    <a href="./scr-1781943098977.html" class="sys-tab" data-aivic-nav-system="itg-3">契約・提案資料管理システム</a>
+    <a href="./scr-1781943451070.html" class="sys-tab active" data-aivic-nav-system="itg-4">顧客企業向け契約・成果管理ポータル</a>
+    <a href="./scr-1781943762164.html" class="sys-tab" data-aivic-nav-system="itg-5">契約変更・請求検証管理システム</a>
+    <a href="./scr-1781940688155.html" class="sys-tab" data-aivic-nav-system="itg-1">営業データ品質管理・請求自動化システム</a>
+</header>
+<div class="app-body">
+  <aside class="sidebar">
+    <p class="sidebar-sys-name">顧客企業向け契約・成果管理ポータル</p>
+      <a href="./scr-1781943451070.html" class="nav-btn" data-aivic-nav="scr-1781943451070">契約管理ダッシュボード</a>
+      <a href="./scr-1781943467582-dnh7.html" class="nav-btn" data-aivic-nav="scr-1781943467582-dnh7">契約書・提案資料検索画面</a>
+      <a href="./scr-1781943478690.html" class="nav-btn" data-aivic-nav="scr-1781943478690">契約情報詳細・変更管理</a>
+      <a href="./scr-1781943494360.html" class="nav-btn" data-aivic-nav="scr-1781943494360">成果物納期管理・変更</a>
+      <a href="./scr-1781943508935.html" class="nav-btn" data-aivic-nav="scr-1781943508935">請求書・メール履歴検索・参照</a>
+      <a href="./scr-1781943534271.html" class="nav-btn" data-aivic-nav="scr-1781943534271">顧客ポータルへ請求書・成果データ配信処理</a>
+      <a href="./scr-1781943547720.html" class="nav-btn" data-aivic-nav="scr-1781943547720">ポータル自動掲載機能</a>
+      <a href="./scr-1781943562664.html" class="nav-btn" data-aivic-nav="scr-1781943562664">契約・成果管理ポータル画面</a>
+      <a href="./scr-1781943575554.html" class="nav-btn" data-aivic-nav="scr-1781943575554">対応履歴更新処理</a>
+      <a href="./scr-1781943590025.html" class="nav-btn" data-aivic-nav="scr-1781943590025">ポータル配信・通知機能</a>
+      <a href="./scr-1781943603652.html" class="nav-btn active" data-aivic-nav="scr-1781943603652">ポータル上での回答・根拠資料公開</a>
+      <a href="./scr-1781943629577.html" class="nav-btn" data-aivic-nav="scr-1781943629577">ポータル確認画面</a>
+      <a href="./scr-1781943643121.html" class="nav-btn" data-aivic-nav="scr-1781943643121">合意確認入力画面</a>
+  </aside>
+  <main class="main">
+    <section class="card" data-aivic-panel="scr-1781943603652" style="margin-top:0">
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; height: 100%; overflow: hidden;">
+  <!-- 左側: 質問一覧 -->
+  <div style="display: flex; flex-direction: column; overflow: hidden; border-right: 1px solid rgba(255,255,255,0.08);">
+    <!-- フィルタバー -->
+    <div style="padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.08); flex-shrink: 0;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
+        <div>
+          <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px;">ステータス</label>
+          <select data-testid="status-filter" style="width: 100%; padding: 6px 8px; border: 1px solid rgba(255,255,255,0.18); background: rgba(0,0,0,0.25); color: var(--text); border-radius: 4px; font-size: 13px;">
+            <option value="">すべて</option>
+            <option value="未回答">未回答</option>
+            <option value="回答済">回答済</option>
+            <option value="資料公開待ち">資料公開待ち</option>
+            <option value="公開済">公開済</option>
+          </select>
+        </div>
+        <div>
+          <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px;">検索</label>
+          <input data-testid="question-search" type="text" placeholder="質問内容で検索..." style="width: 100%; padding: 6px 8px; border: 1px solid rgba(255,255,255,0.18); background: rgba(0,0,0,0.25); color: var(--text); border-radius: 4px; font-size: 13px;">
+        </div>
+      </div>
+      <button data-testid="search-button" id="btn-search" class="action-btn" style="width: 100%; padding: 6px; font-size: 13px;">検索</button>
+    </div>
+
+    <!-- 質問一覧 -->
+    <div style="flex: 1; overflow-y: auto;">
+      <table data-testid="question-list" style="width: 100%; border-collapse: collapse; font-size: 13px;">
+        <tbody id="question-tbody">
+          <tr style="background: var(--bg-card); cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.08);" class="question-row" data-id="q-001" data-status="未回答">
+            <td style="padding: 10px; color: var(--text);">
+              <div style="font-weight: 500; margin-bottom: 4px;">契約期間について</div>
+              <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 4px;">2025-01-15</div>
+              <span style="display: inline-block; padding: 2px 6px; border-radius: 3px; background: #ff6a00; color: #fff; font-size: 11px;">未回答</span>
+            </td>
+          </tr>
+          <tr style="background: var(--bg-card); cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.08);" class="question-row" data-id="q-002" data-status="公開済">
+            <td style="padding: 10px; color: var(--text);">
+              <div style="font-weight: 500; margin-bottom: 4px;">納期変更の条件</div>
+              <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 4px;">2025-01-10</div>
+              <span style="display: inline-block; padding: 2px 6px; border-radius: 3px; background: #4caf50; color: #fff; font-size: 11px;">公開済</span>
+            </td>
+          </tr>
+          <tr style="background: var(--bg-card); cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.08);" class="question-row" data-id="q-003" data-status="回答済">
+            <td style="padding: 10px; color: var(--text);">
+              <div style="font-weight: 500; margin-bottom: 4px;">成果物の品質基準</div>
+              <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 4px;">2025-01-08</div>
+              <span style="display: inline-block; padding: 2px 6px; border-radius: 3px; background: #2196f3; color: #fff; font-size: 11px;">回答済</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 右側: 質問詳細・回答・資料 -->
+  <div style="display: flex; flex-direction: column; overflow: hidden;">
+    <!-- 詳細ヘッダー -->
+    <div style="padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.08); flex-shrink: 0;">
+      <div id="detail-header" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <h3 id="detail-title" style="margin: 0; font-size: 16px; font-weight: 600; color: var(--text);">質問タイトル</h3>
+          <span id="detail-status-badge" style="display: inline-block; padding: 4px 8px; border-radius: 3px; background: #ff6a00; color: #fff; font-size: 12px;">未回答</span>
+        </div>
+        <div style="font-size: 12px; color: var(--text-muted);">
+          質問日時: <span id="detail-date"></span>
+        </div>
+      </div>
+      <div id="no-selection" style="text-align: center; color: var(--text-muted); padding: 20px 0;">
+        質問を選択してください
+      </div>
+    </div>
+
+    <!-- 詳細コンテンツ -->
+    <div style="flex: 1; overflow-y: auto; padding: 12px;">
+      <div id="detail-content" style="display: none;">
+        <!-- 質問内容 -->
+        <div style="margin-bottom: 16px;">
+          <h4 style="margin: 0 0 8px 0; font-size: 13px; font-weight: 600; color: var(--text);">質問内容</h4>
+          <div id="detail-question" style="padding: 10px; background: rgba(0,0,0,0.25); border-radius: 4px; color: var(--text); font-size: 13px; line-height: 1.5;"></div>
+        </div>
+
+        <!-- 回答セクション -->
+        <div style="margin-bottom: 16px;">
+          <h4 style="margin: 0 0 8px 0; font-size: 13px; font-weight: 600; color: var(--text);">回答</h4>
+          <div id="answer-section" style="display: none;">
+            <div id="detail-answer" style="padding: 10px; background: rgba(0,0,0,0.25); border-radius: 4px; color: var(--text); font-size: 13px; line-height: 1.5; margin-bottom: 8px;"></div>
+            <div style="font-size: 12px; color: var(--text-muted);">
+              回答者: <span id="detail-answerer"></span> | 回答日時: <span id="detail-answer-date"></span>
+            </div>
+            <div id="publish-info" style="margin-top: 8px; padding: 8px; background: rgba(76,175,80,0.1); border-left: 3px solid #4caf50; border-radius: 2px; font-size: 12px; color: var(--text);">
+              <strong>公開済</strong> - 公開日時: <span id="publish-date"></span>
+            </div>
+          </div>
+          <div id="no-answer" style="padding: 10px; background: rgba(255,106,0,0.1); border-left: 3px solid #ff6a00; border-radius: 2px; color: var(--text); font-size: 13px;">
+            まだ回答がありません
+          </div>
+        </div>
+
+        <!-- 根拠資料 -->
+        <div style="margin-bottom: 16px;">
+          <h4 style="margin: 0 0 8px 0; font-size: 13px; font-weight: 600; color: var(--text);">根拠資料</h4>
+          <div id="materials-section" style="display: none;">
+            <table data-testid="materials-list" style="width: 100%; border-collapse: collapse; font-size: 12px;">
+              <thead>
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.08);">
+                  <th style="text-align: left; padding: 6px 0; color: var(--text); font-weight: 600;">資料名</th>
+                  <th style="text-align: left; padding: 6px 0; color: var(--text); font-weight: 600;">種別</th>
+                  <th style="text-align: center; padding: 6px 0; color: var(--text); font-weight: 600;">操作</th>
+                </tr>
+              </thead>
+              <tbody id="materials-tbody">
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.08);">
+                  <td style="padding: 8px 0; color: var(--text);">提案資料_2024Q4.pdf</td>
+                  <td style="padding: 8px 0; color: var(--text-muted);">提案資料</td>
+                  <td style="padding: 8px 0; text-align: center;">
+                    <button class="action-btn secondary download-btn" data-id="mat-001" style="padding: 4px 8px; font-size: 11px;">DL</button>
+                  </td>
+                </tr>
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.08);">
+                  <td style="padding: 8px 0; color: var(--text);">契約書_2024-01.pdf</td>
+                  <td style="padding: 8px 0; color: var(--text-muted);">契約書</td>
+                  <td style="padding: 8px 0; text-align: center;">
+                    <button class="action-btn secondary download-btn" data-id="mat-002" style="padding: 4px 8px; font-size: 11px;">DL</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div id="no-materials" style="padding: 10px; background: rgba(0,0,0,0.25); border-radius: 4px; color: var(--text-muted); font-size: 13px;">
+            根拠資料はまだ公開されていません
+          </div>
+        </div>
+
+        <!-- 資料更新履歴 -->
+        <div style="margin-bottom: 16px;">
+          <h4 style="margin: 0 0 8px 0; font-size: 13px; font-weight: 600; color: var(--text);">資料更新履歴</h4>
+          <div id="history-section" style="display: none;">
+            <div style="font-size: 12px; color: var(--text-muted); line-height: 1.8;">
+              <div style="padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.08);">
+                <strong style="color: var(--text);">2025-01-12</strong> - 契約書を追加公開
+              </div>
+              <div style="padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.08);">
+                <strong style="color: var(--text);">2025-01-10</strong> - 提案資料を公開
+              </div>
+              <div style="padding: 6px 0;">
+                <strong style="color: var(--text);">2025-01-08</strong> - 回答を公開
+              </div>
+            </div>
+          </div>
+          <div id="no-history" style="padding: 10px; background: rgba(0,0,0,0.25); border-radius: 4px; color: var(--text-muted); font-size: 13px;">
+            更新履歴はありません
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 下部アクション -->
+    <div style="padding: 12px; border-top: 1px solid rgba(255,255,255,0.08); flex-shrink: 0; display: flex; gap: 8px;">
+      <button data-testid="back-button" id="btn-back" class="action-btn secondary" style="flex: 1; padding: 8px; display: none;">戻る</button>
+      <button data-testid="export-button" id="btn-export-csv" class="action-btn" style="flex: 1; padding: 8px;">CSV エクスポート</button>
+    </div>
+  </div>
+</div>
+    </section>
+  </main>
+</div>
+<script>
+(function() {
+  var TABLE_DEFS = window.AIVIC_TABLES || [];
+  var PRESET_SEED = window.AIVIC_PRESET_SEED || {};
+  var SYSTEM_NAME = window.AIVIC_SYSTEM_NAME || "";
+  var APP_ID = window.AIVIC_APP_ID || "";
+  var API_URL = (window.AIVIC_API_URL && window.AIVIC_API_URL !== "REPLACE_WITH_API_URL")
+    ? window.AIVIC_API_URL : window.location.origin;
+
+  // 通知 helper ( SPA 版と同じ )
+  window.aivicNotify = (function() {
+    function ensureContainer() {
+      var c = document.getElementById("aivic-toast-container");
+      if (c) return c;
+      c = document.createElement("div");
+      c.id = "aivic-toast-container";
+      c.style.cssText = "position:fixed;top:16px;right:16px;z-index:9999;display:flex;flex-direction:column;gap:8px;pointer-events:none;max-width:360px;";
+      document.body.appendChild(c);
+      return c;
+    }
+    function show(msg, type) {
+      var c = ensureContainer();
+      var el = document.createElement("div");
+      el.textContent = msg;
+      el.style.cssText = "padding:10px 16px;border-radius:8px;font-size:13px;line-height:1.4;pointer-events:auto;color:#fff;background:" + (type === "error" ? "#dc2626" : "#d97706");
+      c.appendChild(el);
+      setTimeout(function() {
+        el.style.transition = "opacity .3s";
+        el.style.opacity = "0";
+        setTimeout(function() { if (el.parentNode) el.parentNode.removeChild(el); }, 320);
+      }, type === "error" ? 6000 : 4500);
+    }
+    return {
+      error: function(msg) { show("❌ " + msg, "error"); },
+      warn:  function(msg) { show("⚠️ " + msg, "warn"); },
+    };
+  })();
+
+  // CRUD API ( SPA 版と同じ )
+  window.aivicApi = (function() {
+    function dbErr(op) { window.aivicNotify.error("データベースエラー ( " + op + " ): APIサーバーに接続できません。"); }
+    function newId() { return typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : "id-" + Date.now() + "-" + Math.random().toString(36).slice(2); }
+    function q(i) {
+      var t = TABLE_DEFS[i];
+      var dbP = (window.AIVIC_DB_TYPE && window.AIVIC_DB_TYPE !== "dynamodb") ? "&db=" + encodeURIComponent(window.AIVIC_DB_TYPE) : "";
+      return "?app=" + encodeURIComponent(APP_ID) + "&system=" + encodeURIComponent(SYSTEM_NAME) + "&table=" + encodeURIComponent(t ? t.tableName : "table" + i) + dbP;
+    }
+    return {
+      list: async function(tableIndex) {
+        if (!API_URL) return [];
+        try { var r = await fetch(API_URL + "/api/" + tableIndex + q(tableIndex)); var d = await r.json(); return Array.isArray(d) ? d : (d.items || []); }
+        catch(e) { dbErr("データ取得"); return []; }
+      },
+      save: async function(tableIndex, item) {
+        if (!API_URL) { dbErr("保存"); return null; }
+        var now = new Date().toISOString();
+        var rec = Object.assign({}, item, { id: item.id || newId(), createdAt: item.createdAt || now, updatedAt: now });
+        try { var r = await fetch(API_URL + "/api/" + tableIndex + q(tableIndex), { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(rec) }); return await r.json(); }
+        catch(e) { dbErr("保存"); return null; }
+      },
+      update: async function(tableIndex, id, changes) {
+        if (!API_URL) { dbErr("更新"); return null; }
+        try { var r = await fetch(API_URL + "/api/" + tableIndex + "/" + id + q(tableIndex), { method:"PUT", headers:{"Content-Type":"application/json"}, body:JSON.stringify(Object.assign({}, changes, {updatedAt: new Date().toISOString()})) }); return await r.json(); }
+        catch(e) { dbErr("更新"); return null; }
+      },
+      delete: async function(tableIndex, id) {
+        if (!API_URL) { dbErr("削除"); return {deleted:false}; }
+        try { await fetch(API_URL + "/api/" + tableIndex + "/" + id + q(tableIndex), {method:"DELETE"}); return {deleted:true}; }
+        catch(e) { dbErr("削除"); return {deleted:false}; }
+      },
+    };
+  })();
+
+  // showScreen はマルチページ構成ではページ遷移として動く。
+  var _aivicNavLastTime = 0;
+  var _aivicNavLastTarget = "";
+  var _aivicReady = false;
+  window.showScreen = function(screenId) {
+    if (!screenId) return;
+    if (screenId === window.AIVIC_PAGE_SCREEN_ID) return;
+    var targetPath = './' + encodeURIComponent(screenId) + '.html';
+    var currentName = (window.location.pathname.split('/').pop() || '');
+    if (currentName === (encodeURIComponent(screenId) + '.html') ||
+        currentName === (screenId + '.html')) {
+      return;
+    }
+    var now = Date.now();
+    if (_aivicNavLastTarget === targetPath && (now - _aivicNavLastTime) < 100) {
+      console.warn('[aivic] showScreen 連続呼び出し検知。 無限ループ防止のため抑制:', screenId);
+      return;
+    }
+    if (!_aivicReady) {
+      console.warn('[aivic] DOMContentLoaded 前の showScreen 呼び出し。 抑制:', screenId);
+      return;
+    }
+    _aivicNavLastTime = now;
+    _aivicNavLastTarget = targetPath;
+    window.location.href = targetPath;
+  };
+
+  function seedAllIfEmpty() {
+    if (!API_URL) return Promise.resolve();
+    return Promise.all(TABLE_DEFS.map(function(t, i) {
+      var preset = PRESET_SEED[t.tableName];
+      if (!Array.isArray(preset) || preset.length === 0) return Promise.resolve();
+      return window.aivicApi.list(i).then(function(existing) {
+        if (existing && existing.length > 0) return;
+        return Promise.all(preset.map(function(row) { return window.aivicApi.save(i, row); }));
+      }).catch(function() {});
+    }));
+  }
+
+  // ── 初期表示: このページ専用の panel に initFn を実行 ──
+  document.addEventListener("DOMContentLoaded", function() {
+    setTimeout(function() { _aivicReady = true; }, 1500);
+    var pageScreenId = window.AIVIC_PAGE_SCREEN_ID;
+    if (!pageScreenId) return;
+
+    document.querySelectorAll('[data-aivic-nav]').forEach(function(btn) {
+      var isActive = btn.getAttribute("data-aivic-nav") === pageScreenId;
+      btn.classList.toggle("aivic-active", isActive);
+      btn.setAttribute("aria-current", isActive ? "page" : "false");
+    });
+
+    var container = document.querySelector('[data-aivic-panel="' + pageScreenId + '"]');
+    if (!container) return;
+
+    // content 要素の hidden 強制除去 ( 2026-05-24 Playwright 大量 fail 対応 )
+    var isModalLike = function(el) {
+      if (!el || !el.classList) return false;
+      var cn = String(el.className || "");
+      if (/\bmodal\b|\bdialog\b|\boverlay\b|\bpopup\b|\bdropdown\b|\btooltip\b/i.test(cn)) return true;
+      var role = el.getAttribute && el.getAttribute("role");
+      if (role === "dialog" || role === "alertdialog" || role === "tooltip" || role === "menu") return true;
+      if (el.hasAttribute && (el.hasAttribute("data-modal") || el.hasAttribute("data-dropdown") || el.hasAttribute("data-popup"))) return true;
+      return false;
+    };
+    var unhideContentElements = function(root) {
+      var all = root.querySelectorAll('.hidden, [hidden], [style*="display:none"], [style*="display: none"]');
+      for (var k = 0; k < all.length; k++) {
+        var el = all[k];
+        if (isModalLike(el)) continue;
+        var p = el.parentElement;
+        var insideModal = false;
+        while (p && p !== root) {
+          if (isModalLike(p)) { insideModal = true; break; }
+          p = p.parentElement;
+        }
+        if (insideModal) continue;
+        el.classList.remove('hidden');
+        el.removeAttribute('hidden');
+        if (el.style && el.style.display === 'none') el.style.display = '';
+      }
+    };
+    try { unhideContentElements(container); } catch (e) { console.warn('[aivic] unhideContent failed:', e); }
+
+    var initJsSource = window.AIVIC_PAGE_INIT_JS;
+    if (!initJsSource) {
+      seedAllIfEmpty();
+      return;
+    }
+    var initFn = null;
+    try {
+      initFn = (new Function("return (" + initJsSource + ")"))();
+    } catch (e) {
+      console.error("[aivic] initJs compile error:", pageScreenId, e);
+      return;
+    }
+    if (typeof initFn !== "function") return;
+
+    seedAllIfEmpty().then(function() {
+      return Promise.all(TABLE_DEFS.map(function(t, i) {
+        return window.aivicApi.list(i)
+          .then(function(records) { return Object.assign({}, t, { records: records }); })
+          .catch(function() { return Object.assign({}, t, { records: [] }); });
+      }));
+    }).then(function(tables) {
+      try { initFn(container, API_URL, tables); } catch (e) { console.error("[aivic] initFn error:", pageScreenId, e); }
+      _aivicReady = true;
+    });
+  });
+})();
+
+</script>
+</body>
+</html>

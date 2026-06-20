@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>契約・提案資料検索画面 - DB設計を再開してください</title>
+  <script>
+window.AIVIC_API_URL = "https://mkwmoife37uqyv4zhy4yhweozq0oddxn.lambda-url.us-east-1.on.aws/";
+window.AIVIC_APP_ID = "session-1781935010162";
+window.AIVIC_SYSTEM_NAME = "契約・提案資料管理システム";
+window.AIVIC_TABLES = [{"tableName":"ユーザー","purpose":"営業データ品質管理・請求自動化システムのユーザー管理。ユーザー認証、権限管理、監査ログ記録に必要なマスターテーブル","columns":[{"name":"ユーザーID","type":"uuid","required":true,"description":"ユーザーの一意識別子"},{"name":"ユーザー名","type":"varchar(100)","required":true,"description":"ログイン用のユーザー名"},{"name":"メールアドレス","type":"varchar(100)","required":true,"description":"ユーザーのメールアドレス"},{"name":"パスワードハッシュ","type":"varchar(255)","required":true,"description":"ハッシュ化されたパスワード"},{"name":"氏名","type":"varchar(100)","required":true,"description":"ユーザーの氏名"},{"name":"部門","type":"varchar(100)","required":false,"description":"ユーザーが属する部門"},{"name":"役割","type":"varchar(50)","required":true,"description":"ユーザーの役割（管理者/営業/品質管理者/請求担当者等）"},{"name":"ステータス","type":"varchar(20)","required":true,"description":"ユーザーステータス（有効/無効/休止）"},{"name":"最終ログイン日時","type":"timestamp","required":false,"description":"最後にログインした日時"},{"name":"作成日時","type":"timestamp","required":true,"description":"ユーザーレコード作成日時"},{"name":"更新日時","type":"timestamp","required":true,"description":"ユーザーレコード最終更新日時"},{"name":"作成者","type":"varchar(100)","required":true,"description":"ユーザーレコード作成者"},{"name":"更新者","type":"varchar(100)","required":false,"description":"ユーザーレコード最終更新者"}]},{"tableName":"契約書","purpose":"契約・提案資料管理システムにおける契約書の基本情報を管理するマスタテーブル","columns":[{"name":"契約書ID","type":"uuid","required":true,"description":"契約書の一意識別子"},{"name":"契約書名","type":"varchar(100)","required":true,"description":"契約書のタイトル"},{"name":"契約書説明","type":"text","required":false,"description":"契約書の詳細説明"},{"name":"契約種別","type":"varchar(100)","required":true,"description":"契約の種類（例：売買契約、サービス契約、NDA等）"},{"name":"契約相手先ID","type":"uuid","required":true,"description":"契約相手先企業の識別子"},{"name":"契約開始日","type":"timestamp","required":true,"description":"契約の開始日"},{"name":"契約終了日","type":"timestamp","required":false,"description":"契約の終了日"},{"name":"契約金額","type":"integer","required":false,"description":"契約金額（円）"},{"name":"ステータス","type":"varchar(100)","required":true,"description":"契約状態（例：草案、承認待ち、有効、終了、キャンセル）"},{"name":"担当者ID","type":"uuid","required":true,"description":"契約の担当ユーザーID"},{"name":"ファイルパス","type":"varchar(100)","required":false,"description":"契約書ファイルの保存パス"},{"name":"作成日時","type":"timestamp","required":true,"description":"レコード作成日時"},{"name":"更新日時","type":"timestamp","required":true,"description":"レコード最終更新日時"},{"name":"作成者ID","type":"uuid","required":true,"description":"レコード作成者のユーザーID"}]},{"tableName":"提案資料","purpose":"契約・提案資料管理システムにおいて、顧客への提案資料の情報を一元管理し、提案から契約への進捗を追跡するためのマスタテーブル","columns":[{"name":"提案資料ID","type":"uuid","required":true,"description":"提案資料の一意識別子"},{"name":"提案資料名","type":"varchar(100)","required":true,"description":"提案資料のタイトル・名称"},{"name":"説明","type":"text","required":false,"description":"提案資料の詳細説明"},{"name":"ユーザーID","type":"uuid","required":true,"description":"提案資料を作成・管理するユーザーの外部キー"},{"name":"ステータス","type":"varchar(100)","required":true,"description":"提案資料のステータス（下書き、提案中、承認待ち、契約済み、却下等）"},{"name":"提案日","type":"timestamp","required":true,"description":"顧客への提案実施日時"},{"name":"契約書ID","type":"uuid","required":false,"description":"関連する契約書の外部キー（契約成立時に設定）"},{"name":"作成日時","type":"timestamp","required":true,"description":"提案資料レコードの作成日時"},{"name":"更新日時","type":"timestamp","required":true,"description":"提案資料レコードの最終更新日時"},{"name":"作成者ID","type":"uuid","required":true,"description":"提案資料を作成したユーザーの外部キー"}]},{"tableName":"契約書バージョン","purpose":"契約書の版管理。同一契約書の複数バージョンを追跡し、変更履歴と承認状況を記録する。","columns":[{"name":"バージョンID","type":"uuid","required":true,"description":"バージョンレコードの一意識別子"},{"name":"契約書ID","type":"uuid","required":true,"description":"親契約書テーブルへの外部キー"},{"name":"バージョン番号","type":"integer","required":true,"description":"同一契約書内での版番号（1, 2, 3...）"},{"name":"ファイルパス","type":"varchar(100)","required":true,"description":"契約書ドキュメントの保存先パスまたはURL"},{"name":"変更内容","type":"text","required":false,"description":"前バージョンからの変更点の説明"},{"name":"ステータス","type":"varchar(100)","required":true,"description":"バージョンの状態（下書き/レビュー中/承認済み/却下等）"},{"name":"作成者ID","type":"uuid","required":true,"description":"ユーザーテーブルへの外部キー。バージョン作成者"},{"name":"作成日時","type":"timestamp","required":true,"description":"バージョン作成日時"},{"name":"更新日時","type":"timestamp","required":true,"description":"バージョン最終更新日時"},{"name":"承認者ID","type":"uuid","required":false,"description":"ユーザーテーブルへの外部キー。承認実施者"},{"name":"承認日時","type":"timestamp","required":false,"description":"承認実施日時"}]},{"tableName":"提案資料バージョン","purpose":"提案資料の変更履歴を管理し、各バージョンの内容、ステータス、作成者を追跡する","columns":[{"name":"バージョンID","type":"uuid","required":true,"description":"提案資料バージョンの一意識別子"},{"name":"提案資料ID","type":"uuid","required":true,"description":"親の提案資料を参照する外部キー"},{"name":"バージョン番号","type":"integer","required":true,"description":"提案資料内での連番（1, 2, 3...）"},{"name":"タイトル","type":"varchar(100)","required":true,"description":"このバージョンの提案資料タイトル"},{"name":"内容","type":"text","required":true,"description":"提案資料の本文・詳細内容"},{"name":"ステータス","type":"varchar(100)","required":true,"description":"バージョンのステータス（下書き、承認待ち、承認済み、却下等）"},{"name":"作成者ID","type":"uuid","required":true,"description":"このバージョンを作成したユーザーを参照する外部キー"},{"name":"作成日時","type":"timestamp","required":true,"description":"バージョンの作成日時"},{"name":"更新日時","type":"timestamp","required":true,"description":"バージョンの最終更新日時"},{"name":"備考","type":"text","required":false,"description":"このバージョンの変更内容や特記事項"}]},{"tableName":"変更履歴","purpose":"契約書と提案資料の変更内容を追跡・監査するための履歴管理テーブル","columns":[{"name":"変更履歴ID","type":"uuid","required":true,"description":"変更履歴レコードの一意識別子"},{"name":"対象テーブル","type":"varchar(100)","required":true,"description":"変更対象のテーブル名（契約書 または 提案資料）"},{"name":"対象ID","type":"uuid","required":true,"description":"変更対象レコードのID（契約書ID または 提案資料ID）"},{"name":"変更種別","type":"varchar(100)","required":true,"description":"変更の種類（作成/更新/削除/ステータス変更 等）"},{"name":"変更フィールド","type":"varchar(100)","required":false,"description":"変更されたフィールド名"},{"name":"変更前値","type":"text","required":false,"description":"変更前の値"},{"name":"変更後値","type":"text","required":false,"description":"変更後の値"},{"name":"変更理由","type":"text","required":false,"description":"変更の理由・備考"},{"name":"作成者ID","type":"uuid","required":true,"description":"変更を実施したユーザーID"},{"name":"作成日時","type":"timestamp","required":true,"description":"変更が記録された日時"}]}];
+window.AIVIC_PRESET_SEED = {};
+window.AIVIC_PAGE_SCREEN_ID = "scr-1781943220462";
+window.AIVIC_PAGE_INIT_JS = "function(container, apiUrl, tables) {}";
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+```css
+:root {
+  --primary: #4a7c8c;
+  --primary-hover: #3a6578;
+  --bg-main: #1a1f2e;
+  --bg-card: #232d3f;
+  --bg-sidebar: #1f2937;
+  --border: #3a4556;
+  --text: #e8eef5;
+  --text-muted: #9ca3af;
+  --top-bar-bg: #0f1419;
+  --top-bar-border: #2d3748;
+}
+```
+*, *::before, *::after { box-sizing: border-box; }
+body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; background:var(--bg-main); color:var(--text); display:flex; flex-direction:column; height:100vh; overflow:hidden; }
+.top-bar { display:flex; align-items:center; gap:0; background:var(--top-bar-bg, var(--bg-sidebar)); border-bottom:1px solid var(--top-bar-border, var(--border)); padding:0 16px; height:48px; flex-shrink:0; }
+.top-bar .app-name { font-size:14px; font-weight:700; color:var(--text); margin-right:20px; white-space:nowrap; }
+.sys-tab { background:transparent; color:var(--text); opacity:0.6; border:none; border-bottom:2px solid transparent; padding:0 16px; height:48px; cursor:pointer; font-size:13px; white-space:nowrap; transition:color .15s, border-color .15s, opacity .15s; text-decoration:none; display:flex; align-items:center; }
+.sys-tab:hover { opacity:0.85; }
+.sys-tab.active, .sys-tab.aivic-active { color:var(--text); opacity:1; border-bottom-color:var(--primary); font-weight:600; }
+.app-body { display:flex; flex:1; overflow:hidden; }
+.sidebar { width:220px; background:var(--bg-sidebar); border-right:1px solid var(--border); padding:12px 8px; overflow-y:auto; flex-shrink:0; }
+.sidebar-sys-name { margin:0 0 8px; padding:4px 8px; font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:.06em; }
+.nav-btn { display:block; width:100%; text-align:left; background:transparent; color:var(--text); opacity:0.65; border:none; border-radius:8px; padding:8px 12px; cursor:pointer; font-size:13px; margin-bottom:2px; transition:opacity .15s,background .15s; text-decoration:none; }
+.nav-btn:hover { background:var(--border); opacity:0.9; }
+.nav-btn.active, .nav-btn.aivic-active { background:var(--primary); color:#fff; opacity:1; }
+.main { flex:1; padding:16px; overflow-y:auto; }
+.card { border:1px solid var(--border); border-radius:12px; padding:16px; background:var(--bg-card); margin-bottom:12px; }
+.hidden { display:none !important; }
+.action-btn { background:var(--primary); color:#fff; border:0; border-radius:8px; padding:8px 14px; cursor:pointer; font-size:13px; }
+.action-btn:hover { background:var(--primary-hover, #1a55ef); }
+.action-btn.secondary { background:var(--border); color:var(--text); }
+.input { background:var(--bg-main); border:1px solid var(--border); color:var(--text); border-radius:8px; padding:7px 10px; font-size:13px; }
+.muted { color:var(--text-muted); font-size:13px; }
+.table-wrap { overflow:auto; border:1px solid var(--border); border-radius:8px; }
+table { width:100%; border-collapse:collapse; }
+th, td { border-bottom:1px solid var(--border); padding:8px 10px; text-align:left; font-size:13px; }
+th { color:var(--text); background:var(--bg-sidebar); position:sticky; top:0; font-weight:600; }
+tr:hover { background:var(--bg-sidebar); cursor:pointer; }
+canvas { display:block; max-height:280px !important; }
+.chart-wrap, .chart-container, [class*="chart"] { position:relative; height:260px; max-height:280px; }
+@media (max-width:768px) {
+  .top-bar { overflow-x:auto; }
+  .app-body { flex-direction:column; }
+  .sidebar { width:100%; height:auto; display:flex; flex-wrap:wrap; gap:4px; padding:8px; }
+  .sidebar-sys-name { display:none; }
+  .nav-btn { width:auto; border-radius:999px; padding:5px 12px; }
+}
+  </style>
+</head>
+<body>
+<header class="top-bar">
+  <span class="app-name">DB設計を再開してください</span>
+    <a href="./scr-1781943098977.html" class="sys-tab active" data-aivic-nav-system="itg-3">契約・提案資料管理システム</a>
+    <a href="./scr-1781943451070.html" class="sys-tab" data-aivic-nav-system="itg-4">顧客企業向け契約・成果管理ポータル</a>
+    <a href="./scr-1781943762164.html" class="sys-tab" data-aivic-nav-system="itg-5">契約変更・請求検証管理システム</a>
+    <a href="./scr-1781940688155.html" class="sys-tab" data-aivic-nav-system="itg-1">営業データ品質管理・請求自動化システム</a>
+</header>
+<div class="app-body">
+  <aside class="sidebar">
+    <p class="sidebar-sys-name">契約・提案資料管理システム</p>
+      <a href="./scr-1781943098977.html" class="nav-btn" data-aivic-nav="scr-1781943098977">契約書管理画面</a>
+      <a href="./scr-1781943112133.html" class="nav-btn" data-aivic-nav="scr-1781943112133">提案資料管理画面</a>
+      <a href="./scr-1781943125510.html" class="nav-btn" data-aivic-nav="scr-1781943125510">バージョン比較画面</a>
+      <a href="./scr-1781943154204.html" class="nav-btn" data-aivic-nav="scr-1781943154204">資料管理画面でバージョン情報入力</a>
+      <a href="./scr-1781943166887.html" class="nav-btn" data-aivic-nav="scr-1781943166887">最新版フラグ設定・旧版アーカイブ処理</a>
+      <a href="./scr-1781943180410.html" class="nav-btn" data-aivic-nav="scr-1781943180410">資料検索・表示画面</a>
+      <a href="./scr-1781943194400.html" class="nav-btn" data-aivic-nav="scr-1781943194400">契約・提案資料管理システム連携</a>
+      <a href="./scr-1781943206726.html" class="nav-btn" data-aivic-nav="scr-1781943206726">契約書・提案資料検索画面</a>
+      <a href="./scr-1781943220462.html" class="nav-btn active" data-aivic-nav="scr-1781943220462">契約・提案資料検索画面</a>
+      <a href="./scr-1781943240253.html" class="nav-btn" data-aivic-nav="scr-1781943240253">契約書テンプレート・管理ルール定義</a>
+      <a href="./scr-1781943255079.html" class="nav-btn" data-aivic-nav="scr-1781943255079">ドキュメント管理画面</a>
+  </aside>
+  <main class="main">
+    <section class="card" data-aivic-panel="scr-1781943220462" style="margin-top:0">
+<div style="display: flex; flex-direction: column; height: 100%; gap: 0;">
+  <!-- ヘッダー -->
+  <div style="padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,0.1); background: var(--bg-card);">
+    <h1 style="margin: 0; font-size: 18px; font-weight: 600; color: var(--text);">契約・提案資料検索</h1>
+  </div>
+
+  <!-- 検索フィルタバー -->
+  <div style="padding: 12px 16px; background: var(--bg-main); border-bottom: 1px solid rgba(255,255,255,0.1);">
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+      <!-- 行1: キーワード + 種別 + ステータス -->
+      <div>
+        <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px;">キーワード</label>
+        <input type="text" id="input-keyword" data-testid="keyword-input" placeholder="資料名で検索..." style="width: 100%; padding: 6px 8px; border: 1px solid rgba(255,255,255,0.18); border-radius: 4px; background: rgba(0,0,0,0.25); color: var(--text); font-size: 13px;" />
+      </div>
+      <div>
+        <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px;">資料種別</label>
+        <select id="select-type" data-testid="type-select" style="width: 100%; padding: 6px 8px; border: 1px solid rgba(255,255,255,0.18); border-radius: 4px; background: rgba(0,0,0,0.25); color: var(--text); font-size: 13px;">
+          <option value="">すべて</option>
+          <option value="契約書">契約書</option>
+          <option value="提案資料">提案資料</option>
+        </select>
+      </div>
+      <div>
+        <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px;">ステータス</label>
+        <select id="select-status" data-testid="status-select" style="width: 100%; padding: 6px 8px; border: 1px solid rgba(255,255,255,0.18); border-radius: 4px; background: rgba(0,0,0,0.25); color: var(--text); font-size: 13px;">
+          <option value="">すべて</option>
+          <option value="草案">草案</option>
+          <option value="承認待ち">承認待ち</option>
+          <option value="承認済み">承認済み</option>
+          <option value="有効">有効</option>
+          <option value="終了">終了</option>
+          <option value="キャンセル">キャンセル</option>
+          <option value="却下">却下</option>
+        </select>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+      <!-- 行2: 作成者 + 作成日From + 作成日To -->
+      <div>
+        <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px;">作成者</label>
+        <select id="select-creator" data-testid="creator-select" style="width: 100%; padding: 6px 8px; border: 1px solid rgba(255,255,255,0.18); border-radius: 4px; background: rgba(0,0,0,0.25); color: var(--text); font-size: 13px;">
+          <option value="">すべて</option>
+          <option value="営業太郎">営業太郎</option>
+          <option value="営業花子">営業花子</option>
+          <option value="品質管理者">品質管理者</option>
+        </select>
+      </div>
+      <div>
+        <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px;">作成日 From</label>
+        <input type="date" id="input-created-from" data-testid="created-from-input" style="width: 100%; padding: 6px 8px; border: 1px solid rgba(255,255,255,0.18); border-radius: 4px; background: rgba(0,0,0,0.25); color: var(--text); font-size: 13px;" />
+      </div>
+      <div>
+        <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px;">作成日 To</label>
+        <input type="date" id="input-created-to" data-testid="created-to-input" style="width: 100%; padding: 6px 8px; border: 1px solid rgba(255,255,255,0.18); border-radius: 4px; background: rgba(0,0,0,0.25); color: var(--text); font-size: 13px;" />
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 0;">
+      <!-- 行3: 更新日From + 更新日To + ボタン -->
+      <div>
+        <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px;">更新日 From</label>
+        <input type="date" id="input-updated-from" data-testid="updated-from-input" style="width: 100%; padding: 6px 8px; border: 1px solid rgba(255,255,255,0.18); border-radius: 4px; background: rgba(0,0,0,0.25); color: var(--text); font-size: 13px;" />
+      </div>
+      <div>
+        <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px;">更新日 To</label>
+        <input type="date" id="input-updated-to" data-testid="updated-to-input" style="width: 100%; padding: 6px 8px; border: 1px solid rgba(255,255,255,0.18); border-radius: 4px; background: rgba(0,0,0,0.25); color: var(--text); font-size: 13px;" />
+      </div>
+      <div style="display: flex; gap: 8px; align-items: flex-end;">
+        <button id="btn-search" data-testid="search-button" class="action-btn" style="flex: 1; padding: 6px 12px; font-size: 13px;">検索</button>
+        <button id="btn-reset" data-testid="reset-button" class="action-btn secondary" style="flex: 1; padding: 6px 12px; font-size: 13px;">リセット</button>
+        <button id="btn-export" data-testid="export-button" class="action-btn secondary" style="flex: 1; padding: 6px 12px; font-size: 13px;">CSV</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- メインコンテンツ: 結果テーブル + 詳細パネル -->
+  <div style="display: flex; flex: 1; overflow: hidden; gap: 0;">
+    <!-- 結果テーブル -->
+    <div style="flex: 1; overflow-y: auto; border-right: 1px solid rgba(255,255,255,0.1);">
+      <div class="table-wrap" style="margin: 0; border-radius: 0;">
+        <table data-testid="record-list" style="width: 100%; border-collapse: collapse; font-size: 13px;">
+          <thead style="position: sticky; top: 0; background: var(--bg-card); z-index: 10;">
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+              <th style="padding: 8px 12px; text-align: left; font-weight: 600; color: var(--text); width: 25%;">資料名</th>
+              <th style="padding: 8px 12px; text-align: left; font-weight: 600; color: var(--text); width: 12%;">種別</th>
+              <th style="padding: 8px 12px; text-align: left; font-weight: 600; color: var(--text); width: 15%;">ステータス</th>
+              <th style="padding: 8px 12px; text-align: left; font-weight: 600; color: var(--text); width: 12%;">作成者</th>
+              <th style="padding: 8px 12px; text-align: left; font-weight: 600; color: var(--text); width: 12%;">作成日</th>
+              <th style="padding: 8px 12px; text-align: left; font-weight: 600; color: var(--text); width: 12%;">更新日</th>
+              <th style="padding: 8px 12px; text-align: center; font-weight: 600; color: var(--text); width: 12%;">操作</th>
+            </tr>
+          </thead>
+          <tbody id="result-tbody" style="background: var(--bg-main);">
+            <!-- 動的に行が挿入される -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 詳細パネル（右側、初期非表示） -->
+    <div id="detail-panel" style="width: 320px; background: var(--bg-card); border-left: 1px solid rgba(255,255,255,0.1); overflow-y: auto; display: none; flex-direction: column;">
+      <div style="padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center;">
+        <h3 style="margin: 0; font-size: 14px; font-weight: 600; color: var(--text);">詳細情報</h3>
+        <button id="btn-close-detail" data-testid="close-detail-button" style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 18px; padding: 0; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">×</button>
+      </div>
+
+      <div style="padding: 12px 16px; flex: 1; overflow-y: auto;">
+        <!-- 基本情報 -->
+        <div style="margin-bottom: 16px;">
+          <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.5px;">資料名</div>
+          <div id="detail-name" style="font-size: 13px; color: var(--text); font-weight: 500; word-break: break-word;"></div>
+        </div>
+
+        <div style="margin-bottom: 16px;">
+          <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.5px;">種別</div>
+          <div id="detail-type" style="font-size: 13px; color: var(--text);"></div>
+        </div>
+
+        <div style="margin-bottom: 16px;">
+          <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.5px;">ステータス</div>
+          <div id="detail-status" style="font-size: 13px; color: var(--text); padding: 2px 6px; border-radius: 3px; display: inline-block; background: rgba(255,255,255,0.08);"></div>
+        </div>
+
+        <div style="margin-bottom: 16px;">
+          <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.5px;">作成者</div>
+          <div id="detail-creator" style="font-size: 13px; color: var(--text);"></div>
+        </div>
+
+        <div style="margin-bottom: 16px;">
+          <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.5px;">作成日</div>
+          <div id="detail-created" style="font-size: 13px; color: var(--text);"></div>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+          <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.5px;">更新日</div>
+          <div id="detail-updated" style="font-size: 13px; color: var(--text);"></div>
+        </div>
+
+        <!-- バージョン履歴 -->
+        <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 12px;">
+          <h4 style="margin: 0 0 12px 0; font-size: 12px; font-weight: 600; color: var(--text); text-transform: uppercase; letter-spacing: 0.5px;">バージョン履歴</h4>
+          <div id="version-timeline" style="font-size: 12px;">
+            <!-- タイムラインが動的に挿入される -->
+          </div>
+        </div>
+
+        <!-- アクションボタン -->
+        <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 12px; margin-top: 12px; display: flex; flex-direction: column; gap: 8px;">
+          <button id="btn-compare" data-testid="compare-button" class="action-btn" style="width: 100%; padding: 6px 12px; font-size: 12px;">バージョン比較</button>
+          <button id="btn-edit-detail" data-testid="edit-detail-button" class="action-btn secondary" style="width: 100%; padding: 6px 12px; font-size: 12px;">編集</button>
+          <button id="btn-delete-detail" data-testid="delete-detail-button" class="action-btn secondary" style="width: 100%; padding: 6px 12px; font-size: 12px; color: #ff6a6a;">削除</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    </section>
+  </main>
+</div>
+<script>
+(function() {
+  var TABLE_DEFS = window.AIVIC_TABLES || [];
+  var PRESET_SEED = window.AIVIC_PRESET_SEED || {};
+  var SYSTEM_NAME = window.AIVIC_SYSTEM_NAME || "";
+  var APP_ID = window.AIVIC_APP_ID || "";
+  var API_URL = (window.AIVIC_API_URL && window.AIVIC_API_URL !== "REPLACE_WITH_API_URL")
+    ? window.AIVIC_API_URL : window.location.origin;
+
+  // 通知 helper ( SPA 版と同じ )
+  window.aivicNotify = (function() {
+    function ensureContainer() {
+      var c = document.getElementById("aivic-toast-container");
+      if (c) return c;
+      c = document.createElement("div");
+      c.id = "aivic-toast-container";
+      c.style.cssText = "position:fixed;top:16px;right:16px;z-index:9999;display:flex;flex-direction:column;gap:8px;pointer-events:none;max-width:360px;";
+      document.body.appendChild(c);
+      return c;
+    }
+    function show(msg, type) {
+      var c = ensureContainer();
+      var el = document.createElement("div");
+      el.textContent = msg;
+      el.style.cssText = "padding:10px 16px;border-radius:8px;font-size:13px;line-height:1.4;pointer-events:auto;color:#fff;background:" + (type === "error" ? "#dc2626" : "#d97706");
+      c.appendChild(el);
+      setTimeout(function() {
+        el.style.transition = "opacity .3s";
+        el.style.opacity = "0";
+        setTimeout(function() { if (el.parentNode) el.parentNode.removeChild(el); }, 320);
+      }, type === "error" ? 6000 : 4500);
+    }
+    return {
+      error: function(msg) { show("❌ " + msg, "error"); },
+      warn:  function(msg) { show("⚠️ " + msg, "warn"); },
+    };
+  })();
+
+  // CRUD API ( SPA 版と同じ )
+  window.aivicApi = (function() {
+    function dbErr(op) { window.aivicNotify.error("データベースエラー ( " + op + " ): APIサーバーに接続できません。"); }
+    function newId() { return typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : "id-" + Date.now() + "-" + Math.random().toString(36).slice(2); }
+    function q(i) {
+      var t = TABLE_DEFS[i];
+      var dbP = (window.AIVIC_DB_TYPE && window.AIVIC_DB_TYPE !== "dynamodb") ? "&db=" + encodeURIComponent(window.AIVIC_DB_TYPE) : "";
+      return "?app=" + encodeURIComponent(APP_ID) + "&system=" + encodeURIComponent(SYSTEM_NAME) + "&table=" + encodeURIComponent(t ? t.tableName : "table" + i) + dbP;
+    }
+    return {
+      list: async function(tableIndex) {
+        if (!API_URL) return [];
+        try { var r = await fetch(API_URL + "/api/" + tableIndex + q(tableIndex)); var d = await r.json(); return Array.isArray(d) ? d : (d.items || []); }
+        catch(e) { dbErr("データ取得"); return []; }
+      },
+      save: async function(tableIndex, item) {
+        if (!API_URL) { dbErr("保存"); return null; }
+        var now = new Date().toISOString();
+        var rec = Object.assign({}, item, { id: item.id || newId(), createdAt: item.createdAt || now, updatedAt: now });
+        try { var r = await fetch(API_URL + "/api/" + tableIndex + q(tableIndex), { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(rec) }); return await r.json(); }
+        catch(e) { dbErr("保存"); return null; }
+      },
+      update: async function(tableIndex, id, changes) {
+        if (!API_URL) { dbErr("更新"); return null; }
+        try { var r = await fetch(API_URL + "/api/" + tableIndex + "/" + id + q(tableIndex), { method:"PUT", headers:{"Content-Type":"application/json"}, body:JSON.stringify(Object.assign({}, changes, {updatedAt: new Date().toISOString()})) }); return await r.json(); }
+        catch(e) { dbErr("更新"); return null; }
+      },
+      delete: async function(tableIndex, id) {
+        if (!API_URL) { dbErr("削除"); return {deleted:false}; }
+        try { await fetch(API_URL + "/api/" + tableIndex + "/" + id + q(tableIndex), {method:"DELETE"}); return {deleted:true}; }
+        catch(e) { dbErr("削除"); return {deleted:false}; }
+      },
+    };
+  })();
+
+  // showScreen はマルチページ構成ではページ遷移として動く。
+  var _aivicNavLastTime = 0;
+  var _aivicNavLastTarget = "";
+  var _aivicReady = false;
+  window.showScreen = function(screenId) {
+    if (!screenId) return;
+    if (screenId === window.AIVIC_PAGE_SCREEN_ID) return;
+    var targetPath = './' + encodeURIComponent(screenId) + '.html';
+    var currentName = (window.location.pathname.split('/').pop() || '');
+    if (currentName === (encodeURIComponent(screenId) + '.html') ||
+        currentName === (screenId + '.html')) {
+      return;
+    }
+    var now = Date.now();
+    if (_aivicNavLastTarget === targetPath && (now - _aivicNavLastTime) < 100) {
+      console.warn('[aivic] showScreen 連続呼び出し検知。 無限ループ防止のため抑制:', screenId);
+      return;
+    }
+    if (!_aivicReady) {
+      console.warn('[aivic] DOMContentLoaded 前の showScreen 呼び出し。 抑制:', screenId);
+      return;
+    }
+    _aivicNavLastTime = now;
+    _aivicNavLastTarget = targetPath;
+    window.location.href = targetPath;
+  };
+
+  function seedAllIfEmpty() {
+    if (!API_URL) return Promise.resolve();
+    return Promise.all(TABLE_DEFS.map(function(t, i) {
+      var preset = PRESET_SEED[t.tableName];
+      if (!Array.isArray(preset) || preset.length === 0) return Promise.resolve();
+      return window.aivicApi.list(i).then(function(existing) {
+        if (existing && existing.length > 0) return;
+        return Promise.all(preset.map(function(row) { return window.aivicApi.save(i, row); }));
+      }).catch(function() {});
+    }));
+  }
+
+  // ── 初期表示: このページ専用の panel に initFn を実行 ──
+  document.addEventListener("DOMContentLoaded", function() {
+    setTimeout(function() { _aivicReady = true; }, 1500);
+    var pageScreenId = window.AIVIC_PAGE_SCREEN_ID;
+    if (!pageScreenId) return;
+
+    document.querySelectorAll('[data-aivic-nav]').forEach(function(btn) {
+      var isActive = btn.getAttribute("data-aivic-nav") === pageScreenId;
+      btn.classList.toggle("aivic-active", isActive);
+      btn.setAttribute("aria-current", isActive ? "page" : "false");
+    });
+
+    var container = document.querySelector('[data-aivic-panel="' + pageScreenId + '"]');
+    if (!container) return;
+
+    // content 要素の hidden 強制除去 ( 2026-05-24 Playwright 大量 fail 対応 )
+    var isModalLike = function(el) {
+      if (!el || !el.classList) return false;
+      var cn = String(el.className || "");
+      if (/\bmodal\b|\bdialog\b|\boverlay\b|\bpopup\b|\bdropdown\b|\btooltip\b/i.test(cn)) return true;
+      var role = el.getAttribute && el.getAttribute("role");
+      if (role === "dialog" || role === "alertdialog" || role === "tooltip" || role === "menu") return true;
+      if (el.hasAttribute && (el.hasAttribute("data-modal") || el.hasAttribute("data-dropdown") || el.hasAttribute("data-popup"))) return true;
+      return false;
+    };
+    var unhideContentElements = function(root) {
+      var all = root.querySelectorAll('.hidden, [hidden], [style*="display:none"], [style*="display: none"]');
+      for (var k = 0; k < all.length; k++) {
+        var el = all[k];
+        if (isModalLike(el)) continue;
+        var p = el.parentElement;
+        var insideModal = false;
+        while (p && p !== root) {
+          if (isModalLike(p)) { insideModal = true; break; }
+          p = p.parentElement;
+        }
+        if (insideModal) continue;
+        el.classList.remove('hidden');
+        el.removeAttribute('hidden');
+        if (el.style && el.style.display === 'none') el.style.display = '';
+      }
+    };
+    try { unhideContentElements(container); } catch (e) { console.warn('[aivic] unhideContent failed:', e); }
+
+    var initJsSource = window.AIVIC_PAGE_INIT_JS;
+    if (!initJsSource) {
+      seedAllIfEmpty();
+      return;
+    }
+    var initFn = null;
+    try {
+      initFn = (new Function("return (" + initJsSource + ")"))();
+    } catch (e) {
+      console.error("[aivic] initJs compile error:", pageScreenId, e);
+      return;
+    }
+    if (typeof initFn !== "function") return;
+
+    seedAllIfEmpty().then(function() {
+      return Promise.all(TABLE_DEFS.map(function(t, i) {
+        return window.aivicApi.list(i)
+          .then(function(records) { return Object.assign({}, t, { records: records }); })
+          .catch(function() { return Object.assign({}, t, { records: [] }); });
+      }));
+    }).then(function(tables) {
+      try { initFn(container, API_URL, tables); } catch (e) { console.error("[aivic] initFn error:", pageScreenId, e); }
+      _aivicReady = true;
+    });
+  });
+})();
+
+</script>
+</body>
+</html>

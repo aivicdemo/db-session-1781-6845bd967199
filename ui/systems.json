@@ -1,0 +1,5739 @@
+[
+  {
+    "systemId": "itg-2",
+    "systemName": "営業成果レポート自動生成・配信システム",
+    "screens": [
+      {
+        "id": "scr-1781941196452",
+        "name": "レポートテンプレート管理画面",
+        "purpose": "営業成果レポートのテンプレートを作成・編集・削除・管理し、レポート生成の基準となるフォーマットを一元管理する",
+        "items": [
+          "テンプレート一覧表",
+          "テンプレート名検索欄",
+          "テンプレートステータスフィルター",
+          "新規テンプレート作成ボタン",
+          "テンプレート編集ボタン",
+          "テンプレート削除ボタン",
+          "テンプレート複製ボタン",
+          "テンプレート詳細表示パネル",
+          "テンプレート名入力欄",
+          "テンプレート説明入力欄",
+          "レポート対象期間設定",
+          "含める指標選択チェックボックス"
+        ]
+      },
+      {
+        "id": "scr-1781941209026",
+        "name": "営業データ検索・抽出画面",
+        "purpose": "営業活動、顧客企業、成約データを検索・抽出し、レポート生成の基礎データを準備する",
+        "items": [
+          "検索条件パネル",
+          "期間指定（開始日）",
+          "期間指定（終了日）",
+          "営業担当者選択",
+          "顧客企業名検索",
+          "成約ステータスフィルタ",
+          "成果指標選択",
+          "検索実行ボタン",
+          "検索条件リセットボタン",
+          "検索結果テーブル",
+          "結果件数表示",
+          "ページネーション"
+        ]
+      },
+      {
+        "id": "scr-1781941221780",
+        "name": "レポート自動生成・配信画面",
+        "purpose": "営業成果レポートの自動生成と配信スケジュール管理、テンプレート選択、配信先設定を行う画面",
+        "items": [
+          "レポートテンプレート選択ドロップダウン",
+          "生成対象期間開始日",
+          "生成対象期間終了日",
+          "配信先ユーザー選択チェックボックス",
+          "配信先メールアドレス入力欄",
+          "自動配信スケジュール設定",
+          "配信頻度選択（日次/週次/月次）",
+          "配信曜日・時刻設定",
+          "レポート内容プレビュー",
+          "成果指標表示設定チェックボックス",
+          "営業活動データ含有チェックボックス",
+          "成約データ含有チェックボックス"
+        ]
+      },
+      {
+        "id": "scr-1781941234200",
+        "name": "生成済みレポート確認画面",
+        "purpose": "生成済みレポートの内容を確認し、配信状況を管理するための画面",
+        "items": [
+          "レポート一覧テーブル",
+          "レポートタイトル",
+          "生成日時",
+          "レポートテンプレート名",
+          "対象ユーザー",
+          "ステータス",
+          "配信状況",
+          "レポート内容プレビュー",
+          "営業成果サマリー",
+          "成約件数",
+          "売上金額",
+          "達成率"
+        ]
+      },
+      {
+        "id": "scr-1781941247290",
+        "name": "成果指標ダッシュボード画面",
+        "purpose": "営業成果の主要指標をリアルタイムで可視化し、営業活動の進捗状況と成約実績を一目で把握するためのダッシュボード",
+        "items": [
+          "期間選択フィルター",
+          "営業担当者選択フィルター",
+          "顧客企業カテゴリフィルター",
+          "売上目標達成率ウィジェット",
+          "成約件数ウィジェット",
+          "営業活動件数ウィジェット",
+          "平均契約金額ウィジェット",
+          "売上推移グラフ",
+          "営業活動タイプ別内訳グラフ",
+          "成約率トレンドグラフ",
+          "営業担当者別ランキング表",
+          "顧客企業別売上ランキング表"
+        ]
+      },
+      {
+        "id": "scr-1781941260019",
+        "name": "営業成果レポート自動生成処理",
+        "purpose": "営業活動データから成果レポートを自動生成し、指定された配信先に送信する",
+        "items": [
+          "レポート生成期間選択",
+          "対象営業担当者選択",
+          "対象顧客企業フィルタ",
+          "レポートテンプレート選択",
+          "成果指標選択チェックボックス",
+          "売上金額集計表示",
+          "成約件数集計表示",
+          "営業活動件数集計表示",
+          "顧客別成果一覧",
+          "配信先メールアドレス入力",
+          "配信スケジュール設定",
+          "即時配信ボタン"
+        ]
+      },
+      {
+        "id": "scr-1781941271936",
+        "name": "月次成果レポート自動生成処理",
+        "purpose": "営業成果データを集計し、月次レポートを自動生成して配信対象者に送付する",
+        "items": [
+          "生成対象月選択",
+          "対象ユーザー選択",
+          "レポートテンプレート選択",
+          "成約データ集計範囲指定",
+          "営業活動データ集計範囲指定",
+          "成果指標表示項目選択",
+          "顧客企業別集計オプション",
+          "配信先メールアドレス入力",
+          "配信スケジュール設定",
+          "プレビュー表示ボタン",
+          "生成実行ボタン",
+          "生成済みレポート一覧"
+        ]
+      },
+      {
+        "id": "scr-1781941283814",
+        "name": "レポート配信処理",
+        "purpose": "生成済みレポートを選択して対象ユーザーに配信し、配信履歴を管理する",
+        "items": [
+          "生成済みレポート一覧",
+          "レポート検索フィルター",
+          "配信対象ユーザー選択",
+          "配信方法選択（メール/システム内通知）",
+          "配信スケジュール設定",
+          "配信予定日時",
+          "配信メッセージ（オプション）",
+          "配信プレビュー",
+          "配信実行ボタン",
+          "配信履歴一覧",
+          "配信ステータス表示",
+          "配信結果確認"
+        ]
+      },
+      {
+        "id": "scr-1781941295568",
+        "name": "営業成果レポート自動生成",
+        "purpose": "営業活動データから成果指標を集計し、レポートテンプレートに基づいて自動生成・配信するための画面",
+        "items": [
+          "レポート生成期間選択",
+          "対象ユーザー選択",
+          "レポートテンプレート選択",
+          "成果指標フィルター",
+          "顧客企業フィルター",
+          "営業活動データプレビュー",
+          "成約データプレビュー",
+          "生成レポートプレビュー",
+          "配信先メールアドレス入力",
+          "配信スケジュール設定",
+          "即座生成ボタン",
+          "スケジュール生成ボタン"
+        ]
+      },
+      {
+        "id": "scr-1781941321416",
+        "name": "成果指標集計処理",
+        "purpose": "営業活動と成約データから成果指標を自動集計し、レポート生成の基礎データを準備する",
+        "items": [
+          "集計期間開始日",
+          "集計期間終了日",
+          "営業担当者選択",
+          "顧客企業フィルタ",
+          "集計対象指標チェックボックス",
+          "集計実行ボタン",
+          "集計進捗表示",
+          "集計結果プレビュー",
+          "成約件数",
+          "成約金額合計",
+          "平均成約金額",
+          "営業活動件数"
+        ]
+      },
+      {
+        "id": "scr-1781941333717",
+        "name": "レポート生成・フォーマット変換処理",
+        "purpose": "営業成果データを選択してレポートを生成し、複数のフォーマットに変換・出力する",
+        "items": [
+          "期間選択（開始日・終了日）",
+          "営業活動データ選択チェックボックス",
+          "成約データ選択チェックボックス",
+          "成果指標選択チェックボックス",
+          "レポートテンプレート選択ドロップダウン",
+          "出力フォーマット選択（PDF・Excel・CSV）",
+          "顧客企業フィルター",
+          "営業担当者フィルター",
+          "データプレビュー表示エリア",
+          "レポート生成ボタン",
+          "フォーマット変換ボタン",
+          "ダウンロードボタン"
+        ]
+      },
+      {
+        "id": "scr-1781941346318",
+        "name": "レポート確認画面",
+        "purpose": "生成済みレポートの内容を確認し、配信前の最終チェックと配信操作を行う画面",
+        "items": [
+          "レポート一覧テーブル",
+          "レポートタイトル",
+          "生成日時表示",
+          "レポート種別フィルタ",
+          "ステータスフィルタ",
+          "検索ボックス",
+          "レポート内容プレビュー",
+          "営業成果サマリーセクション",
+          "成約件数表示",
+          "売上金額表示",
+          "顧客企業別成果表",
+          "営業活動履歴表"
+        ]
+      },
+      {
+        "id": "scr-1781941359210",
+        "name": "レポート自動配信処理",
+        "purpose": "営業成果レポートを自動生成し、設定されたスケジュールに従って対象ユーザーへ配信する処理を管理・実行する",
+        "items": [
+          "配信スケジュール一覧",
+          "配信対象ユーザー選択",
+          "レポートテンプレート選択",
+          "配信先メールアドレス入力",
+          "配信形式選択（PDF/Excel/HTML）",
+          "配信タイミング設定",
+          "成果指標フィルター",
+          "期間指定（開始日・終了日）",
+          "プレビュー表示",
+          "配信実行ボタン",
+          "配信スケジュール保存",
+          "配信履歴確認"
+        ]
+      },
+      {
+        "id": "scr-1781941371700",
+        "name": "レポート自動生成・配信処理",
+        "purpose": "営業成果レポートの自動生成と配信スケジュール管理、テンプレート設定、配信先指定を行う画面",
+        "items": [
+          "レポートテンプレート選択",
+          "生成対象期間指定",
+          "営業活動フィルター",
+          "顧客企業フィルター",
+          "成約データ抽出条件",
+          "成果指標選択",
+          "配信先ユーザー選択",
+          "配信スケジュール設定",
+          "自動生成頻度設定",
+          "レポート形式選択",
+          "プレビュー表示",
+          "生成実行ボタン"
+        ]
+      },
+      {
+        "id": "scr-1781941385034",
+        "name": "営業成果レポート生成処理",
+        "purpose": "営業活動データから成果レポートを自動生成し、指定ユーザーへ配信するための処理画面",
+        "items": [
+          "レポート生成期間選択",
+          "対象ユーザー選択",
+          "対象顧客企業フィルタ",
+          "レポートテンプレート選択",
+          "成果指標選択チェックボックス",
+          "営業活動データプレビュー",
+          "成約データプレビュー",
+          "生成レポートプレビュー",
+          "配信先メールアドレス入力",
+          "配信スケジュール設定",
+          "即座配信ボタン",
+          "スケジュール配信ボタン"
+        ]
+      }
+    ],
+    "tableDefinitions": [
+      {
+        "tableName": "ユーザー",
+        "purpose": "営業データ品質管理・請求自動化システムのユーザー管理。ユーザー認証、権限管理、監査ログ記録に必要なマスターテーブル",
+        "columns": [
+          {
+            "name": "ユーザーID",
+            "type": "uuid",
+            "required": true,
+            "description": "ユーザーの一意識別子"
+          },
+          {
+            "name": "ユーザー名",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "ログイン用のユーザー名"
+          },
+          {
+            "name": "メールアドレス",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "ユーザーのメールアドレス"
+          },
+          {
+            "name": "パスワードハッシュ",
+            "type": "varchar(255)",
+            "required": true,
+            "description": "ハッシュ化されたパスワード"
+          },
+          {
+            "name": "氏名",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "ユーザーの氏名"
+          },
+          {
+            "name": "部門",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "ユーザーが属する部門"
+          },
+          {
+            "name": "役割",
+            "type": "varchar(50)",
+            "required": true,
+            "description": "ユーザーの役割（管理者/営業/品質管理者/請求担当者等）"
+          },
+          {
+            "name": "ステータス",
+            "type": "varchar(20)",
+            "required": true,
+            "description": "ユーザーステータス（有効/無効/休止）"
+          },
+          {
+            "name": "最終ログイン日時",
+            "type": "timestamp",
+            "required": false,
+            "description": "最後にログインした日時"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "ユーザーレコード作成日時"
+          },
+          {
+            "name": "更新日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "ユーザーレコード最終更新日時"
+          },
+          {
+            "name": "作成者",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "ユーザーレコード作成者"
+          },
+          {
+            "name": "更新者",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "ユーザーレコード最終更新者"
+          }
+        ]
+      },
+      {
+        "tableName": "営業活動",
+        "purpose": "営業担当者の日々の営業活動を記録し、成果レポート生成の基礎データとなるトランザクションテーブル",
+        "columns": [
+          {
+            "name": "営業活動ID",
+            "type": "uuid",
+            "required": true,
+            "description": "営業活動の一意識別子"
+          },
+          {
+            "name": "ユーザーID",
+            "type": "uuid",
+            "required": true,
+            "description": "営業担当者のユーザーID（ユーザーテーブルへの外部キー）"
+          },
+          {
+            "name": "活動日",
+            "type": "timestamp",
+            "required": true,
+            "description": "営業活動が実施された日時"
+          },
+          {
+            "name": "活動種別",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "営業活動の種類（訪問、電話、メール、提案等）"
+          },
+          {
+            "name": "顧客名",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "対象顧客の名称"
+          },
+          {
+            "name": "案件名",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "関連する案件の名称"
+          },
+          {
+            "name": "活動内容",
+            "type": "text",
+            "required": false,
+            "description": "営業活動の詳細内容"
+          },
+          {
+            "name": "成果金額",
+            "type": "integer",
+            "required": false,
+            "description": "この活動に関連する売上金額（円）"
+          },
+          {
+            "name": "成果有無",
+            "type": "boolean",
+            "required": true,
+            "description": "営業活動が成果に結びついたかどうか"
+          },
+          {
+            "name": "次回フォロー予定日",
+            "type": "timestamp",
+            "required": false,
+            "description": "次回のフォローアップ予定日時"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "レコード作成日時"
+          },
+          {
+            "name": "更新日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "レコード最終更新日時"
+          },
+          {
+            "name": "作成者",
+            "type": "uuid",
+            "required": true,
+            "description": "レコード作成者のユーザーID"
+          }
+        ]
+      },
+      {
+        "tableName": "顧客企業",
+        "purpose": "営業成果レポート自動生成・配信システムにおける顧客企業の基本情報を管理し、営業活動の対象企業として機能する",
+        "columns": [
+          {
+            "name": "顧客企業ID",
+            "type": "uuid",
+            "required": true,
+            "description": "顧客企業の一意識別子"
+          },
+          {
+            "name": "企業名",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "顧客企業の正式名称"
+          },
+          {
+            "name": "業種",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "顧客企業の業種分類"
+          },
+          {
+            "name": "所在地",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "顧客企業の本社所在地"
+          },
+          {
+            "name": "代表者名",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "顧客企業の代表者名"
+          },
+          {
+            "name": "電話番号",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "顧客企業の代表電話番号"
+          },
+          {
+            "name": "メールアドレス",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "顧客企業の代表メールアドレス"
+          },
+          {
+            "name": "担当営業ユーザーID",
+            "type": "uuid",
+            "required": true,
+            "description": "ユーザーテーブルへの外部キー（担当営業）"
+          },
+          {
+            "name": "ステータス",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "顧客企業のステータス（見込み客/既存顧客/休止中等）"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "顧客企業レコード作成日時"
+          },
+          {
+            "name": "更新日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "顧客企業レコード最終更新日時"
+          },
+          {
+            "name": "作成者ユーザーID",
+            "type": "uuid",
+            "required": true,
+            "description": "ユーザーテーブルへの外部キー（作成者）"
+          }
+        ]
+      },
+      {
+        "tableName": "成約",
+        "purpose": "営業活動から成約に至った案件を記録し、営業成果レポート生成の基礎データとなるトランザクションテーブル",
+        "columns": [
+          {
+            "name": "成約ID",
+            "type": "uuid",
+            "required": true,
+            "description": "成約レコードの一意識別子"
+          },
+          {
+            "name": "営業活動ID",
+            "type": "uuid",
+            "required": true,
+            "description": "関連する営業活動への外部キー"
+          },
+          {
+            "name": "ユーザーID",
+            "type": "uuid",
+            "required": true,
+            "description": "成約を達成した営業担当者への外部キー"
+          },
+          {
+            "name": "顧客企業ID",
+            "type": "uuid",
+            "required": true,
+            "description": "成約した顧客企業への外部キー"
+          },
+          {
+            "name": "成約金額",
+            "type": "integer",
+            "required": true,
+            "description": "成約時の契約金額（円）"
+          },
+          {
+            "name": "成約日",
+            "type": "timestamp",
+            "required": true,
+            "description": "成約が確定した日時"
+          },
+          {
+            "name": "商品サービス名",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "成約した商品またはサービスの名称"
+          },
+          {
+            "name": "契約期間開始日",
+            "type": "timestamp",
+            "required": false,
+            "description": "契約の開始日"
+          },
+          {
+            "name": "契約期間終了日",
+            "type": "timestamp",
+            "required": false,
+            "description": "契約の終了日"
+          },
+          {
+            "name": "備考",
+            "type": "text",
+            "required": false,
+            "description": "成約に関する追加情報やメモ"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "成約レコード作成日時"
+          },
+          {
+            "name": "更新日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "成約レコード最終更新日時"
+          },
+          {
+            "name": "作成者",
+            "type": "uuid",
+            "required": true,
+            "description": "成約レコードを作成したユーザーID"
+          }
+        ]
+      },
+      {
+        "tableName": "レポートテンプレート",
+        "purpose": "営業成果レポートの自動生成に使用するテンプレート定義を管理。レポート形式、含含める項目、配信先などを定義",
+        "columns": [
+          {
+            "name": "テンプレートID",
+            "type": "uuid",
+            "required": true,
+            "description": "テンプレートの一意識別子"
+          },
+          {
+            "name": "テンプレート名",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "テンプレートの名称（例：月次営業成果レポート）"
+          },
+          {
+            "name": "説明",
+            "type": "text",
+            "required": false,
+            "description": "テンプレートの詳細説明"
+          },
+          {
+            "name": "レポート種別",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "レポートの種類（例：月次、週次、日次、カスタム）"
+          },
+          {
+            "name": "対象ユーザーID",
+            "type": "uuid",
+            "required": true,
+            "description": "このテンプレートを使用するユーザーID"
+          },
+          {
+            "name": "含含める指標",
+            "type": "text",
+            "required": true,
+            "description": "レポートに含める指標のリスト（カンマ区切り）"
+          },
+          {
+            "name": "フィルター条件",
+            "type": "text",
+            "required": false,
+            "description": "レポート生成時に適用するフィルター条件"
+          },
+          {
+            "name": "配信先メールアドレス",
+            "type": "text",
+            "required": false,
+            "description": "レポート配信先のメールアドレス（複数の場合はカンマ区切り）"
+          },
+          {
+            "name": "配信スケジュール",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "配信スケジュール（例：毎月1日、毎週月曜日）"
+          },
+          {
+            "name": "有効フラグ",
+            "type": "boolean",
+            "required": true,
+            "description": "テンプレートが有効かどうか"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "テンプレート作成日時"
+          },
+          {
+            "name": "更新日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "テンプレート最終更新日時"
+          },
+          {
+            "name": "作成者ID",
+            "type": "uuid",
+            "required": true,
+            "description": "テンプレート作成者のユーザーID"
+          }
+        ]
+      },
+      {
+        "tableName": "生成済みレポート",
+        "purpose": "営業成果レポートの生成履歴を管理し、配信状況、テンプレート適用、生成内容を追跡するためのトランザクションテーブル",
+        "columns": [
+          {
+            "name": "レポートID",
+            "type": "uuid",
+            "required": true,
+            "description": "生成済みレポートの一意識別子"
+          },
+          {
+            "name": "テンプレートID",
+            "type": "uuid",
+            "required": true,
+            "description": "レポートテンプレートテーブルへの外部キー"
+          },
+          {
+            "name": "ユーザーID",
+            "type": "uuid",
+            "required": true,
+            "description": "レポート生成対象のユーザー（営業担当者）"
+          },
+          {
+            "name": "レポート期間開始日",
+            "type": "timestamp",
+            "required": true,
+            "description": "レポート対象期間の開始日時"
+          },
+          {
+            "name": "レポート期間終了日",
+            "type": "timestamp",
+            "required": true,
+            "description": "レポート対象期間の終了日時"
+          },
+          {
+            "name": "生成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "レポートが実際に生成された日時"
+          },
+          {
+            "name": "レポートタイトル",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "生成されたレポートのタイトル"
+          },
+          {
+            "name": "レポート内容",
+            "type": "text",
+            "required": true,
+            "description": "生成されたレポートの本文内容"
+          },
+          {
+            "name": "配信ステータス",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "配信状況（未配信/配信済み/配信失敗等）"
+          },
+          {
+            "name": "配信日時",
+            "type": "timestamp",
+            "required": false,
+            "description": "実際に配信された日時"
+          },
+          {
+            "name": "配信先メールアドレス",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "レポート配信先のメールアドレス"
+          },
+          {
+            "name": "成約件数",
+            "type": "integer",
+            "required": false,
+            "description": "レポート期間内の成約件数"
+          },
+          {
+            "name": "営業活動件数",
+            "type": "integer",
+            "required": false,
+            "description": "レポート期間内の営業活動件数"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "レコード作成日時"
+          },
+          {
+            "name": "更新日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "レコード最終更新日時"
+          },
+          {
+            "name": "作成者ID",
+            "type": "uuid",
+            "required": true,
+            "description": "レポート生成を実行したユーザーID（システムまたは管理者）"
+          }
+        ]
+      },
+      {
+        "tableName": "レポート配信履歴",
+        "purpose": "営業成果レポートの配信実績を記録し、配信状況の追跡、再配信管理、配信パフォーマンス分析を実現する",
+        "columns": [
+          {
+            "name": "配信履歴ID",
+            "type": "uuid",
+            "required": true,
+            "description": "配信履歴の一意識別子"
+          },
+          {
+            "name": "生成済みレポートID",
+            "type": "uuid",
+            "required": true,
+            "description": "生成済みレポートテーブルへの外部キー"
+          },
+          {
+            "name": "配信先ユーザーID",
+            "type": "uuid",
+            "required": true,
+            "description": "ユーザーテーブルへの外部キー、配信対象ユーザー"
+          },
+          {
+            "name": "配信先メールアドレス",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "配信時点のメールアドレス（ユーザー情報変更時の履歴保持用）"
+          },
+          {
+            "name": "配信日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "実際の配信実行日時"
+          },
+          {
+            "name": "配信ステータス",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "配信状況（成功/失敗/保留中/再配信待ち）"
+          },
+          {
+            "name": "配信方法",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "配信チャネル（メール/システム内通知等）"
+          },
+          {
+            "name": "エラーメッセージ",
+            "type": "text",
+            "required": false,
+            "description": "配信失敗時のエラー詳細"
+          },
+          {
+            "name": "開封日時",
+            "type": "timestamp",
+            "required": false,
+            "description": "受信者がレポートを開封した日時"
+          },
+          {
+            "name": "開封フラグ",
+            "type": "boolean",
+            "required": true,
+            "description": "レポートが開封されたかどうか"
+          },
+          {
+            "name": "再配信フラグ",
+            "type": "boolean",
+            "required": true,
+            "description": "再配信対象かどうか"
+          },
+          {
+            "name": "再配信回数",
+            "type": "integer",
+            "required": true,
+            "description": "これまでの再配信実行回数"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "配信履歴レコード作成日時"
+          },
+          {
+            "name": "更新日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "配信履歴レコード最終更新日時"
+          },
+          {
+            "name": "作成者ID",
+            "type": "uuid",
+            "required": true,
+            "description": "配信を実行したユーザーまたはシステムID"
+          }
+        ]
+      },
+      {
+        "tableName": "成果指標",
+        "purpose": "営業成果の定量的な目標値と実績値を管理し、レポート生成時の評価基準となるマスタデータ",
+        "columns": [
+          {
+            "name": "成果指標ID",
+            "type": "uuid",
+            "required": true,
+            "description": "成果指標の一意識別子"
+          },
+          {
+            "name": "指標名",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "成果指標の名称（例：売上高、受注件数、顧客満足度）"
+          },
+          {
+            "name": "指標コード",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "成果指標の一意なコード（例：SALES_REVENUE、ORDER_COUNT）"
+          },
+          {
+            "name": "説明",
+            "type": "text",
+            "required": false,
+            "description": "成果指標の詳細説明"
+          },
+          {
+            "name": "単位",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "測定単位（例：円、件、％）"
+          },
+          {
+            "name": "計算方法",
+            "type": "text",
+            "required": false,
+            "description": "指標の計算ロジック説明"
+          },
+          {
+            "name": "目標値",
+            "type": "integer",
+            "required": false,
+            "description": "期間内の目標値"
+          },
+          {
+            "name": "警告閾値",
+            "type": "integer",
+            "required": false,
+            "description": "警告を発する下限値（目標値に対する達成率など）"
+          },
+          {
+            "name": "表示順序",
+            "type": "integer",
+            "required": false,
+            "description": "レポート内での表示順序"
+          },
+          {
+            "name": "有効フラグ",
+            "type": "boolean",
+            "required": true,
+            "description": "指標が有効かどうか"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "レコード作成日時"
+          },
+          {
+            "name": "更新日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "レコード最終更新日時"
+          },
+          {
+            "name": "作成者",
+            "type": "uuid",
+            "required": true,
+            "description": "作成したユーザーID"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "systemId": "itg-3",
+    "systemName": "契約・提案資料管理システム",
+    "screens": [
+      {
+        "id": "scr-1781943098977",
+        "name": "契約書管理画面",
+        "purpose": "契約書の一覧表示、検索、作成、編集、バージョン管理、変更履歴の追跡を行う業務メイン画面",
+        "items": [
+          "契約書一覧テーブル",
+          "検索・フィルター入力欄",
+          "ステータスフィルター（ドロップダウン）",
+          "契約書新規作成ボタン",
+          "契約書編集ボタン",
+          "契約書削除ボタン",
+          "契約書詳細表示パネル",
+          "バージョン履歴タブ",
+          "変更履歴タブ",
+          "提案資料リンク表示",
+          "ファイルアップロード欄",
+          "ダウンロードボタン"
+        ]
+      },
+      {
+        "id": "scr-1781943112133",
+        "name": "提案資料管理画面",
+        "purpose": "提案資料の作成、編集、バージョン管理、変更履歴の追跡を行い、契約書との関連付けを管理する画面",
+        "items": [
+          "提案資料一覧テーブル",
+          "提案資料検索フィルター",
+          "提案資料新規作成ボタン",
+          "提案資料編集ボタン",
+          "提案資料削除ボタン",
+          "提案資料詳細表示パネル",
+          "バージョン履歴タブ",
+          "バージョン比較ボタン",
+          "変更履歴タイムライン",
+          "契約書関連付けセレクター",
+          "ステータス変更ドロップダウン",
+          "作成者情報表示"
+        ]
+      },
+      {
+        "id": "scr-1781943125510",
+        "name": "バージョン比較画面",
+        "purpose": "契約書または提案資料の複数バージョン間の差分を視覚的に比較し、変更内容を確認する",
+        "items": [
+          "ドキュメント選択ドロップダウン",
+          "比較対象バージョン1選択",
+          "比較対象バージョン2選択",
+          "比較実行ボタン",
+          "左側バージョン表示パネル",
+          "右側バージョン表示パネル",
+          "差分ハイライト表示",
+          "変更箇所一覧",
+          "追加行マーカー",
+          "削除行マーカー",
+          "変更行マーカー",
+          "変更内容詳細表示"
+        ]
+      },
+      {
+        "id": "scr-1781943154204",
+        "name": "資料管理画面でバージョン情報入力",
+        "purpose": "契約書または提案資料の新しいバージョン情報を入力・登録し、変更履歴を管理する",
+        "items": [
+          "資料種別選択（契約書/提案資料）",
+          "資料一覧表示",
+          "バージョン番号入力欄",
+          "バージョンタイトル入力欄",
+          "変更内容説明テキストエリア",
+          "変更者名表示",
+          "変更日時表示",
+          "ファイルアップロード",
+          "ステータス選択（ドラフト/確認中/承認済み）",
+          "タグ/カテゴリ入力",
+          "保存ボタン",
+          "キャンセルボタン"
+        ]
+      },
+      {
+        "id": "scr-1781943166887",
+        "name": "最新版フラグ設定・旧版アーカイブ処理",
+        "purpose": "契約書・提案資料のバージョン管理において、最新版フラグの設定と旧版のアーカイブ処理を一元的に実行する画面",
+        "items": [
+          "対象文書選択フィルター",
+          "文書タイプ選択（契約書/提案資料）",
+          "バージョン一覧表示",
+          "最新版フラグ設定チェックボックス",
+          "現在の最新版表示",
+          "新最新版選択ラジオボタン",
+          "アーカイブ対象バージョン選択",
+          "アーカイブ理由入力欄",
+          "一括選択チェックボックス",
+          "最新版フラグ設定ボタン",
+          "アーカイブ実行ボタン",
+          "キャンセルボタン"
+        ]
+      },
+      {
+        "id": "scr-1781943180410",
+        "name": "資料検索・表示画面",
+        "purpose": "契約書と提案資料を検索・フィルタリングし、詳細情報と変更履歴を表示する",
+        "items": [
+          "検索キーワード入力欄",
+          "資料種別フィルタ（契約書/提案資料）",
+          "ステータスフィルタ",
+          "作成日範囲指定",
+          "担当者フィルタ",
+          "検索実行ボタン",
+          "検索結果一覧表",
+          "資料名",
+          "資料種別",
+          "ステータス",
+          "作成日",
+          "最終更新日"
+        ]
+      },
+      {
+        "id": "scr-1781943194400",
+        "name": "契約・提案資料管理システム連携",
+        "purpose": "契約書と提案資料の一元管理、バージョン管理、変更履歴の追跡を行うシステム",
+        "items": [
+          "契約書一覧表",
+          "提案資料一覧表",
+          "契約書検索フィルター",
+          "提案資料検索フィルター",
+          "契約書新規作成ボタン",
+          "提案資料新規作成ボタン",
+          "契約書詳細表示パネル",
+          "提案資料詳細表示パネル",
+          "バージョン履歴タブ",
+          "変更履歴タブ",
+          "契約書アップロード機能",
+          "提案資料アップロード機能"
+        ]
+      },
+      {
+        "id": "scr-1781943206726",
+        "name": "契約書・提案資料検索画面",
+        "purpose": "契約書と提案資料を統合的に検索・フィルタリングし、バージョン管理と変更履歴を確認できる画面",
+        "items": [
+          "検索キーワード入力欄",
+          "資料種別フィルタ（契約書/提案資料）",
+          "ステータスフィルタ",
+          "作成者フィルタ",
+          "作成日範囲フィルタ",
+          "更新日範囲フィルタ",
+          "検索実行ボタン",
+          "検索条件リセットボタン",
+          "検索結果一覧表",
+          "資料名列",
+          "種別列",
+          "ステータス列"
+        ]
+      },
+      {
+        "id": "scr-1781943220462",
+        "name": "契約・提案資料検索画面",
+        "purpose": "契約書と提案資料を統合的に検索・閲覧し、バージョン管理と変更履歴を確認するための検索画面",
+        "items": [
+          "検索キーワード入力欄",
+          "資料種別フィルタ（契約書/提案資料）",
+          "ステータスフィルタ",
+          "作成者フィルタ",
+          "作成日範囲指定",
+          "更新日範囲指定",
+          "検索実行ボタン",
+          "検索結果一覧表",
+          "資料名列",
+          "種別列",
+          "ステータス列",
+          "作成者列"
+        ]
+      },
+      {
+        "id": "scr-1781943240253",
+        "name": "契約書テンプレート・管理ルール定義",
+        "purpose": "契約書テンプレートの作成・編集と管理ルールの定義を行い、組織全体の契約書管理の標準化と効率化を実現する",
+        "items": [
+          "テンプレート一覧表",
+          "新規テンプレート作成ボタン",
+          "テンプレート名入力欄",
+          "テンプレート説明入力欄",
+          "テンプレートカテゴリ選択",
+          "テンプレート内容エディタ",
+          "必須項目設定チェックボックス",
+          "条件付き項目設定",
+          "承認フロー定義",
+          "承認者割り当て",
+          "管理ルール名入力欄",
+          "ルール適用対象選択"
+        ]
+      },
+      {
+        "id": "scr-1781943255079",
+        "name": "ドキュメント管理画面",
+        "purpose": "契約書と提案資料の一元管理、バージョン管理、変更履歴の追跡を行う画面",
+        "items": [
+          "ドキュメント一覧表",
+          "ドキュメントタイプフィルタ（契約書/提案資料）",
+          "ステータスフィルタ",
+          "検索ボックス",
+          "新規ドキュメント作成ボタン",
+          "ドキュメント詳細表示パネル",
+          "バージョン履歴タブ",
+          "変更履歴タブ",
+          "ドキュメントアップロード機能",
+          "ドキュメントダウンロードボタン",
+          "編集ボタン",
+          "削除ボタン"
+        ]
+      }
+    ],
+    "tableDefinitions": [
+      {
+        "tableName": "ユーザー",
+        "purpose": "営業データ品質管理・請求自動化システムのユーザー管理。ユーザー認証、権限管理、監査ログ記録に必要なマスターテーブル",
+        "columns": [
+          {
+            "name": "ユーザーID",
+            "type": "uuid",
+            "required": true,
+            "description": "ユーザーの一意識別子"
+          },
+          {
+            "name": "ユーザー名",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "ログイン用のユーザー名"
+          },
+          {
+            "name": "メールアドレス",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "ユーザーのメールアドレス"
+          },
+          {
+            "name": "パスワードハッシュ",
+            "type": "varchar(255)",
+            "required": true,
+            "description": "ハッシュ化されたパスワード"
+          },
+          {
+            "name": "氏名",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "ユーザーの氏名"
+          },
+          {
+            "name": "部門",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "ユーザーが属する部門"
+          },
+          {
+            "name": "役割",
+            "type": "varchar(50)",
+            "required": true,
+            "description": "ユーザーの役割（管理者/営業/品質管理者/請求担当者等）"
+          },
+          {
+            "name": "ステータス",
+            "type": "varchar(20)",
+            "required": true,
+            "description": "ユーザーステータス（有効/無効/休止）"
+          },
+          {
+            "name": "最終ログイン日時",
+            "type": "timestamp",
+            "required": false,
+            "description": "最後にログインした日時"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "ユーザーレコード作成日時"
+          },
+          {
+            "name": "更新日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "ユーザーレコード最終更新日時"
+          },
+          {
+            "name": "作成者",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "ユーザーレコード作成者"
+          },
+          {
+            "name": "更新者",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "ユーザーレコード最終更新者"
+          }
+        ]
+      },
+      {
+        "tableName": "契約書",
+        "purpose": "契約・提案資料管理システムにおける契約書の基本情報を管理するマスタテーブル",
+        "columns": [
+          {
+            "name": "契約書ID",
+            "type": "uuid",
+            "required": true,
+            "description": "契約書の一意識別子"
+          },
+          {
+            "name": "契約書名",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "契約書のタイトル"
+          },
+          {
+            "name": "契約書説明",
+            "type": "text",
+            "required": false,
+            "description": "契約書の詳細説明"
+          },
+          {
+            "name": "契約種別",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "契約の種類（例：売買契約、サービス契約、NDA等）"
+          },
+          {
+            "name": "契約相手先ID",
+            "type": "uuid",
+            "required": true,
+            "description": "契約相手先企業の識別子"
+          },
+          {
+            "name": "契約開始日",
+            "type": "timestamp",
+            "required": true,
+            "description": "契約の開始日"
+          },
+          {
+            "name": "契約終了日",
+            "type": "timestamp",
+            "required": false,
+            "description": "契約の終了日"
+          },
+          {
+            "name": "契約金額",
+            "type": "integer",
+            "required": false,
+            "description": "契約金額（円）"
+          },
+          {
+            "name": "ステータス",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "契約状態（例：草案、承認待ち、有効、終了、キャンセル）"
+          },
+          {
+            "name": "担当者ID",
+            "type": "uuid",
+            "required": true,
+            "description": "契約の担当ユーザーID"
+          },
+          {
+            "name": "ファイルパス",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "契約書ファイルの保存パス"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "レコード作成日時"
+          },
+          {
+            "name": "更新日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "レコード最終更新日時"
+          },
+          {
+            "name": "作成者ID",
+            "type": "uuid",
+            "required": true,
+            "description": "レコード作成者のユーザーID"
+          }
+        ]
+      },
+      {
+        "tableName": "提案資料",
+        "purpose": "契約・提案資料管理システムにおいて、顧客への提案資料の情報を一元管理し、提案から契約への進捗を追跡するためのマスタテーブル",
+        "columns": [
+          {
+            "name": "提案資料ID",
+            "type": "uuid",
+            "required": true,
+            "description": "提案資料の一意識別子"
+          },
+          {
+            "name": "提案資料名",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "提案資料のタイトル・名称"
+          },
+          {
+            "name": "説明",
+            "type": "text",
+            "required": false,
+            "description": "提案資料の詳細説明"
+          },
+          {
+            "name": "ユーザーID",
+            "type": "uuid",
+            "required": true,
+            "description": "提案資料を作成・管理するユーザーの外部キー"
+          },
+          {
+            "name": "ステータス",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "提案資料のステータス（下書き、提案中、承認待ち、契約済み、却下等）"
+          },
+          {
+            "name": "提案日",
+            "type": "timestamp",
+            "required": true,
+            "description": "顧客への提案実施日時"
+          },
+          {
+            "name": "契約書ID",
+            "type": "uuid",
+            "required": false,
+            "description": "関連する契約書の外部キー（契約成立時に設定）"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "提案資料レコードの作成日時"
+          },
+          {
+            "name": "更新日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "提案資料レコードの最終更新日時"
+          },
+          {
+            "name": "作成者ID",
+            "type": "uuid",
+            "required": true,
+            "description": "提案資料を作成したユーザーの外部キー"
+          }
+        ]
+      },
+      {
+        "tableName": "契約書バージョン",
+        "purpose": "契約書の版管理。同一契約書の複数バージョンを追跡し、変更履歴と承認状況を記録する。",
+        "columns": [
+          {
+            "name": "バージョンID",
+            "type": "uuid",
+            "required": true,
+            "description": "バージョンレコードの一意識別子"
+          },
+          {
+            "name": "契約書ID",
+            "type": "uuid",
+            "required": true,
+            "description": "親契約書テーブルへの外部キー"
+          },
+          {
+            "name": "バージョン番号",
+            "type": "integer",
+            "required": true,
+            "description": "同一契約書内での版番号（1, 2, 3...）"
+          },
+          {
+            "name": "ファイルパス",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "契約書ドキュメントの保存先パスまたはURL"
+          },
+          {
+            "name": "変更内容",
+            "type": "text",
+            "required": false,
+            "description": "前バージョンからの変更点の説明"
+          },
+          {
+            "name": "ステータス",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "バージョンの状態（下書き/レビュー中/承認済み/却下等）"
+          },
+          {
+            "name": "作成者ID",
+            "type": "uuid",
+            "required": true,
+            "description": "ユーザーテーブルへの外部キー。バージョン作成者"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "バージョン作成日時"
+          },
+          {
+            "name": "更新日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "バージョン最終更新日時"
+          },
+          {
+            "name": "承認者ID",
+            "type": "uuid",
+            "required": false,
+            "description": "ユーザーテーブルへの外部キー。承認実施者"
+          },
+          {
+            "name": "承認日時",
+            "type": "timestamp",
+            "required": false,
+            "description": "承認実施日時"
+          }
+        ]
+      },
+      {
+        "tableName": "提案資料バージョン",
+        "purpose": "提案資料の変更履歴を管理し、各バージョンの内容、ステータス、作成者を追跡する",
+        "columns": [
+          {
+            "name": "バージョンID",
+            "type": "uuid",
+            "required": true,
+            "description": "提案資料バージョンの一意識別子"
+          },
+          {
+            "name": "提案資料ID",
+            "type": "uuid",
+            "required": true,
+            "description": "親の提案資料を参照する外部キー"
+          },
+          {
+            "name": "バージョン番号",
+            "type": "integer",
+            "required": true,
+            "description": "提案資料内での連番（1, 2, 3...）"
+          },
+          {
+            "name": "タイトル",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "このバージョンの提案資料タイトル"
+          },
+          {
+            "name": "内容",
+            "type": "text",
+            "required": true,
+            "description": "提案資料の本文・詳細内容"
+          },
+          {
+            "name": "ステータス",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "バージョンのステータス（下書き、承認待ち、承認済み、却下等）"
+          },
+          {
+            "name": "作成者ID",
+            "type": "uuid",
+            "required": true,
+            "description": "このバージョンを作成したユーザーを参照する外部キー"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "バージョンの作成日時"
+          },
+          {
+            "name": "更新日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "バージョンの最終更新日時"
+          },
+          {
+            "name": "備考",
+            "type": "text",
+            "required": false,
+            "description": "このバージョンの変更内容や特記事項"
+          }
+        ]
+      },
+      {
+        "tableName": "変更履歴",
+        "purpose": "契約書と提案資料の変更内容を追跡・監査するための履歴管理テーブル",
+        "columns": [
+          {
+            "name": "変更履歴ID",
+            "type": "uuid",
+            "required": true,
+            "description": "変更履歴レコードの一意識別子"
+          },
+          {
+            "name": "対象テーブル",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "変更対象のテーブル名（契約書 または 提案資料）"
+          },
+          {
+            "name": "対象ID",
+            "type": "uuid",
+            "required": true,
+            "description": "変更対象レコードのID（契約書ID または 提案資料ID）"
+          },
+          {
+            "name": "変更種別",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "変更の種類（作成/更新/削除/ステータス変更 等）"
+          },
+          {
+            "name": "変更フィールド",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "変更されたフィールド名"
+          },
+          {
+            "name": "変更前値",
+            "type": "text",
+            "required": false,
+            "description": "変更前の値"
+          },
+          {
+            "name": "変更後値",
+            "type": "text",
+            "required": false,
+            "description": "変更後の値"
+          },
+          {
+            "name": "変更理由",
+            "type": "text",
+            "required": false,
+            "description": "変更の理由・備考"
+          },
+          {
+            "name": "作成者ID",
+            "type": "uuid",
+            "required": true,
+            "description": "変更を実施したユーザーID"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "変更が記録された日時"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "systemId": "itg-4",
+    "systemName": "顧客企業向け契約・成果管理ポータル",
+    "screens": [
+      {
+        "id": "scr-1781943451070",
+        "name": "契約管理ダッシュボード",
+        "purpose": "顧客企業の契約状況、成果物納期、請求状況を一元管理し、契約進捗と変更履歴を可視化するダッシュボード",
+        "items": [
+          "契約サマリーウィジェット",
+          "契約ステータス別集計",
+          "進行中の契約一覧",
+          "成果物納期カレンダー",
+          "納期超過アラート",
+          "請求書ステータス",
+          "未払い請求書リスト",
+          "契約変更履歴タイムライン",
+          "納期変更履歴",
+          "メール送受信履歴",
+          "通知履歴",
+          "契約詳細表示ボタン"
+        ]
+      },
+      {
+        "id": "scr-1781943467582-dnh7",
+        "name": "契約書・提案資料検索画面",
+        "purpose": "契約書と提案資料を統合的に検索・フィルタリングし、バージョン管理と変更履歴を確認できる画面",
+        "items": [
+          "検索キーワード入力欄",
+          "資料種別フィルタ（契約書/提案資料）",
+          "ステータスフィルタ",
+          "作成者フィルタ",
+          "作成日範囲フィルタ",
+          "更新日範囲フィルタ",
+          "検索実行ボタン",
+          "検索条件リセットボタン",
+          "検索結果一覧表",
+          "資料名列",
+          "種別列",
+          "ステータス列"
+        ]
+      },
+      {
+        "id": "scr-1781943478690",
+        "name": "契約情報詳細・変更管理",
+        "purpose": "顧客企業との契約情報を表示・管理し、契約変更履歴を追跡・承認するための画面",
+        "items": [
+          "契約書基本情報表示エリア",
+          "契約ID",
+          "顧客企業名",
+          "契約開始日",
+          "契約終了日",
+          "契約金額",
+          "契約ステータス",
+          "提案資料リンク",
+          "成果物一覧タブ",
+          "成果物名",
+          "成果物納期",
+          "成果物ステータス"
+        ]
+      },
+      {
+        "id": "scr-1781943494360",
+        "name": "成果物納期管理・変更",
+        "purpose": "契約に紐づく成果物の納期を管理し、納期変更の申請・承認・履歴管理を行う画面",
+        "items": [
+          "契約検索フィルター",
+          "契約一覧テーブル",
+          "成果物一覧テーブル",
+          "現在の納期表示",
+          "新しい納期入力欄",
+          "変更理由入力欄",
+          "納期変更申請ボタン",
+          "変更承認ボタン",
+          "変更却下ボタン",
+          "納期変更履歴テーブル",
+          "変更ステータス表示",
+          "承認者情報表示"
+        ]
+      },
+      {
+        "id": "scr-1781943508935",
+        "name": "請求書・メール履歴検索・参照",
+        "purpose": "顧客企業の請求書とメール履歴を検索・参照し、契約に関連する請求情報と通信履歴を一元管理する",
+        "items": [
+          "顧客企業選択ドロップダウン",
+          "契約書選択ドロップダウン",
+          "請求書検索フィールド",
+          "請求日範囲指定（開始日）",
+          "請求日範囲指定（終了日）",
+          "請求ステータスフィルタ",
+          "請求金額範囲指定",
+          "メール履歴検索フィールド",
+          "メール送信日範囲指定（開始日）",
+          "メール送信日範囲指定（終了日）",
+          "メール種別フィルタ",
+          "送信者フィルタ"
+        ]
+      },
+      {
+        "id": "scr-1781943534271",
+        "name": "顧客ポータルへ請求書・成果データ配信処理",
+        "purpose": "契約に紐づく請求書と成果物データを顧客ポータルへ配信し、顧客企業が確認・ダウンロードできるようにする",
+        "items": [
+          "配信対象契約選択",
+          "請求書一覧表示",
+          "成果物一覧表示",
+          "配信対象顧客企業選択",
+          "配信対象ユーザー選択",
+          "請求書チェックボックス",
+          "成果物チェックボックス",
+          "配信日時指定",
+          "メール通知設定",
+          "配信内容プレビュー",
+          "配信実行ボタン",
+          "配信履歴表示"
+        ]
+      },
+      {
+        "id": "scr-1781943547720",
+        "name": "ポータル自動掲載機能",
+        "purpose": "顧客企業向けポータルに契約情報・成果物・請求書などを自動掲載し、リアルタイムで情報を共有・管理する機能",
+        "items": [
+          "自動掲載設定パネル",
+          "掲載対象契約選択",
+          "掲載対象成果物選択",
+          "掲載対象請求書選択",
+          "自動更新スケジュール設定",
+          "掲載開始日時指定",
+          "掲載終了日時指定",
+          "公開範囲設定",
+          "顧客企業別掲載設定",
+          "掲載プレビュー",
+          "掲載ステータス表示",
+          "自動掲載ログ"
+        ]
+      },
+      {
+        "id": "scr-1781943562664",
+        "name": "契約・成果管理ポータル画面",
+        "purpose": "顧客企業が契約情報と成果物の進捗状況を一元管理し、納期や請求情報を確認するためのポータル",
+        "items": [
+          "契約一覧テーブル",
+          "契約検索フィルター",
+          "契約ステータス表示",
+          "契約詳細表示ボタン",
+          "成果物進捗ダッシュボード",
+          "成果物一覧テーブル",
+          "納期管理カレンダー",
+          "納期変更履歴表示",
+          "請求書一覧テーブル",
+          "請求書ダウンロードボタン",
+          "提案資料表示エリア",
+          "メール履歴表示"
+        ]
+      },
+      {
+        "id": "scr-1781943575554",
+        "name": "対応履歴更新処理",
+        "purpose": "顧客企業との対応内容を記録・更新し、契約管理と成果物納期管理に関連する対応履歴を一元管理する",
+        "items": [
+          "顧客企業選択ドロップダウン",
+          "契約書選択ドロップダウン",
+          "対応日時入力フィールド",
+          "対応種別選択ラジオボタン",
+          "対応内容テキストエリア",
+          "関連契約変更履歴チェックボックス",
+          "関連成果物選択マルチセレクト",
+          "納期変更の有無トグルスイッチ",
+          "新納期入力フィールド",
+          "納期変更理由テキストエリア",
+          "請求書関連情報表示エリア",
+          "メール送信チェックボックス"
+        ]
+      },
+      {
+        "id": "scr-1781943590025",
+        "name": "ポータル配信・通知機能",
+        "purpose": "顧客企業向けに契約情報、成果物、請求書などの重要な情報をポータル経由で配信し、メール・通知で顧客に周知する機能",
+        "items": [
+          "通知一覧",
+          "未読通知フィルター",
+          "通知詳細表示",
+          "通知既読マーク",
+          "配信対象企業選択",
+          "配信内容テンプレート選択",
+          "配信スケジュール設定",
+          "配信プレビュー",
+          "配信実行ボタン",
+          "配信履歴一覧",
+          "配信ステータス表示",
+          "メール履歴検索"
+        ]
+      },
+      {
+        "id": "scr-1781943603652",
+        "name": "ポータル上での回答・根拠資料公開",
+        "purpose": "顧客企業に対して契約内容の質問への回答と根拠となる提案資料・契約書を公開し、透明性のある情報共有を実現する",
+        "items": [
+          "質問一覧",
+          "質問詳細表示",
+          "回答内容",
+          "根拠資料リスト",
+          "提案資料ダウンロード",
+          "契約書ダウンロード",
+          "成果物ダウンロード",
+          "納期情報表示",
+          "請求書表示",
+          "回答公開日時",
+          "資料更新履歴",
+          "検索フィルター"
+        ]
+      },
+      {
+        "id": "scr-1781943629577",
+        "name": "ポータル確認画面",
+        "purpose": "顧客企業が契約内容、成果物、請求情報、納期状況を一元的に確認・管理するためのポータル画面",
+        "items": [
+          "ログインユーザー情報表示",
+          "契約一覧テーブル",
+          "契約ステータスフィルター",
+          "提案資料リンク",
+          "成果物一覧テーブル",
+          "成果物納期ステータス表示",
+          "納期変更履歴確認ボタン",
+          "請求書一覧テーブル",
+          "請求書ダウンロードボタン",
+          "契約変更履歴確認ボタン",
+          "メール履歴表示",
+          "通知履歴表示"
+        ]
+      },
+      {
+        "id": "scr-1781943643121",
+        "name": "合意確認入力画面",
+        "purpose": "顧客企業との契約内容に関する合意事項を確認・入力し、契約変更履歴を記録するための画面",
+        "items": [
+          "顧客企業名表示",
+          "契約書選択ドロップダウン",
+          "提案資料参照リンク",
+          "契約内容サマリー表示",
+          "合意事項入力テキストエリア",
+          "成果物一覧表",
+          "納期確認テーブル",
+          "変更内容入力フィールド",
+          "変更理由入力テキストエリア",
+          "請求金額確認欄",
+          "添付ファイルアップロード",
+          "確認チェックボックス"
+        ]
+      }
+    ],
+    "tableDefinitions": [
+      {
+        "tableName": "顧客企業",
+        "purpose": "営業成果レポート自動生成・配信システムにおける顧客企業の基本情報を管理し、営業活動の対象企業として機能する",
+        "columns": [
+          {
+            "name": "顧客企業ID",
+            "type": "uuid",
+            "required": true,
+            "description": "顧客企業の一意識別子"
+          },
+          {
+            "name": "企業名",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "顧客企業の正式名称"
+          },
+          {
+            "name": "業種",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "顧客企業の業種分類"
+          },
+          {
+            "name": "所在地",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "顧客企業の本社所在地"
+          },
+          {
+            "name": "代表者名",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "顧客企業の代表者名"
+          },
+          {
+            "name": "電話番号",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "顧客企業の代表電話番号"
+          },
+          {
+            "name": "メールアドレス",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "顧客企業の代表メールアドレス"
+          },
+          {
+            "name": "担当営業ユーザーID",
+            "type": "uuid",
+            "required": true,
+            "description": "ユーザーテーブルへの外部キー（担当営業）"
+          },
+          {
+            "name": "ステータス",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "顧客企業のステータス（見込み客/既存顧客/休止中等）"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "顧客企業レコード作成日時"
+          },
+          {
+            "name": "更新日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "顧客企業レコード最終更新日時"
+          },
+          {
+            "name": "作成者ユーザーID",
+            "type": "uuid",
+            "required": true,
+            "description": "ユーザーテーブルへの外部キー（作成者）"
+          }
+        ]
+      },
+      {
+        "tableName": "契約書",
+        "purpose": "契約・提案資料管理システムにおける契約書の基本情報を管理するマスタテーブル",
+        "columns": [
+          {
+            "name": "契約書ID",
+            "type": "uuid",
+            "required": true,
+            "description": "契約書の一意識別子"
+          },
+          {
+            "name": "契約書名",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "契約書のタイトル"
+          },
+          {
+            "name": "契約書説明",
+            "type": "text",
+            "required": false,
+            "description": "契約書の詳細説明"
+          },
+          {
+            "name": "契約種別",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "契約の種類（例：売買契約、サービス契約、NDA等）"
+          },
+          {
+            "name": "契約相手先ID",
+            "type": "uuid",
+            "required": true,
+            "description": "契約相手先企業の識別子"
+          },
+          {
+            "name": "契約開始日",
+            "type": "timestamp",
+            "required": true,
+            "description": "契約の開始日"
+          },
+          {
+            "name": "契約終了日",
+            "type": "timestamp",
+            "required": false,
+            "description": "契約の終了日"
+          },
+          {
+            "name": "契約金額",
+            "type": "integer",
+            "required": false,
+            "description": "契約金額（円）"
+          },
+          {
+            "name": "ステータス",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "契約状態（例：草案、承認待ち、有効、終了、キャンセル）"
+          },
+          {
+            "name": "担当者ID",
+            "type": "uuid",
+            "required": true,
+            "description": "契約の担当ユーザーID"
+          },
+          {
+            "name": "ファイルパス",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "契約書ファイルの保存パス"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "レコード作成日時"
+          },
+          {
+            "name": "更新日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "レコード最終更新日時"
+          },
+          {
+            "name": "作成者ID",
+            "type": "uuid",
+            "required": true,
+            "description": "レコード作成者のユーザーID"
+          }
+        ]
+      },
+      {
+        "tableName": "提案資料",
+        "purpose": "契約・提案資料管理システムにおいて、顧客への提案資料の情報を一元管理し、提案から契約への進捗を追跡するためのマスタテーブル",
+        "columns": [
+          {
+            "name": "提案資料ID",
+            "type": "uuid",
+            "required": true,
+            "description": "提案資料の一意識別子"
+          },
+          {
+            "name": "提案資料名",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "提案資料のタイトル・名称"
+          },
+          {
+            "name": "説明",
+            "type": "text",
+            "required": false,
+            "description": "提案資料の詳細説明"
+          },
+          {
+            "name": "ユーザーID",
+            "type": "uuid",
+            "required": true,
+            "description": "提案資料を作成・管理するユーザーの外部キー"
+          },
+          {
+            "name": "ステータス",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "提案資料のステータス（下書き、提案中、承認待ち、契約済み、却下等）"
+          },
+          {
+            "name": "提案日",
+            "type": "timestamp",
+            "required": true,
+            "description": "顧客への提案実施日時"
+          },
+          {
+            "name": "契約書ID",
+            "type": "uuid",
+            "required": false,
+            "description": "関連する契約書の外部キー（契約成立時に設定）"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "提案資料レコードの作成日時"
+          },
+          {
+            "name": "更新日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "提案資料レコードの最終更新日時"
+          },
+          {
+            "name": "作成者ID",
+            "type": "uuid",
+            "required": true,
+            "description": "提案資料を作成したユーザーの外部キー"
+          }
+        ]
+      },
+      {
+        "tableName": "契約",
+        "purpose": "顧客企業との契約情報を一元管理し、契約の締結、更新、ステータス追跡、成果管理を支援するマスタテーブル",
+        "columns": [
+          {
+            "name": "契約ID",
+            "type": "uuid",
+            "required": true,
+            "description": "契約の一意識別子"
+          },
+          {
+            "name": "顧客企業ID",
+            "type": "uuid",
+            "required": true,
+            "description": "顧客企業テーブルへの外部キー"
+          },
+          {
+            "name": "契約書ID",
+            "type": "uuid",
+            "required": false,
+            "description": "契約書テーブルへの外部キー"
+          },
+          {
+            "name": "提案資料ID",
+            "type": "uuid",
+            "required": false,
+            "description": "提案資料テーブルへの外部キー"
+          },
+          {
+            "name": "契約名",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "契約の名称"
+          },
+          {
+            "name": "契約ステータス",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "契約状態（提案中/承認待ち/契約済/完了/終了等）"
+          },
+          {
+            "name": "契約開始日",
+            "type": "timestamp",
+            "required": true,
+            "description": "契約の開始日"
+          },
+          {
+            "name": "契約終了日",
+            "type": "timestamp",
+            "required": true,
+            "description": "契約の終了日"
+          },
+          {
+            "name": "契約金額",
+            "type": "integer",
+            "required": true,
+            "description": "契約金額（円）"
+          },
+          {
+            "name": "契約内容",
+            "type": "text",
+            "required": false,
+            "description": "契約の詳細内容"
+          },
+          {
+            "name": "成果目標",
+            "type": "text",
+            "required": false,
+            "description": "契約に基づく成果目標"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "契約レコード作成日時"
+          },
+          {
+            "name": "更新日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "契約レコード最終更新日時"
+          },
+          {
+            "name": "作成者",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "契約レコード作成者"
+          },
+          {
+            "name": "更新者",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "契約レコード最終更新者"
+          }
+        ]
+      },
+      {
+        "tableName": "契約変更履歴",
+        "purpose": "契約の変更内容を時系列で記録し、変更前後の状態を追跡管理するための履歴テーブル",
+        "columns": [
+          {
+            "name": "変更履歴ID",
+            "type": "uuid",
+            "required": true,
+            "description": "変更履歴レコードの一意識別子"
+          },
+          {
+            "name": "契約ID",
+            "type": "uuid",
+            "required": true,
+            "description": "変更対象の契約を特定するための外部キー"
+          },
+          {
+            "name": "変更種別",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "変更の種類（金額変更、期間延長、条件変更、解除等）"
+          },
+          {
+            "name": "変更前値",
+            "type": "text",
+            "required": false,
+            "description": "変更前の値または状態"
+          },
+          {
+            "name": "変更後値",
+            "type": "text",
+            "required": false,
+            "description": "変更後の値または状態"
+          },
+          {
+            "name": "変更理由",
+            "type": "text",
+            "required": false,
+            "description": "変更の理由や背景"
+          },
+          {
+            "name": "変更ステータス",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "変更の状態（申請中、承認済、却下、実行済等）"
+          },
+          {
+            "name": "申請者ID",
+            "type": "uuid",
+            "required": true,
+            "description": "変更を申請したユーザーの識別子"
+          },
+          {
+            "name": "承認者ID",
+            "type": "uuid",
+            "required": false,
+            "description": "変更を承認したユーザーの識別子"
+          },
+          {
+            "name": "承認日時",
+            "type": "timestamp",
+            "required": false,
+            "description": "変更が承認された日時"
+          },
+          {
+            "name": "実行日時",
+            "type": "timestamp",
+            "required": false,
+            "description": "変更が実際に反映された日時"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "変更履歴レコードが作成された日時"
+          },
+          {
+            "name": "更新日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "変更履歴レコードが最後に更新された日時"
+          },
+          {
+            "name": "備考",
+            "type": "text",
+            "required": false,
+            "description": "その他の補足情報"
+          }
+        ]
+      },
+      {
+        "tableName": "成果物",
+        "purpose": "顧客企業向け契約に基づいて納品される成果物の管理。納品状況、品質、変更履歴を追跡し、契約の履行状況を把握するための中核テーブル",
+        "columns": [
+          {
+            "name": "成果物ID",
+            "type": "uuid",
+            "required": true,
+            "description": "成果物の一意識別子"
+          },
+          {
+            "name": "契約ID",
+            "type": "uuid",
+            "required": true,
+            "description": "親契約への外部キー"
+          },
+          {
+            "name": "成果物名",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "成果物の名称"
+          },
+          {
+            "name": "説明",
+            "type": "text",
+            "required": false,
+            "description": "成果物の詳細説明"
+          },
+          {
+            "name": "ステータス",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "成果物の状態（計画中/進行中/完了/承認待ち/却下等）"
+          },
+          {
+            "name": "納期",
+            "type": "timestamp",
+            "required": true,
+            "description": "予定納期"
+          },
+          {
+            "name": "実納期",
+            "type": "timestamp",
+            "required": false,
+            "description": "実際の納期"
+          },
+          {
+            "name": "品質評価",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "品質評価結果（合格/不合格/要修正等）"
+          },
+          {
+            "name": "顧客承認状況",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "顧客による承認状況（未承認/承認/却下）"
+          },
+          {
+            "name": "顧客承認日時",
+            "type": "timestamp",
+            "required": false,
+            "description": "顧客が承認した日時"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "成果物レコード作成日時"
+          },
+          {
+            "name": "更新日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "成果物レコード最終更新日時"
+          },
+          {
+            "name": "作成者",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "成果物を作成したユーザー"
+          },
+          {
+            "name": "更新者",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "成果物を最後に更新したユーザー"
+          }
+        ]
+      },
+      {
+        "tableName": "成果物納期",
+        "purpose": "成果物の納期管理と進捗追跡を行い、契約上の納期義務を履行するための基本台帳",
+        "columns": [
+          {
+            "name": "成果物納期ID",
+            "type": "uuid",
+            "required": true,
+            "description": "成果物納期レコードの一意識別子"
+          },
+          {
+            "name": "成果物ID",
+            "type": "uuid",
+            "required": true,
+            "description": "成果物テーブルへの外部キー"
+          },
+          {
+            "name": "契約ID",
+            "type": "uuid",
+            "required": true,
+            "description": "契約テーブルへの外部キー"
+          },
+          {
+            "name": "顧客企業ID",
+            "type": "uuid",
+            "required": true,
+            "description": "顧客企業テーブルへの外部キー"
+          },
+          {
+            "name": "予定納期日",
+            "type": "timestamp",
+            "required": true,
+            "description": "契約で定められた成果物の納期予定日"
+          },
+          {
+            "name": "実績納期日",
+            "type": "timestamp",
+            "required": false,
+            "description": "実際に成果物が納期された日付"
+          },
+          {
+            "name": "納期ステータス",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "納期状況（予定通り/遅延/完了等）"
+          },
+          {
+            "name": "遅延日数",
+            "type": "integer",
+            "required": false,
+            "description": "予定納期からの遅延日数（負数は早期納期）"
+          },
+          {
+            "name": "遅延理由",
+            "type": "text",
+            "required": false,
+            "description": "納期遅延が発生した場合の理由"
+          },
+          {
+            "name": "納期変更履歴ID",
+            "type": "uuid",
+            "required": false,
+            "description": "契約変更履歴テーブルへの外部キー（納期変更がある場合）"
+          },
+          {
+            "name": "備考",
+            "type": "text",
+            "required": false,
+            "description": "納期に関する追加情報やメモ"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "レコード作成日時"
+          },
+          {
+            "name": "更新日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "レコード最終更新日時"
+          },
+          {
+            "name": "作成者",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "レコード作成者のユーザーID"
+          },
+          {
+            "name": "更新者",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "レコード最終更新者のユーザーID"
+          }
+        ]
+      },
+      {
+        "tableName": "納期変更履歴",
+        "purpose": "成果物の納期変更を履歴として記録し、変更の経緯、理由、承認状況を管理するテーブル",
+        "columns": [
+          {
+            "name": "納期変更履歴ID",
+            "type": "uuid",
+            "required": true,
+            "description": "納期変更履歴の一意識別子"
+          },
+          {
+            "name": "成果物納期ID",
+            "type": "uuid",
+            "required": true,
+            "description": "成果物納期テーブルへの外部キー"
+          },
+          {
+            "name": "契約ID",
+            "type": "uuid",
+            "required": true,
+            "description": "契約テーブルへの外部キー"
+          },
+          {
+            "name": "変更前納期",
+            "type": "timestamp",
+            "required": true,
+            "description": "変更前の納期日時"
+          },
+          {
+            "name": "変更後納期",
+            "type": "timestamp",
+            "required": true,
+            "description": "変更後の納期日時"
+          },
+          {
+            "name": "変更理由",
+            "type": "text",
+            "required": true,
+            "description": "納期変更の理由"
+          },
+          {
+            "name": "承認状況",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "承認状況（申請中/承認/却下）"
+          },
+          {
+            "name": "承認者ID",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "承認者のユーザーID"
+          },
+          {
+            "name": "承認日時",
+            "type": "timestamp",
+            "required": false,
+            "description": "承認日時"
+          },
+          {
+            "name": "承認コメント",
+            "type": "text",
+            "required": false,
+            "description": "承認時のコメント"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "変更申請の作成日時"
+          },
+          {
+            "name": "作成者",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "変更申請の作成者ユーザーID"
+          },
+          {
+            "name": "更新日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "最終更新日時"
+          }
+        ]
+      },
+      {
+        "tableName": "請求書",
+        "purpose": "顧客企業への請求書を管理し、契約に基づく成果物納期と請求内容を紐付け、請求状況を追跡するトランザクションテーブル",
+        "columns": [
+          {
+            "name": "請求書ID",
+            "type": "uuid",
+            "required": true,
+            "description": "請求書の一意識別子"
+          },
+          {
+            "name": "顧客企業ID",
+            "type": "uuid",
+            "required": true,
+            "description": "請求対象の顧客企業ID（顧客企業テーブルへの外部キー）"
+          },
+          {
+            "name": "契約ID",
+            "type": "uuid",
+            "required": true,
+            "description": "請求対象の契約ID（契約テーブルへの外部キー）"
+          },
+          {
+            "name": "請求書番号",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "請求書の一意な番号（顧客向け表示用）"
+          },
+          {
+            "name": "請求日",
+            "type": "timestamp",
+            "required": true,
+            "description": "請求書発行日"
+          },
+          {
+            "name": "請求期間開始日",
+            "type": "timestamp",
+            "required": true,
+            "description": "請求対象期間の開始日"
+          },
+          {
+            "name": "請求期間終了日",
+            "type": "timestamp",
+            "required": true,
+            "description": "請求対象期間の終了日"
+          },
+          {
+            "name": "請求金額",
+            "type": "integer",
+            "required": true,
+            "description": "請求総額（税抜き、単位：円）"
+          },
+          {
+            "name": "税額",
+            "type": "integer",
+            "required": true,
+            "description": "消費税額（単位：円）"
+          },
+          {
+            "name": "請求金額合計",
+            "type": "integer",
+            "required": true,
+            "description": "請求総額（税込み、単位：円）"
+          },
+          {
+            "name": "請求ステータス",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "請求状況（未送付/送付済/支払済/期限超過等）"
+          },
+          {
+            "name": "支払期限日",
+            "type": "timestamp",
+            "required": true,
+            "description": "支払期限日"
+          },
+          {
+            "name": "支払日",
+            "type": "timestamp",
+            "required": false,
+            "description": "実際の支払日（支払済の場合のみ）"
+          },
+          {
+            "name": "備考",
+            "type": "text",
+            "required": false,
+            "description": "請求書に関する備考・特記事項"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "請求書レコード作成日時"
+          },
+          {
+            "name": "更新日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "請求書レコード最終更新日時"
+          },
+          {
+            "name": "作成者",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "請求書を作成したユーザーID"
+          }
+        ]
+      },
+      {
+        "tableName": "メール履歴",
+        "purpose": "顧客企業との契約・成果に関するメール送受信の記録を管理し、コミュニケーション履歴の追跡と監査証跡を提供する",
+        "columns": [
+          {
+            "name": "メール履歴ID",
+            "type": "uuid",
+            "required": true,
+            "description": "メール履歴の一意識別子"
+          },
+          {
+            "name": "顧客企業ID",
+            "type": "uuid",
+            "required": true,
+            "description": "関連する顧客企業への外部キー"
+          },
+          {
+            "name": "契約ID",
+            "type": "uuid",
+            "required": false,
+            "description": "関連する契約への外部キー（契約関連のメールの場合）"
+          },
+          {
+            "name": "成果物ID",
+            "type": "uuid",
+            "required": false,
+            "description": "関連する成果物への外部キー（成果物関連のメールの場合）"
+          },
+          {
+            "name": "請求書ID",
+            "type": "uuid",
+            "required": false,
+            "description": "関連する請求書への外部キー（請求関連のメールの場合）"
+          },
+          {
+            "name": "送信者メールアドレス",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "メール送信者のメールアドレス"
+          },
+          {
+            "name": "受信者メールアドレス",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "メール受信者のメールアドレス"
+          },
+          {
+            "name": "CC",
+            "type": "text",
+            "required": false,
+            "description": "CC対象のメールアドレス（複数の場合はカンマ区切り）"
+          },
+          {
+            "name": "BCC",
+            "type": "text",
+            "required": false,
+            "description": "BCC対象のメールアドレス（複数の場合はカンマ区切り）"
+          },
+          {
+            "name": "件名",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "メールの件名"
+          },
+          {
+            "name": "本文",
+            "type": "text",
+            "required": true,
+            "description": "メール本文"
+          },
+          {
+            "name": "メール種別",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "メールの種別（提案、契約確認、成果物納期通知、請求書送付、変更通知等）"
+          },
+          {
+            "name": "送受信区分",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "送信または受信"
+          },
+          {
+            "name": "送受信日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "メール送受信の日時"
+          },
+          {
+            "name": "添付ファイル有無",
+            "type": "boolean",
+            "required": true,
+            "description": "添付ファイルの有無"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "レコード作成日時"
+          },
+          {
+            "name": "更新日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "レコード更新日時"
+          },
+          {
+            "name": "作成者",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "レコード作成者"
+          }
+        ]
+      },
+      {
+        "tableName": "通知履歴",
+        "purpose": "顧客企業向けポータルで送信した通知の履歴を管理し、通知内容、送信状況、受信者情報を追跡する",
+        "columns": [
+          {
+            "name": "通知履歴ID",
+            "type": "uuid",
+            "required": true,
+            "description": "通知履歴の一意識別子"
+          },
+          {
+            "name": "顧客企業ID",
+            "type": "uuid",
+            "required": true,
+            "description": "通知対象の顧客企業ID（外部キー）"
+          },
+          {
+            "name": "通知タイプ",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "通知の種類（契約更新、成果物納期、請求書発行、契約変更等）"
+          },
+          {
+            "name": "関連エンティティタイプ",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "通知の対象エンティティ種別（契約、成果物、請求書等）"
+          },
+          {
+            "name": "関連エンティティID",
+            "type": "uuid",
+            "required": false,
+            "description": "通知の対象エンティティID"
+          },
+          {
+            "name": "通知タイトル",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "通知のタイトル"
+          },
+          {
+            "name": "通知内容",
+            "type": "text",
+            "required": true,
+            "description": "通知の本文内容"
+          },
+          {
+            "name": "送信方法",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "通知の送信方法（メール、ポータル画面内通知等）"
+          },
+          {
+            "name": "送信状態",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "送信状態（送信済、送信失敗、保留中等）"
+          },
+          {
+            "name": "受信者メールアドレス",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "メール送信の場合の受信者メールアドレス"
+          },
+          {
+            "name": "送信日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "通知の送信日時"
+          },
+          {
+            "name": "既読フラグ",
+            "type": "boolean",
+            "required": true,
+            "description": "ポータル内通知の既読状態"
+          },
+          {
+            "name": "既読日時",
+            "type": "timestamp",
+            "required": false,
+            "description": "ポータル内通知の既読日時"
+          },
+          {
+            "name": "送信失敗理由",
+            "type": "text",
+            "required": false,
+            "description": "送信失敗時のエラー内容"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "通知履歴レコードの作成日時"
+          },
+          {
+            "name": "更新日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "通知履歴レコードの更新日時"
+          }
+        ]
+      },
+      {
+        "tableName": "ログインユーザー",
+        "purpose": "顧客企業向けポータルのログインユーザー管理。ユーザー認証、アクセス制御、監査ログの基盤となる。",
+        "columns": [
+          {
+            "name": "ユーザーID",
+            "type": "uuid",
+            "required": true,
+            "description": "ログインユーザーの一意識別子"
+          },
+          {
+            "name": "顧客企業ID",
+            "type": "uuid",
+            "required": true,
+            "description": "所属する顧客企業への外部キー"
+          },
+          {
+            "name": "メールアドレス",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "ログインID兼連絡先。企業内で一意"
+          },
+          {
+            "name": "ユーザー名",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "ポータル上に表示されるユーザー名"
+          },
+          {
+            "name": "パスワードハッシュ",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "認証用のハッシュ化されたパスワード"
+          },
+          {
+            "name": "ロール",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "ユーザーの権限レベル（管理者/担当者/閲覧者等）"
+          },
+          {
+            "name": "ステータス",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "ユーザーの状態（有効/無効/招待待機等）"
+          },
+          {
+            "name": "最終ログイン日時",
+            "type": "timestamp",
+            "required": false,
+            "description": "最後にログインした日時"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "ユーザーアカウント作成日時"
+          },
+          {
+            "name": "更新日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "ユーザー情報最終更新日時"
+          },
+          {
+            "name": "作成者",
+            "type": "uuid",
+            "required": true,
+            "description": "ユーザーを作成したユーザーID"
+          }
+        ]
+      },
+      {
+        "tableName": "ユーザー権限",
+        "purpose": "ログインユーザーが顧客企業ポータル内で実行可能な操作を制御するための権限管理テーブル。ユーザーごとに契約書閲覧、成果物確認、請求書確認などの権限を付与・管理する。",
+        "columns": [
+          {
+            "name": "ユーザー権限ID",
+            "type": "uuid",
+            "required": true,
+            "description": "ユーザー権限レコードの一意識別子"
+          },
+          {
+            "name": "ログインユーザーID",
+            "type": "uuid",
+            "required": true,
+            "description": "権限を付与されるログインユーザーへの外部キー"
+          },
+          {
+            "name": "顧客企業ID",
+            "type": "uuid",
+            "required": true,
+            "description": "権限が適用される顧客企業への外部キー"
+          },
+          {
+            "name": "権限種別",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "付与する権限の種別（例：契約書閲覧、成果物確認、請求書確認、契約変更申請、通知受信等）"
+          },
+          {
+            "name": "有効フラグ",
+            "type": "boolean",
+            "required": true,
+            "description": "権限が有効か無効かを示すフラグ"
+          },
+          {
+            "name": "権限開始日",
+            "type": "timestamp",
+            "required": false,
+            "description": "権限の有効開始日時"
+          },
+          {
+            "name": "権限終了日",
+            "type": "timestamp",
+            "required": false,
+            "description": "権限の有効終了日時"
+          },
+          {
+            "name": "備考",
+            "type": "text",
+            "required": false,
+            "description": "権限付与の理由や特記事項"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "権限レコード作成日時"
+          },
+          {
+            "name": "作成者",
+            "type": "uuid",
+            "required": true,
+            "description": "権限を作成したユーザーID"
+          },
+          {
+            "name": "更新日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "権限レコード最終更新日時"
+          },
+          {
+            "name": "更新者",
+            "type": "uuid",
+            "required": true,
+            "description": "権限を最後に更新したユーザーID"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "systemId": "itg-5",
+    "systemName": "契約変更・請求検証管理システム",
+    "screens": [
+      {
+        "id": "scr-1781943762164",
+        "name": "契約照合ダッシュボード",
+        "purpose": "契約と請求データを照合し、差異を検出・管理するための統合ダッシュボード",
+        "items": [
+          "契約一覧テーブル",
+          "請求一覧テーブル",
+          "照合ステータスフィルター",
+          "差異検出結果パネル",
+          "契約詳細表示エリア",
+          "請求明細表示エリア",
+          "照合実行ボタン",
+          "差異レポート出力ボタン",
+          "期間指定フィルター",
+          "顧客名検索欄",
+          "契約番号検索欄",
+          "請求番号検索欄"
+        ]
+      },
+      {
+        "id": "scr-1781943775914",
+        "name": "契約変更・履歴検索画面",
+        "purpose": "契約の変更履歴を検索・表示し、請求情報との整合性を検証するための画面",
+        "items": [
+          "検索条件パネル",
+          "契約ID入力欄",
+          "顧客名入力欄",
+          "変更日時範囲指定",
+          "変更種別選択ドロップダウン",
+          "検索ボタン",
+          "リセットボタン",
+          "契約履歴一覧テーブル",
+          "契約ID列",
+          "顧客名列",
+          "変更前内容列",
+          "変更後内容列"
+        ]
+      },
+      {
+        "id": "scr-1781943788704",
+        "name": "請求データ検証画面",
+        "purpose": "請求データの正確性を検証し、契約情報との整合性を確認するための画面",
+        "items": [
+          "請求検索フィルター",
+          "請求ID入力欄",
+          "顧客名検索欄",
+          "契約期間指定",
+          "請求ステータス選択",
+          "請求一覧テーブル",
+          "請求金額表示",
+          "請求明細展開ボタン",
+          "契約情報パネル",
+          "契約内容確認ボタン",
+          "金額差分表示",
+          "差分理由入力欄"
+        ]
+      },
+      {
+        "id": "scr-1781943802266",
+        "name": "時系列照合確認画面",
+        "purpose": "契約変更と請求の時系列データを照合し、矛盾や不整合を検出・確認する画面",
+        "items": [
+          "契約ID検索欄",
+          "顧客名検索欄",
+          "照合期間開始日",
+          "照合期間終了日",
+          "検索ボタン",
+          "契約履歴一覧表",
+          "請求履歴一覧表",
+          "時系列イベント統合ビュー",
+          "不整合フラグ表示",
+          "契約変更日時",
+          "請求発行日時",
+          "金額差分表示"
+        ]
+      },
+      {
+        "id": "scr-1781943815003",
+        "name": "差異検出・調整画面",
+        "purpose": "契約と請求の差異を検出し、調整内容を確認・承認する画面",
+        "items": [
+          "差異検出フィルター",
+          "契約番号検索欄",
+          "顧客名検索欄",
+          "差異タイプ選択（金額差異・数量差異・期間差異）",
+          "差異検出結果テーブル",
+          "契約内容表示パネル",
+          "請求内容表示パネル",
+          "差異詳細情報",
+          "差異原因入力欄",
+          "調整金額入力欄",
+          "調整理由入力欄",
+          "調整方法選択（返金・相殺・次月調整）"
+        ]
+      },
+      {
+        "id": "scr-1781943828980",
+        "name": "請求承認・確定画面",
+        "purpose": "生成された請求内容を確認し、承認または却下を行い、確定処理を実行する画面",
+        "items": [
+          "請求ID",
+          "顧客名",
+          "契約ID",
+          "請求期間",
+          "請求日",
+          "請求金額",
+          "請求明細一覧",
+          "明細項目名",
+          "明細数量",
+          "明細単価",
+          "明細小計",
+          "消費税額"
+        ]
+      },
+      {
+        "id": "scr-1781943844500",
+        "name": "契約変更・請求検証管理システム連携",
+        "purpose": "契約変更と請求情報を一元管理し、システム間のデータ連携と請求検証を行う",
+        "items": [
+          "契約一覧表",
+          "契約検索フィルター",
+          "契約詳細表示パネル",
+          "契約変更申請ボタン",
+          "変更内容入力フォーム",
+          "請求一覧表",
+          "請求検証ボタン",
+          "請求明細表示",
+          "顧客情報パネル",
+          "ユーザー選択ドロップダウン",
+          "契約履歴タイムライン",
+          "データ同期ボタン"
+        ]
+      },
+      {
+        "id": "scr-1781943871827",
+        "name": "契約変更情報入力画面",
+        "purpose": "既存契約の変更内容を入力し、変更履歴を管理・請求に反映させるための画面",
+        "items": [
+          "契約ID検索欄",
+          "顧客名表示",
+          "現在の契約内容表示",
+          "変更種別選択（プラン変更・数量変更・料金変更等）",
+          "新しいプラン選択ドロップダウン",
+          "新しい数量入力欄",
+          "新しい料金入力欄",
+          "変更開始日選択カレンダー",
+          "変更終了日選択カレンダー",
+          "変更理由入力テキストエリア",
+          "請求への反映方法選択（即時反映・次回請求から等）",
+          "添付ファイルアップロード"
+        ]
+      },
+      {
+        "id": "scr-1781943896586",
+        "name": "契約履歴・請求データ検索画面",
+        "purpose": "契約履歴と請求データを検索・閲覧し、顧客の契約変更履歴と請求情報を一元管理する",
+        "items": [
+          "顧客名検索欄",
+          "顧客ID検索欄",
+          "契約ID検索欄",
+          "契約状態フィルター",
+          "契約開始日範囲指定",
+          "契約終了日範囲指定",
+          "請求期間範囲指定",
+          "請求状態フィルター",
+          "金額範囲指定",
+          "検索ボタン",
+          "リセットボタン",
+          "契約履歴テーブル"
+        ]
+      },
+      {
+        "id": "scr-1781943911231",
+        "name": "検証結果記録・承認処理",
+        "purpose": "契約変更と請求内容の検証結果を記録し、承認・却下の処理を実行する画面",
+        "items": [
+          "検証対象契約選択",
+          "検証対象請求選択",
+          "検証ステータス表示",
+          "契約内容確認パネル",
+          "請求明細確認パネル",
+          "検証結果入力欄",
+          "検証コメント入力欄",
+          "検証者名表示",
+          "検証日時表示",
+          "承認ボタン",
+          "却下ボタン",
+          "保留ボタン"
+        ]
+      },
+      {
+        "id": "scr-1781943924387",
+        "name": "請求検証管理画面",
+        "purpose": "契約と請求データを照合し、請求の正確性を検証・管理するための画面",
+        "items": [
+          "請求検証一覧テーブル",
+          "契約番号検索フィールド",
+          "顧客名検索フィールド",
+          "請求期間フィルター",
+          "検証ステータスフィルター",
+          "金額範囲フィルター",
+          "検索実行ボタン",
+          "リセットボタン",
+          "請求詳細表示パネル",
+          "契約内容確認パネル",
+          "請求明細一覧",
+          "契約履歴一覧"
+        ]
+      },
+      {
+        "id": "scr-1781943949929",
+        "name": "契約・割引基準照会画面",
+        "purpose": "契約情報と割引基準を照会し、顧客の契約内容と適用される割引条件を確認する画面",
+        "items": [
+          "顧客検索フィールド",
+          "顧客ID入力欄",
+          "顧客名入力欄",
+          "検索ボタン",
+          "契約一覧テーブル",
+          "契約ID列",
+          "契約開始日列",
+          "契約終了日列",
+          "契約ステータス列",
+          "契約詳細表示ボタン",
+          "割引基準情報パネル",
+          "割引種別"
+        ]
+      },
+      {
+        "id": "scr-1781943962777",
+        "name": "契約書検証・管理画面",
+        "purpose": "契約情報の検証、管理、請求との整合性確認を行う業務メイン画面",
+        "items": [
+          "契約一覧テーブル",
+          "契約検索フィルター",
+          "契約ステータス表示",
+          "契約詳細パネル",
+          "契約書ファイルアップロード",
+          "契約書プレビュー",
+          "検証ルール設定",
+          "検証実行ボタン",
+          "検証結果表示",
+          "エラー・警告リスト",
+          "請求との照合ボタン",
+          "請求明細マッピング表示"
+        ]
+      },
+      {
+        "id": "scr-1781943977121",
+        "name": "請求検証・データ照合機能",
+        "purpose": "契約情報と請求データの整合性を検証し、データの不一致を検出・修正する機能",
+        "items": [
+          "検証対象期間選択",
+          "契約番号検索欄",
+          "顧客名検索欄",
+          "検証実行ボタン",
+          "検証結果一覧表",
+          "契約情報パネル",
+          "請求情報パネル",
+          "不一致項目ハイライト表示",
+          "差分詳細表示",
+          "修正提案表示",
+          "修正承認ボタン",
+          "修正却下ボタン"
+        ]
+      },
+      {
+        "id": "scr-1781943990646",
+        "name": "契約変更内容入力画面",
+        "purpose": "既存契約の変更内容を入力し、変更履歴を管理・請求に反映させるための画面",
+        "items": [
+          "契約ID検索欄",
+          "顧客名表示",
+          "現在の契約内容表示",
+          "変更種別選択（プラン変更・数量変更・オプション追加等）",
+          "新しいプラン選択",
+          "新しい数量入力欄",
+          "オプション追加チェックボックス",
+          "変更開始日付入力",
+          "変更終了日付入力",
+          "変更理由入力欄",
+          "変更前後の料金比較表示",
+          "日割り計算結果表示"
+        ]
+      },
+      {
+        "id": "scr-1781944003252",
+        "name": "変更内容検証・自動確認処理",
+        "purpose": "契約変更の内容を検証し、自動確認ルールに基づいて処理を実行する画面",
+        "items": [
+          "変更申請一覧テーブル",
+          "変更内容詳細表示パネル",
+          "変更前後の比較ビュー",
+          "検証ルール選択ドロップダウン",
+          "自動確認実行ボタン",
+          "手動確認ボタン",
+          "承認ボタン",
+          "却下ボタン",
+          "却下理由入力欄",
+          "検証結果表示エリア",
+          "エラー・警告メッセージ表示",
+          "請求影響度表示"
+        ]
+      },
+      {
+        "id": "scr-1781944017984",
+        "name": "合意確認の自動記録・通知処理",
+        "purpose": "契約変更に関する顧客の合意を自動で記録し、関連ユーザーへ通知する処理を管理する画面",
+        "items": [
+          "合意待ち契約一覧",
+          "契約ID",
+          "顧客名",
+          "変更内容",
+          "合意期限",
+          "合意ステータス",
+          "合意確認ボタン",
+          "合意却下ボタン",
+          "合意詳細表示",
+          "通知先ユーザー一覧",
+          "通知ステータス",
+          "再通知ボタン"
+        ]
+      },
+      {
+        "id": "scr-1781944031600",
+        "name": "契約・請求データ更新処理",
+        "purpose": "契約情報と請求データを一括更新し、変更履歴を管理・検証するための処理画面",
+        "items": [
+          "契約ID検索欄",
+          "顧客名検索欄",
+          "契約ステータス選択",
+          "契約開始日",
+          "契約終了日",
+          "契約金額入力欄",
+          "請求周期選択",
+          "請求金額入力欄",
+          "請求ステータス選択",
+          "請求日付",
+          "請求明細テーブル",
+          "変更内容プレビュー"
+        ]
+      },
+      {
+        "id": "scr-1781944045356",
+        "name": "請求情報承認画面",
+        "purpose": "請求情報の内容を確認し、承認または却下を行う画面",
+        "items": [
+          "請求ID",
+          "顧客名",
+          "契約ID",
+          "請求日",
+          "請求金額",
+          "請求ステータス",
+          "請求明細一覧",
+          "明細項目",
+          "明細金額",
+          "明細説明",
+          "契約内容確認",
+          "契約開始日"
+        ]
+      }
+    ],
+    "tableDefinitions": [
+      {
+        "tableName": "契約",
+        "purpose": "顧客企業との契約情報を一元管理し、契約の締結、更新、ステータス追跡、成果管理を支援するマスタテーブル",
+        "columns": [
+          {
+            "name": "契約ID",
+            "type": "uuid",
+            "required": true,
+            "description": "契約の一意識別子"
+          },
+          {
+            "name": "顧客企業ID",
+            "type": "uuid",
+            "required": true,
+            "description": "顧客企業テーブルへの外部キー"
+          },
+          {
+            "name": "契約書ID",
+            "type": "uuid",
+            "required": false,
+            "description": "契約書テーブルへの外部キー"
+          },
+          {
+            "name": "提案資料ID",
+            "type": "uuid",
+            "required": false,
+            "description": "提案資料テーブルへの外部キー"
+          },
+          {
+            "name": "契約名",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "契約の名称"
+          },
+          {
+            "name": "契約ステータス",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "契約状態（提案中/承認待ち/契約済/完了/終了等）"
+          },
+          {
+            "name": "契約開始日",
+            "type": "timestamp",
+            "required": true,
+            "description": "契約の開始日"
+          },
+          {
+            "name": "契約終了日",
+            "type": "timestamp",
+            "required": true,
+            "description": "契約の終了日"
+          },
+          {
+            "name": "契約金額",
+            "type": "integer",
+            "required": true,
+            "description": "契約金額（円）"
+          },
+          {
+            "name": "契約内容",
+            "type": "text",
+            "required": false,
+            "description": "契約の詳細内容"
+          },
+          {
+            "name": "成果目標",
+            "type": "text",
+            "required": false,
+            "description": "契約に基づく成果目標"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "契約レコード作成日時"
+          },
+          {
+            "name": "更新日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "契約レコード最終更新日時"
+          },
+          {
+            "name": "作成者",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "契約レコード作成者"
+          },
+          {
+            "name": "更新者",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "契約レコード最終更新者"
+          }
+        ]
+      },
+      {
+        "tableName": "ユーザー",
+        "purpose": "営業データ品質管理・請求自動化システムのユーザー管理。ユーザー認証、権限管理、監査ログ記録に必要なマスターテーブル",
+        "columns": [
+          {
+            "name": "ユーザーID",
+            "type": "uuid",
+            "required": true,
+            "description": "ユーザーの一意識別子"
+          },
+          {
+            "name": "ユーザー名",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "ログイン用のユーザー名"
+          },
+          {
+            "name": "メールアドレス",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "ユーザーのメールアドレス"
+          },
+          {
+            "name": "パスワードハッシュ",
+            "type": "varchar(255)",
+            "required": true,
+            "description": "ハッシュ化されたパスワード"
+          },
+          {
+            "name": "氏名",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "ユーザーの氏名"
+          },
+          {
+            "name": "部門",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "ユーザーが属する部門"
+          },
+          {
+            "name": "役割",
+            "type": "varchar(50)",
+            "required": true,
+            "description": "ユーザーの役割（管理者/営業/品質管理者/請求担当者等）"
+          },
+          {
+            "name": "ステータス",
+            "type": "varchar(20)",
+            "required": true,
+            "description": "ユーザーステータス（有効/無効/休止）"
+          },
+          {
+            "name": "最終ログイン日時",
+            "type": "timestamp",
+            "required": false,
+            "description": "最後にログインした日時"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "ユーザーレコード作成日時"
+          },
+          {
+            "name": "更新日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "ユーザーレコード最終更新日時"
+          },
+          {
+            "name": "作成者",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "ユーザーレコード作成者"
+          },
+          {
+            "name": "更新者",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "ユーザーレコード最終更新者"
+          }
+        ]
+      },
+      {
+        "tableName": "契約履歴",
+        "purpose": "契約の変更履歴を記録し、契約変更・請求検証管理システムにおいて変更内容の追跡と監査証跡を提供する",
+        "columns": [
+          {
+            "name": "契約履歴ID",
+            "type": "uuid",
+            "required": true,
+            "description": "契約履歴レコードの一意識別子"
+          },
+          {
+            "name": "契約ID",
+            "type": "uuid",
+            "required": true,
+            "description": "親テーブル「契約」への外部キー"
+          },
+          {
+            "name": "変更種別",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "変更の種類（例：新規作成、更新、キャンセル、更新日変更）"
+          },
+          {
+            "name": "変更前値",
+            "type": "text",
+            "required": false,
+            "description": "変更前の値（JSON形式で複数フィールドを保持する場合はテキスト化）"
+          },
+          {
+            "name": "変更後値",
+            "type": "text",
+            "required": false,
+            "description": "変更後の値（JSON形式で複数フィールドを保持する場合はテキスト化）"
+          },
+          {
+            "name": "変更フィールド名",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "変更されたフィールド名（例：契約金額、開始日、ステータス）"
+          },
+          {
+            "name": "請求検証ステータス",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "この変更に関連する請求検証の状態（例：未検証、検証済み、不一致）"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "履歴レコード作成日時"
+          },
+          {
+            "name": "作成者ID",
+            "type": "uuid",
+            "required": true,
+            "description": "ユーザーテーブルへの外部キー、変更を実施したユーザー"
+          },
+          {
+            "name": "備考",
+            "type": "text",
+            "required": false,
+            "description": "変更に関する追加情報やコメント"
+          }
+        ]
+      },
+      {
+        "tableName": "請求",
+        "purpose": "契約に基づく請求情報を管理し、請求額の検証、支払い状況の追跡、請求履歴の記録を行う",
+        "columns": [
+          {
+            "name": "請求ID",
+            "type": "uuid",
+            "required": true,
+            "description": "請求の一意識別子"
+          },
+          {
+            "name": "契約ID",
+            "type": "uuid",
+            "required": true,
+            "description": "関連する契約の識別子（契約テーブルへの外部キー）"
+          },
+          {
+            "name": "請求年月",
+            "type": "varchar(7)",
+            "required": true,
+            "description": "請求対象の年月（YYYY-MM形式）"
+          },
+          {
+            "name": "請求金額",
+            "type": "integer",
+            "required": true,
+            "description": "請求額（円単位）"
+          },
+          {
+            "name": "請求日",
+            "type": "timestamp",
+            "required": true,
+            "description": "請求を発行した日時"
+          },
+          {
+            "name": "支払期限日",
+            "type": "timestamp",
+            "required": true,
+            "description": "支払い期限"
+          },
+          {
+            "name": "請求ステータス",
+            "type": "varchar(20)",
+            "required": true,
+            "description": "請求状態（未請求/請求済/支払済/延滞/キャンセル）"
+          },
+          {
+            "name": "支払済金額",
+            "type": "integer",
+            "required": false,
+            "description": "実際に支払われた金額（円単位）"
+          },
+          {
+            "name": "支払日",
+            "type": "timestamp",
+            "required": false,
+            "description": "実際の支払い日時"
+          },
+          {
+            "name": "摘要",
+            "type": "text",
+            "required": false,
+            "description": "請求内容の詳細説明や備考"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "請求レコード作成日時"
+          },
+          {
+            "name": "作成者ID",
+            "type": "uuid",
+            "required": true,
+            "description": "請求を作成したユーザーの識別子（ユーザーテーブルへの外部キー）"
+          },
+          {
+            "name": "更新日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "請求レコード最終更新日時"
+          },
+          {
+            "name": "更新者ID",
+            "type": "uuid",
+            "required": true,
+            "description": "請求を最後に更新したユーザーの識別子（ユーザーテーブルへの外部キー）"
+          }
+        ]
+      },
+      {
+        "tableName": "請求明細",
+        "purpose": "請求書に紐付く個別の明細行を管理し、契約内容と実績の対応関係を記録する",
+        "columns": [
+          {
+            "name": "請求明細ID",
+            "type": "uuid",
+            "required": true,
+            "description": "請求明細の一意識別子"
+          },
+          {
+            "name": "請求ID",
+            "type": "uuid",
+            "required": true,
+            "description": "親テーブル(請求)への外部キー"
+          },
+          {
+            "name": "契約ID",
+            "type": "uuid",
+            "required": true,
+            "description": "対象契約への外部キー"
+          },
+          {
+            "name": "契約行ID",
+            "type": "uuid",
+            "required": false,
+            "description": "契約内の特定の行アイテムへの参照（契約に複数行がある場合）"
+          },
+          {
+            "name": "明細種別",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "基本料金/従量料金/追加サービス/調整等の分類"
+          },
+          {
+            "name": "説明",
+            "type": "text",
+            "required": false,
+            "description": "明細の詳細説明"
+          },
+          {
+            "name": "数量",
+            "type": "integer",
+            "required": true,
+            "description": "請求対象の数量"
+          },
+          {
+            "name": "単価",
+            "type": "integer",
+            "required": true,
+            "description": "単位あたりの金額（整数、最小単位は1円）"
+          },
+          {
+            "name": "金額",
+            "type": "integer",
+            "required": true,
+            "description": "数量×単価の合計金額"
+          },
+          {
+            "name": "税率",
+            "type": "integer",
+            "required": false,
+            "description": "適用税率（パーセンテージ、例：10）"
+          },
+          {
+            "name": "税額",
+            "type": "integer",
+            "required": false,
+            "description": "計算された税額"
+          },
+          {
+            "name": "対象期間開始日",
+            "type": "timestamp",
+            "required": false,
+            "description": "この明細が適用される期間の開始日"
+          },
+          {
+            "name": "対象期間終了日",
+            "type": "timestamp",
+            "required": false,
+            "description": "この明細が適用される期間の終了日"
+          },
+          {
+            "name": "検証ステータス",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "未検証/検証済み/差異検出/承認待ち等の状態"
+          },
+          {
+            "name": "差異理由",
+            "type": "text",
+            "required": false,
+            "description": "契約との差異が検出された場合の理由"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "明細の作成日時"
+          },
+          {
+            "name": "更新日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "明細の最終更新日時"
+          },
+          {
+            "name": "作成者",
+            "type": "uuid",
+            "required": true,
+            "description": "作成したユーザーへの外部キー"
+          },
+          {
+            "name": "更新者",
+            "type": "uuid",
+            "required": false,
+            "description": "最後に更新したユーザーへの外部キー"
+          }
+        ]
+      },
+      {
+        "tableName": "顧客",
+        "purpose": "顧客マスタ。契約・請求の対象となる顧客情報を一元管理し、契約変更・請求検証時の顧客属性参照を支援する。",
+        "columns": [
+          {
+            "name": "顧客ID",
+            "type": "uuid",
+            "required": true,
+            "description": "顧客の一意識別子。主キー。"
+          },
+          {
+            "name": "顧客名",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "顧客の正式名称。請求書・契約書に記載される名前。"
+          },
+          {
+            "name": "顧客名カナ",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "顧客名のカナ表記。検索・ソート用。"
+          },
+          {
+            "name": "顧客区分",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "顧客分類。例：法人/個人/代理店。契約・請求ルール判定に使用。"
+          },
+          {
+            "name": "請求先住所",
+            "type": "text",
+            "required": false,
+            "description": "請求書送付先住所。"
+          },
+          {
+            "name": "請求先電話番号",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "請求先の連絡先電話番号。"
+          },
+          {
+            "name": "請求先メールアドレス",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "請求先のメールアドレス。電子請求対応時に使用。"
+          },
+          {
+            "name": "担当者名",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "顧客側の主要担当者名。"
+          },
+          {
+            "name": "支払条件",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "支払期限。例：月末締め翌月末払い。請求検証時に参照。"
+          },
+          {
+            "name": "ステータス",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "顧客ステータス。例：有効/休止/解約。契約・請求対象判定に使用。"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "顧客レコード作成日時。"
+          },
+          {
+            "name": "更新日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "顧客レコード最終更新日時。"
+          },
+          {
+            "name": "作成者",
+            "type": "uuid",
+            "required": true,
+            "description": "顧客レコード作成者のユーザーID。ユーザーテーブルへの外部キー。"
+          },
+          {
+            "name": "更新者",
+            "type": "uuid",
+            "required": true,
+            "description": "顧客レコード最終更新者のユーザーID。ユーザーテーブルへの外部キー。"
+          }
+        ]
+      },
+      {
+        "tableName": "操作ログ",
+        "purpose": "契約変更・請求検証管理システムにおけるユーザーの全操作を記録し、監査証跡とシステム動作の追跡を実現する",
+        "columns": [
+          {
+            "name": "操作ログID",
+            "type": "uuid",
+            "required": true,
+            "description": "操作ログの一意識別子"
+          },
+          {
+            "name": "ユーザーID",
+            "type": "uuid",
+            "required": true,
+            "description": "操作を実行したユーザーの識別子（ユーザーテーブルへの外部キー）"
+          },
+          {
+            "name": "操作種別",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "操作の種類（作成/更新/削除/参照/承認/却下等）"
+          },
+          {
+            "name": "対象テーブル",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "操作対象のテーブル名（契約/請求/請求明細等）"
+          },
+          {
+            "name": "対象レコードID",
+            "type": "uuid",
+            "required": true,
+            "description": "操作対象のレコード識別子"
+          },
+          {
+            "name": "変更前値",
+            "type": "text",
+            "required": false,
+            "description": "更新操作時の変更前の値（JSON形式で複数フィールド対応）"
+          },
+          {
+            "name": "変更後値",
+            "type": "text",
+            "required": false,
+            "description": "更新操作時の変更後の値（JSON形式で複数フィールド対応）"
+          },
+          {
+            "name": "操作理由",
+            "type": "text",
+            "required": false,
+            "description": "操作の理由やコメント"
+          },
+          {
+            "name": "IPアドレス",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "操作を実行したクライアントのIPアドレス"
+          },
+          {
+            "name": "操作日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "操作が実行された日時"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "ログレコードが作成された日時"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "systemId": "itg-1",
+    "systemName": "営業データ品質管理・請求自動化システム",
+    "screens": [
+      {
+        "id": "scr-1781940688155",
+        "name": "営業データ入力・検証画面",
+        "purpose": "営業データの入力、リアルタイム検証、異常検出、および請求対象項目の確認を行う画面",
+        "items": [
+          "営業データ入力フォーム",
+          "顧客名入力欄",
+          "サービス種別選択",
+          "売上金額入力欄",
+          "取引日付ピッカー",
+          "請求対象フラグ",
+          "リアルタイム検証結果表示",
+          "検証ルール適用状況",
+          "異常検出アラート",
+          "データ品質スコア表示",
+          "不足データ警告",
+          "入力値の自動補完候補"
+        ]
+      },
+      {
+        "id": "scr-1781940699943",
+        "name": "営業データ異常検出・確認画面",
+        "purpose": "営業データの異常を検出・表示し、データ品質を確認・承認する画面",
+        "items": [
+          "異常検出結果一覧テーブル",
+          "異常レベルフィルター",
+          "検出日時範囲指定",
+          "顧客名検索欄",
+          "営業担当者フィルター",
+          "異常タイプ分類フィルター",
+          "異常詳細表示パネル",
+          "検証ルール確認ボタン",
+          "異常原因コメント入力欄",
+          "データ修正提案表示",
+          "修正内容確認ボタン",
+          "異常承認ボタン"
+        ]
+      },
+      {
+        "id": "scr-1781940712852",
+        "name": "請求額集計・確認画面",
+        "purpose": "営業データから抽出した請求対象項目を集計し、顧客別・サービス別の請求額を確認・検証するための画面",
+        "items": [
+          "集計期間選択",
+          "顧客フィルター",
+          "サービスフィルター",
+          "データ品質ステータス表示",
+          "請求額集計テーブル",
+          "顧客別請求額サマリー",
+          "サービス別請求額サマリー",
+          "異常検出ログ表示",
+          "不足データ警告バナー",
+          "集計結果エクスポートボタン",
+          "請求額確定ボタン",
+          "修正・調整入力欄"
+        ]
+      },
+      {
+        "id": "scr-1781940724596",
+        "name": "営業データメタデータ管理画面",
+        "purpose": "営業データのメタデータ定義・管理、データ品質ルール設定、検証結果の監視を行う管理画面",
+        "items": [
+          "メタデータ一覧テーブル",
+          "メタデータ新規作成ボタン",
+          "メタデータ編集ボタン",
+          "メタデータ削除ボタン",
+          "データ項目名入力欄",
+          "データ型選択ドロップダウン",
+          "必須フラグチェックボックス",
+          "データ長制限入力欄",
+          "検証ルール設定ボタン",
+          "検証ルール一覧テーブル",
+          "ルール名入力欄",
+          "ルール条件入力欄"
+        ]
+      },
+      {
+        "id": "scr-1781940736575",
+        "name": "月次サマリー生成・確認画面",
+        "purpose": "営業データの月次集計結果を生成・確認し、請求対象データの品質検証を行った上で月次サマリーを確定する",
+        "items": [
+          "対象年月選択",
+          "営業データ読み込み",
+          "データ品質検証結果表示",
+          "異常検出ログ表示",
+          "不足データ通知表示",
+          "顧客別請求集計表",
+          "サービス別請求集計表",
+          "月次サマリープレビュー",
+          "検証ルール適用状況",
+          "データ修正・補正入力欄",
+          "修正履歴表示",
+          "サマリー生成ボタン"
+        ]
+      },
+      {
+        "id": "scr-1781940749476",
+        "name": "データ品質検証結果ダッシュボード",
+        "purpose": "営業データの品質検証結果を可視化し、異常検出ログと不足データを一元管理するダッシュボード",
+        "items": [
+          "検証結果サマリーカード",
+          "全体合格率ゲージ",
+          "検証ルール別合格率チャート",
+          "異常検出ログテーブル",
+          "異常データ件数推移グラフ",
+          "不足データ通知ログテーブル",
+          "検証ルール選択フィルター",
+          "検証対象期間ピッカー",
+          "顧客別品質スコアテーブル",
+          "請求対象項目の検証状況",
+          "データ品質トレンドチャート",
+          "詳細検証結果表示ボタン"
+        ]
+      },
+      {
+        "id": "scr-1781940761242",
+        "name": "不足データ・エラー通知画面",
+        "purpose": "営業データの不足項目とエラーを一元管理し、データ品質問題を迅速に検出・通知・対応するための画面",
+        "items": [
+          "不足データ・エラー一覧テーブル",
+          "エラー種別フィルター",
+          "重要度フィルター",
+          "対象期間選択",
+          "顧客名検索",
+          "営業担当者フィルター",
+          "ステータスフィルター",
+          "エラー詳細表示パネル",
+          "不足項目の詳細情報",
+          "エラー発生日時",
+          "検証ルール名",
+          "推奨対応方法"
+        ]
+      },
+      {
+        "id": "scr-1781940773858",
+        "name": "営業データ品質検証処理",
+        "purpose": "営業データの品質を検証し、異常データを検出・記録して請求対象データの正確性を確保する",
+        "items": [
+          "検証対象期間選択",
+          "営業データ一覧表示",
+          "検証ルール選択",
+          "検証実行ボタン",
+          "リアルタイム検証進捗表示",
+          "異常データ件数サマリー",
+          "異常検出ログ表示",
+          "異常データ詳細ビューア",
+          "異常理由分類フィルタ",
+          "データ品質スコア表示",
+          "不足データ項目リスト",
+          "不足データ通知送信ボタン"
+        ]
+      },
+      {
+        "id": "scr-1781940785933",
+        "name": "請求対象項目抽出処理",
+        "purpose": "営業データから請求対象項目を抽出し、データ品質検証を実施した上で顧客・サービス別に集計する処理画面",
+        "items": [
+          "抽出対象期間選択",
+          "顧客フィルター",
+          "サービスフィルター",
+          "請求対象項目定義一覧",
+          "データ品質検証ルール確認",
+          "異常検出ログ表示",
+          "抽出条件プレビュー",
+          "抽出実行ボタン",
+          "抽出進捗表示",
+          "抽出結果一覧",
+          "顧客請求集計結果",
+          "サービス請求集計結果"
+        ]
+      },
+      {
+        "id": "scr-1781940797608",
+        "name": "顧客ごと・サービスごと請求額自動計算処理",
+        "purpose": "営業データから顧客およびサービス単位で請求額を自動計算し、請求対象項目の検証と集計を行うメイン処理画面",
+        "items": [
+          "計算対象期間選択",
+          "顧客一覧フィルター",
+          "サービス一覧フィルター",
+          "営業データ検証ルール適用",
+          "異常検出ログ確認",
+          "請求対象項目定義確認",
+          "顧客別請求額集計表",
+          "サービス別請求額集計表",
+          "データ品質検証結果表示",
+          "不足データ通知確認",
+          "計算実行ボタン",
+          "計算結果エクスポート"
+        ]
+      },
+      {
+        "id": "scr-1781940809038",
+        "name": "営業データ品質検証画面",
+        "purpose": "営業データの品質を検証し、異常検出ルールに基づいてデータの妥当性を確認、請求対象データの正確性を保証する",
+        "items": [
+          "検証対象期間選択",
+          "営業データ一覧表示",
+          "検証ルール選択フィルター",
+          "データ品質スコア表示",
+          "異常検出結果サマリー",
+          "検証ルール詳細表示",
+          "エラー件数カウンター",
+          "警告件数カウンター",
+          "異常データ詳細ビュー",
+          "異常検出ログ参照",
+          "不足データ通知表示",
+          "請求対象項目チェック状況"
+        ]
+      },
+      {
+        "id": "scr-1781940820681",
+        "name": "データ品質スコア計算処理",
+        "purpose": "営業データの品質スコアを計算し、検証ルールに基づいて異常検出を行い、請求対象データの品質を管理する",
+        "items": [
+          "計算対象期間選択",
+          "営業データ読み込み",
+          "検証ルール適用",
+          "異常検出実行",
+          "品質スコア表示",
+          "スコア内訳詳細",
+          "不足データ一覧",
+          "異常検出ログ表示",
+          "請求対象項目チェック",
+          "顧客別スコア集計",
+          "サービス別スコア集計",
+          "月次サマリー生成"
+        ]
+      },
+      {
+        "id": "scr-1781940832252",
+        "name": "営業データ入力画面",
+        "purpose": "営業データの入力・編集を行い、データ品質検証ルールに基づいた自動検証と異常検出を実施し、請求対象項目の抽出と請求自動化を支援する",
+        "items": [
+          "顧客名入力欄",
+          "顧客ID検索",
+          "サービス種別選択",
+          "売上金額入力欄",
+          "売上日付入力欄",
+          "数量入力欄",
+          "単価入力欄",
+          "請求対象フラグ",
+          "営業担当者選択",
+          "プロジェクト名入力欄",
+          "契約期間開始日",
+          "契約期間終了日"
+        ]
+      },
+      {
+        "id": "scr-1781940846173",
+        "name": "データ品質検証・エラー検出処理",
+        "purpose": "営業データの品質を検証し、エラーと異常を検出・管理するための画面",
+        "items": [
+          "検証対象データ選択",
+          "検証ルール一覧",
+          "検証実行ボタン",
+          "検証進捗表示",
+          "エラー検出結果表示",
+          "異常データ詳細表示",
+          "エラー分類フィルター",
+          "重要度別フィルター",
+          "検証日時範囲指定",
+          "異常検出ログ表示",
+          "不足データ通知一覧",
+          "データ品質スコア表示"
+        ]
+      },
+      {
+        "id": "scr-1781940859451",
+        "name": "修正データ再検証処理",
+        "purpose": "修正された営業データを再検証し、データ品質を確保した上で請求処理へ進める",
+        "items": [
+          "修正データ選択フィルター",
+          "修正対象営業データ一覧表",
+          "検証ルール適用設定",
+          "再検証実行ボタン",
+          "検証進捗バー",
+          "検証結果サマリー",
+          "エラー詳細表示パネル",
+          "異常検出ログ参照",
+          "修正前後の差分表示",
+          "データ品質スコア表示",
+          "請求対象項目チェックリスト",
+          "承認者割り当て欄"
+        ]
+      },
+      {
+        "id": "scr-1781940870338",
+        "name": "営業データ完全性・正確性検証処理",
+        "purpose": "営業データの完全性と正確性を検証し、データ品質を確保した上で請求処理を実行するための画面",
+        "items": [
+          "検証対象期間選択",
+          "営業データ一覧表示",
+          "検証ルール選択",
+          "完全性チェック実行ボタン",
+          "正確性チェック実行ボタン",
+          "異常検出結果表示",
+          "不足データ一覧",
+          "データ品質スコア表示",
+          "検証エラー詳細表示",
+          "修正提案表示",
+          "修正内容入力欄",
+          "修正適用ボタン"
+        ]
+      },
+      {
+        "id": "scr-1781940880972",
+        "name": "請求自動化処理",
+        "purpose": "営業データの品質検証を実施し、検証済みデータから請求対象項目を抽出して顧客・サービス別に自動集計し、請求処理を実行する",
+        "items": [
+          "処理実行日時表示",
+          "営業データ読み込みボタン",
+          "データ品質検証実行ボタン",
+          "検証ルール選択ドロップダウン",
+          "異常検出ログ表示パネル",
+          "検証結果サマリー表示",
+          "不足データ通知一覧",
+          "請求対象項目マッピング確認表",
+          "顧客請求集計プレビュー",
+          "サービス請求集計プレビュー",
+          "請求集計実行ボタン",
+          "月次サマリー生成ボタン"
+        ]
+      },
+      {
+        "id": "scr-1781940893302",
+        "name": "請求ロジック定義・検証画面",
+        "purpose": "営業データから請求対象項目を定義し、請求ロジックの妥当性を検証・テストするための画面",
+        "items": [
+          "請求ロジック一覧テーブル",
+          "新規ロジック作成ボタン",
+          "ロジック編集フォーム",
+          "請求対象項目選択パネル",
+          "条件設定エディタ",
+          "集計ルール定義セクション",
+          "検証ルール適用チェックボックス",
+          "テストデータ選択ドロップダウン",
+          "ロジック検証実行ボタン",
+          "検証結果表示パネル",
+          "異常検出ログビューア",
+          "データ品質スコア表示"
+        ]
+      },
+      {
+        "id": "scr-1781940905547",
+        "name": "請求額自動計算処理",
+        "purpose": "営業データから請求対象項目を抽出し、検証ルールに基づいて請求額を自動計算・集計する",
+        "items": [
+          "計算対象期間選択",
+          "営業データ読み込み",
+          "データ品質検証実行",
+          "異常検出ログ表示",
+          "検証ルール適用確認",
+          "請求対象項目フィルタ",
+          "顧客別集計結果",
+          "サービス別集計結果",
+          "請求額計算結果一覧",
+          "不足データ警告表示",
+          "計算ログ詳細表示",
+          "請求集計確定ボタン"
+        ]
+      },
+      {
+        "id": "scr-1781940916612",
+        "name": "請求書生成・配信処理",
+        "purpose": "営業データの品質検証を実施した上で、請求対象データを集計し、請求書を生成・配信する一連の処理を管理する画面",
+        "items": [
+          "生成対象月選択",
+          "データ品質検証結果表示",
+          "異常検出ログ確認",
+          "不足データ通知一覧",
+          "請求対象項目プレビュー",
+          "顧客別請求集計表",
+          "サービス別請求集計表",
+          "請求書生成ボタン",
+          "生成済み請求書一覧",
+          "配信先顧客選択",
+          "配信方法選択（メール/郵送/システム）",
+          "配信スケジュール設定"
+        ]
+      },
+      {
+        "id": "scr-1781940929119",
+        "name": "請求ロジック・割引基準定義",
+        "purpose": "請求対象項目の定義、割引基準の設定、請求ロジックの構成・検証を行う画面",
+        "items": [
+          "請求対象項目一覧",
+          "請求対象項目追加ボタン",
+          "請求対象項目編集フォーム",
+          "請求対象項目削除ボタン",
+          "割引基準一覧",
+          "割引基準追加ボタン",
+          "割引基準編集フォーム",
+          "割引基準削除ボタン",
+          "割引率入力欄",
+          "割引適用条件設定",
+          "請求ロジック定義エディタ",
+          "請求ロジック検証ボタン"
+        ]
+      },
+      {
+        "id": "scr-1781940940693",
+        "name": "請求書作成画面",
+        "purpose": "営業データから請求対象項目を抽出し、顧客別・サービス別に集計して請求書を自動生成する",
+        "items": [
+          "請求期間選択",
+          "顧客選択ドロップダウン",
+          "サービス種別フィルター",
+          "営業データ検証ステータス表示",
+          "データ品質検証結果確認",
+          "不足データ警告表示",
+          "請求対象項目一覧テーブル",
+          "顧客請求集計プレビュー",
+          "サービス請求集計プレビュー",
+          "請求金額合計表示",
+          "税金計算結果表示",
+          "異常検出ログ確認ボタン"
+        ]
+      },
+      {
+        "id": "scr-1781940952745",
+        "name": "営業データ品質チェック画面",
+        "purpose": "営業データの品質を検証し、異常データを検出・管理し、請求対象データの正確性を確保するための統合管理画面",
+        "items": [
+          "データ品質チェック実行ボタン",
+          "検証ルール選択ドロップダウン",
+          "チェック対象期間指定",
+          "営業データ一覧テーブル",
+          "データ異常検出結果表示",
+          "異常データ詳細ビューア",
+          "検証ルール管理ボタン",
+          "異常検出ログ表示",
+          "データ品質スコア表示",
+          "不足データ通知一覧",
+          "請求対象項目確認パネル",
+          "顧客別品質サマリー"
+        ]
+      },
+      {
+        "id": "scr-1781940964903",
+        "name": "営業データ検索・照会画面",
+        "purpose": "営業データの検索・照会、データ品質検証結果の確認、異常検出ログの参照を行う画面",
+        "items": [
+          "検索条件パネル",
+          "顧客ID入力欄",
+          "サービス種別選択",
+          "期間指定（開始日）",
+          "期間指定（終了日）",
+          "データ品質ステータスフィルタ",
+          "検索ボタン",
+          "リセットボタン",
+          "営業データ一覧表",
+          "データID列",
+          "顧客名列",
+          "サービス名列"
+        ]
+      },
+      {
+        "id": "scr-1781940977578",
+        "name": "請求対象項目自動抽出処理",
+        "purpose": "営業データから請求対象項目を自動抽出し、データ品質検証を実施した上で請求集計対象を確定する",
+        "items": [
+          "抽出対象期間選択",
+          "営業データ読み込みボタン",
+          "検証ルール適用設定",
+          "異常検出ログ表示",
+          "データ品質検証結果表示",
+          "抽出対象項目一覧テーブル",
+          "請求対象項目定義マッピング表示",
+          "不足データ通知ログ表示",
+          "顧客別請求集計プレビュー",
+          "サービス別請求集計プレビュー",
+          "月次サマリーテンプレート適用",
+          "抽出結果確認チェックボックス"
+        ]
+      },
+      {
+        "id": "scr-1781940989732",
+        "name": "請求情報検証画面",
+        "purpose": "営業データから生成された請求情報の妥当性を検証し、データ品質を確保した上で請求処理を進める",
+        "items": [
+          "検証対象期間選択",
+          "顧客名検索フィルタ",
+          "請求対象項目一覧表",
+          "営業データ検証ルール適用状況",
+          "データ品質スコア表示",
+          "異常検出ログ表示",
+          "不足データ警告バナー",
+          "検証ルール詳細確認ボタン",
+          "異常データ詳細表示",
+          "手動修正入力欄",
+          "修正理由コメント欄",
+          "検証結果承認ボタン"
+        ]
+      },
+      {
+        "id": "scr-1781941001313",
+        "name": "請求額計算・割引適用処理",
+        "purpose": "営業データから請求対象項目を抽出し、割引ルールを適用して最終請求額を計算・確定する",
+        "items": [
+          "請求対象期間選択",
+          "顧客一覧フィルター",
+          "サービス種別フィルター",
+          "請求対象データプレビュー",
+          "基本請求額表示",
+          "適用可能割引ルール一覧",
+          "割引種別選択",
+          "割引率・割引額入力",
+          "割引適用前後の金額比較",
+          "データ品質検証結果表示",
+          "異常検出ログ確認",
+          "不足データ警告表示"
+        ]
+      },
+      {
+        "id": "scr-1781941013440",
+        "name": "会計システム連携処理",
+        "purpose": "営業データを検証・整形し、会計システムへの請求データ連携を自動化・管理する",
+        "items": [
+          "連携ステータス表示",
+          "営業データ検証結果サマリー",
+          "異常検出ログ一覧",
+          "不足データ通知表示",
+          "請求対象項目確認",
+          "顧客請求集計プレビュー",
+          "サービス請求集計プレビュー",
+          "データ品質スコア",
+          "連携実行ボタン",
+          "検証ルール適用設定",
+          "エラー詳細表示",
+          "再試行ボタン"
+        ]
+      },
+      {
+        "id": "scr-1781941025237",
+        "name": "営業データ品質スコア計算処理",
+        "purpose": "営業データの品質スコアを計算し、検証ルールに基づいて異常を検出・記録し、請求対象データの適正性を確保する",
+        "items": [
+          "計算対象期間選択",
+          "営業データ一覧表示",
+          "検証ルール適用設定",
+          "品質スコア計算実行ボタン",
+          "スコア計算結果表示",
+          "異常検出ログ表示",
+          "データ品質検証結果テーブル",
+          "不足データ通知ログ表示",
+          "請求対象項目チェック状況",
+          "顧客別品質スコア集計",
+          "サービス別品質スコア集計",
+          "メタデータ参照パネル"
+        ]
+      }
+    ],
+    "tableDefinitions": [
+      {
+        "tableName": "営業データ",
+        "purpose": "営業取引の記録、請求自動化、データ品質管理を支援するトランザクションテーブル",
+        "columns": [
+          {
+            "name": "営業データID",
+            "type": "uuid",
+            "required": true,
+            "description": "営業データの一意識別子"
+          },
+          {
+            "name": "顧客ID",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "顧客マスタへの外部キー"
+          },
+          {
+            "name": "取引日",
+            "type": "timestamp",
+            "required": true,
+            "description": "営業取引が発生した日時"
+          },
+          {
+            "name": "取引金額",
+            "type": "integer",
+            "required": true,
+            "description": "取引の金額（単位：円）"
+          },
+          {
+            "name": "取引種別",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "取引の種類（例：販売、返品、調整）"
+          },
+          {
+            "name": "商品ID",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "商品マスタへの外部キー"
+          },
+          {
+            "name": "数量",
+            "type": "integer",
+            "required": true,
+            "description": "取引の数量"
+          },
+          {
+            "name": "単価",
+            "type": "integer",
+            "required": true,
+            "description": "商品の単価（単位：円）"
+          },
+          {
+            "name": "請求対象フラグ",
+            "type": "boolean",
+            "required": true,
+            "description": "請求自動化の対象かどうか"
+          },
+          {
+            "name": "請求済みフラグ",
+            "type": "boolean",
+            "required": true,
+            "description": "請求処理が完了したかどうか"
+          },
+          {
+            "name": "請求ID",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "請求マスタへの外部キー（請求済みの場合）"
+          },
+          {
+            "name": "データ品質ステータス",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "データ品質の状態（例：正常、警告、エラー）"
+          },
+          {
+            "name": "品質エラー内容",
+            "type": "text",
+            "required": false,
+            "description": "データ品質上の問題の詳細"
+          },
+          {
+            "name": "摘要",
+            "type": "text",
+            "required": false,
+            "description": "取引に関する備考"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "レコード作成日時"
+          },
+          {
+            "name": "作成者",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "レコード作成者のユーザーID"
+          },
+          {
+            "name": "更新日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "レコード最終更新日時"
+          },
+          {
+            "name": "更新者",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "レコード最終更新者のユーザーID"
+          }
+        ]
+      },
+      {
+        "tableName": "営業データ検証ルール",
+        "purpose": "営業データの品質を確保するための検証ルールを管理し、請求自動化システムで使用される営業データの妥当性を定義・運用する",
+        "columns": [
+          {
+            "name": "ルールID",
+            "type": "uuid",
+            "required": true,
+            "description": "検証ルールの一意識別子"
+          },
+          {
+            "name": "ルール名",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "検証ルールの名称"
+          },
+          {
+            "name": "対象フィールド",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "検証対象となる営業データのフィールド名"
+          },
+          {
+            "name": "検証タイプ",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "検証方式（必須チェック/形式チェック/範囲チェック/重複チェック等）"
+          },
+          {
+            "name": "検証条件",
+            "type": "text",
+            "required": true,
+            "description": "検証ルールの詳細条件・パラメータ"
+          },
+          {
+            "name": "エラーメッセージ",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "検証失敗時に表示するエラーメッセージ"
+          },
+          {
+            "name": "重要度",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "ルールの重要度（エラー/警告/情報）"
+          },
+          {
+            "name": "有効フラグ",
+            "type": "boolean",
+            "required": true,
+            "description": "ルールが有効かどうか"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "ルール作成日時"
+          },
+          {
+            "name": "更新日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "ルール最終更新日時"
+          },
+          {
+            "name": "作成者",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "ルール作成者"
+          },
+          {
+            "name": "更新者",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "ルール最終更新者"
+          }
+        ]
+      },
+      {
+        "tableName": "営業データ異常検出ログ",
+        "purpose": "営業データの品質異常を検出・記録し、請求自動化システムの信頼性を確保するための監査ログ",
+        "columns": [
+          {
+            "name": "異常検出ログID",
+            "type": "uuid",
+            "required": true,
+            "description": "異常検出ログの一意識別子"
+          },
+          {
+            "name": "営業データID",
+            "type": "uuid",
+            "required": true,
+            "description": "異常が検出された営業データの参照ID"
+          },
+          {
+            "name": "検証ルールID",
+            "type": "uuid",
+            "required": true,
+            "description": "適用された営業データ検証ルールの参照ID"
+          },
+          {
+            "name": "異常タイプ",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "異常の分類（例：データ型不正、範囲外、必須項目欠落、重複）"
+          },
+          {
+            "name": "異常フィールド名",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "異常が検出されたフィールド名"
+          },
+          {
+            "name": "検出値",
+            "type": "text",
+            "required": false,
+            "description": "異常が検出された実際の値"
+          },
+          {
+            "name": "期待値",
+            "type": "text",
+            "required": false,
+            "description": "検証ルールで期待される値または条件"
+          },
+          {
+            "name": "重要度",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "異常の重要度レベル（例：高、中、低）"
+          },
+          {
+            "name": "検出日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "異常が検出された日時"
+          },
+          {
+            "name": "対応状況",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "異常への対応状況（例：未対応、対応中、解決済み、無視）"
+          },
+          {
+            "name": "対応者",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "異常に対応したユーザー"
+          },
+          {
+            "name": "対応日時",
+            "type": "timestamp",
+            "required": false,
+            "description": "異常が対応された日時"
+          },
+          {
+            "name": "対応コメント",
+            "type": "text",
+            "required": false,
+            "description": "対応内容の詳細説明"
+          },
+          {
+            "name": "請求処理への影響",
+            "type": "boolean",
+            "required": true,
+            "description": "この異常が請求自動化処理に影響を与えるかどうか"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "ログレコード作成日時"
+          },
+          {
+            "name": "更新日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "ログレコード最終更新日時"
+          }
+        ]
+      },
+      {
+        "tableName": "請求対象項目定義",
+        "purpose": "営業データから請求対象となる項目を定義・管理し、請求自動化システムが正確に請求対象データを抽出・検証するためのマスタテーブル",
+        "columns": [
+          {
+            "name": "項目定義ID",
+            "type": "uuid",
+            "required": true,
+            "description": "請求対象項目定義の一意識別子"
+          },
+          {
+            "name": "項目コード",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "請求対象項目の業務コード（例：SALES_AMOUNT、SERVICE_FEE）"
+          },
+          {
+            "name": "項目名",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "請求対象項目の日本語名称"
+          },
+          {
+            "name": "説明",
+            "type": "text",
+            "required": false,
+            "description": "項目の詳細説明・定義"
+          },
+          {
+            "name": "営業データテーブル名",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "営業データテーブル内のソーステーブル名"
+          },
+          {
+            "name": "営業データカラム名",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "営業データテーブル内のソースカラム名"
+          },
+          {
+            "name": "データ型",
+            "type": "varchar(50)",
+            "required": true,
+            "description": "項目のデータ型（integer/varchar/timestamp等）"
+          },
+          {
+            "name": "請求計算方法",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "請求額計算方法（SUM/AVG/COUNT/DIRECT等）"
+          },
+          {
+            "name": "検証ルールID",
+            "type": "uuid",
+            "required": false,
+            "description": "適用する営業データ検証ルールの参照ID"
+          },
+          {
+            "name": "必須フラグ",
+            "type": "boolean",
+            "required": true,
+            "description": "請求対象として必須かどうか"
+          },
+          {
+            "name": "有効フラグ",
+            "type": "boolean",
+            "required": true,
+            "description": "項目定義が有効かどうか"
+          },
+          {
+            "name": "開始日",
+            "type": "timestamp",
+            "required": true,
+            "description": "項目定義の適用開始日時"
+          },
+          {
+            "name": "終了日",
+            "type": "timestamp",
+            "required": false,
+            "description": "項目定義の適用終了日時（NULL=継続中）"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "レコード作成日時"
+          },
+          {
+            "name": "作成者",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "レコード作成者"
+          },
+          {
+            "name": "更新日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "レコード最終更新日時"
+          },
+          {
+            "name": "更新者",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "レコード最終更新者"
+          }
+        ]
+      },
+      {
+        "tableName": "顧客請求集計",
+        "purpose": "営業データから検証・集計した請求対象データを管理し、請求自動化の入力源となる顧客別・期間別の請求集計情報を保持する",
+        "columns": [
+          {
+            "name": "請求集計ID",
+            "type": "uuid",
+            "required": true,
+            "description": "請求集計レコードの一意識別子"
+          },
+          {
+            "name": "顧客ID",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "請求対象の顧客ID（営業データから参照）"
+          },
+          {
+            "name": "請求年月",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "請求対象期間（YYYY-MM形式）"
+          },
+          {
+            "name": "請求金額",
+            "type": "integer",
+            "required": true,
+            "description": "集計された請求対象金額（税抜き）"
+          },
+          {
+            "name": "税額",
+            "type": "integer",
+            "required": true,
+            "description": "請求金額に対する消費税額"
+          },
+          {
+            "name": "請求金額合計",
+            "type": "integer",
+            "required": true,
+            "description": "請求金額と税額の合計（税込み）"
+          },
+          {
+            "name": "対象営業データ件数",
+            "type": "integer",
+            "required": true,
+            "description": "この請求集計に含まれる営業データレコード数"
+          },
+          {
+            "name": "検証ステータス",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "検証状態（未検証/検証済み/異常検出/承認待ち）"
+          },
+          {
+            "name": "異常フラグ",
+            "type": "boolean",
+            "required": true,
+            "description": "異常検出ログに該当する異常が存在するか"
+          },
+          {
+            "name": "請求ステータス",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "請求処理状態（未処理/請求済み/入金確認/キャンセル）"
+          },
+          {
+            "name": "摘要",
+            "type": "text",
+            "required": false,
+            "description": "請求集計に関する備考・特記事項"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "請求集計レコード作成日時"
+          },
+          {
+            "name": "更新日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "請求集計レコード最終更新日時"
+          },
+          {
+            "name": "作成者",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "請求集計を作成したユーザーID"
+          },
+          {
+            "name": "更新者",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "請求集計を最後に更新したユーザーID"
+          }
+        ]
+      },
+      {
+        "tableName": "サービス請求集計",
+        "purpose": "営業データから検証・集計した請求対象データを管理し、顧客別・サービス別の請求額を確定する集計テーブル",
+        "columns": [
+          {
+            "name": "請求集計ID",
+            "type": "uuid",
+            "required": true,
+            "description": "請求集計レコードの一意識別子"
+          },
+          {
+            "name": "顧客ID",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "請求対象の顧客ID（顧客マスタへの外部キー）"
+          },
+          {
+            "name": "請求年月",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "請求対象の年月（YYYY-MM形式）"
+          },
+          {
+            "name": "サービスID",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "請求対象のサービスID"
+          },
+          {
+            "name": "集計対象件数",
+            "type": "integer",
+            "required": true,
+            "description": "この集計に含まれる営業データレコード数"
+          },
+          {
+            "name": "請求金額",
+            "type": "integer",
+            "required": true,
+            "description": "確定した請求金額（税抜き）"
+          },
+          {
+            "name": "税額",
+            "type": "integer",
+            "required": true,
+            "description": "計算された消費税額"
+          },
+          {
+            "name": "請求金額合計",
+            "type": "integer",
+            "required": true,
+            "description": "請求金額 + 税額"
+          },
+          {
+            "name": "集計ステータス",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "集計状態（下書き/確定/請求済み/キャンセル）"
+          },
+          {
+            "name": "データ品質スコア",
+            "type": "integer",
+            "required": false,
+            "description": "この集計に含まれるデータの品質スコア（0-100）"
+          },
+          {
+            "name": "異常検出フラグ",
+            "type": "boolean",
+            "required": true,
+            "description": "異常検出ログで検出された異常が存在するか"
+          },
+          {
+            "name": "検証ルール適用状況",
+            "type": "text",
+            "required": false,
+            "description": "適用された検証ルールの結果サマリー"
+          },
+          {
+            "name": "請求確定日時",
+            "type": "timestamp",
+            "required": false,
+            "description": "請求金額が確定した日時"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "集計レコード作成日時"
+          },
+          {
+            "name": "更新日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "集計レコード最終更新日時"
+          },
+          {
+            "name": "作成者",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "集計レコード作成者のユーザーID"
+          },
+          {
+            "name": "更新者",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "集計レコード最終更新者のユーザーID"
+          },
+          {
+            "name": "備考",
+            "type": "text",
+            "required": false,
+            "description": "集計に関する備考・摘要"
+          }
+        ]
+      },
+      {
+        "tableName": "営業データメタデータ",
+        "purpose": "営業データの構造・品質基準・検証ルール・請求対象項目の定義を一元管理し、データ品質管理と請求自動化の基準となるマスタ情報を提供する",
+        "columns": [
+          {
+            "name": "メタデータID",
+            "type": "uuid",
+            "required": true,
+            "description": "メタデータレコードの一意識別子"
+          },
+          {
+            "name": "データ項目名",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "営業データ内の項目名（例：受注金額、顧客ID、請求日等）"
+          },
+          {
+            "name": "データ項目説明",
+            "type": "text",
+            "required": false,
+            "description": "データ項目の詳細説明・ビジネス定義"
+          },
+          {
+            "name": "データ型",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "データ型（integer、varchar、timestamp等）"
+          },
+          {
+            "name": "必須フラグ",
+            "type": "boolean",
+            "required": true,
+            "description": "当該項目が必須かどうか"
+          },
+          {
+            "name": "最大文字数",
+            "type": "integer",
+            "required": false,
+            "description": "varchar型の場合の最大文字数"
+          },
+          {
+            "name": "品質検証ルール適用",
+            "type": "boolean",
+            "required": true,
+            "description": "営業データ検証ルールを適用するかどうか"
+          },
+          {
+            "name": "異常検出対象フラグ",
+            "type": "boolean",
+            "required": true,
+            "description": "異常検出ロジックの対象項目かどうか"
+          },
+          {
+            "name": "請求対象フラグ",
+            "type": "boolean",
+            "required": true,
+            "description": "請求集計に使用する項目かどうか"
+          },
+          {
+            "name": "請求項目カテゴリ",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "請求対象の場合のカテゴリ（例：サービス料金、手数料、税金等）"
+          },
+          {
+            "name": "集計方法",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "請求集計時の集計方法（SUM、COUNT、AVG等）"
+          },
+          {
+            "name": "データソース",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "データの取得元システム・テーブル名"
+          },
+          {
+            "name": "更新頻度",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "データ更新の頻度（日次、月次等）"
+          },
+          {
+            "name": "有効開始日",
+            "type": "timestamp",
+            "required": true,
+            "description": "このメタデータ定義の有効開始日時"
+          },
+          {
+            "name": "有効終了日",
+            "type": "timestamp",
+            "required": false,
+            "description": "このメタデータ定義の有効終了日時（NULL=現在有効）"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "レコード作成日時"
+          },
+          {
+            "name": "作成者",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "レコード作成者のユーザーID"
+          },
+          {
+            "name": "更新日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "レコード最終更新日時"
+          },
+          {
+            "name": "更新者",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "レコード最終更新者のユーザーID"
+          },
+          {
+            "name": "備考",
+            "type": "text",
+            "required": false,
+            "description": "その他の注記・運用上の注意事項"
+          }
+        ]
+      },
+      {
+        "tableName": "月次サマリーテンプレート",
+        "purpose": "営業データと請求データの月次集計結果を標準化されたテンプレート形式で管理し、レポーティングと異常検出の基準となる月次サマリーを保持する",
+        "columns": [
+          {
+            "name": "月次サマリーテンプレートID",
+            "type": "uuid",
+            "required": true,
+            "description": "月次サマリーテンプレートの一意識別子"
+          },
+          {
+            "name": "対象年月",
+            "type": "varchar(7)",
+            "required": true,
+            "description": "集計対象の年月（YYYY-MM形式）"
+          },
+          {
+            "name": "営業データ集計件数",
+            "type": "integer",
+            "required": true,
+            "description": "当月の営業データ総件数"
+          },
+          {
+            "name": "営業データ検証成功件数",
+            "type": "integer",
+            "required": true,
+            "description": "検証ルール合格の営業データ件数"
+          },
+          {
+            "name": "営業データ検証失敗件数",
+            "type": "integer",
+            "required": true,
+            "description": "検証ルール不合格の営業データ件数"
+          },
+          {
+            "name": "異常検出件数",
+            "type": "integer",
+            "required": true,
+            "description": "異常検出ログで検出された異常件数"
+          },
+          {
+            "name": "請求対象件数",
+            "type": "integer",
+            "required": true,
+            "description": "請求対象項目定義に該当する件数"
+          },
+          {
+            "name": "請求集計金額",
+            "type": "integer",
+            "required": true,
+            "description": "当月の請求集計総額（円）"
+          },
+          {
+            "name": "顧客請求集計件数",
+            "type": "integer",
+            "required": true,
+            "description": "顧客別請求集計の件数"
+          },
+          {
+            "name": "サービス請求集計件数",
+            "type": "integer",
+            "required": true,
+            "description": "サービス別請求集計の件数"
+          },
+          {
+            "name": "データ品質スコア",
+            "type": "integer",
+            "required": true,
+            "description": "当月のデータ品質スコア（0-100）"
+          },
+          {
+            "name": "テンプレートステータス",
+            "type": "varchar(20)",
+            "required": true,
+            "description": "テンプレートの状態（下書き/確定/承認済み/アーカイブ）"
+          },
+          {
+            "name": "備考",
+            "type": "text",
+            "required": false,
+            "description": "月次サマリーに関する備考・特記事項"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "レコード作成日時"
+          },
+          {
+            "name": "更新日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "レコード最終更新日時"
+          },
+          {
+            "name": "作成者",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "レコード作成者のユーザーID"
+          },
+          {
+            "name": "更新者",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "レコード最終更新者のユーザーID"
+          }
+        ]
+      },
+      {
+        "tableName": "データ品質検証結果",
+        "purpose": "営業データの品質検証実行結果を記録し、検証ルール適用状況、エラー内容、是正状況を追跡管理するトランザクションテーブル",
+        "columns": [
+          {
+            "name": "検証結果ID",
+            "type": "uuid",
+            "required": true,
+            "description": "検証結果の一意識別子"
+          },
+          {
+            "name": "営業データID",
+            "type": "uuid",
+            "required": true,
+            "description": "検証対象の営業データを特定するID"
+          },
+          {
+            "name": "検証ルールID",
+            "type": "uuid",
+            "required": true,
+            "description": "適用された検証ルールを特定するID"
+          },
+          {
+            "name": "検証実行日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "検証が実行された日時"
+          },
+          {
+            "name": "検証ステータス",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "検証結果ステータス（合格/不合格/警告）"
+          },
+          {
+            "name": "エラー内容",
+            "type": "text",
+            "required": false,
+            "description": "検証失敗時の詳細エラーメッセージ"
+          },
+          {
+            "name": "エラー重大度",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "エラーの重大度レベル（致命的/高/中/低）"
+          },
+          {
+            "name": "検証対象フィールド",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "検証対象となったデータフィールド名"
+          },
+          {
+            "name": "検証対象値",
+            "type": "text",
+            "required": false,
+            "description": "検証対象となったデータの値"
+          },
+          {
+            "name": "是正状況",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "是正状況（未対応/対応中/完了/対応不要）"
+          },
+          {
+            "name": "是正完了日時",
+            "type": "timestamp",
+            "required": false,
+            "description": "データ是正が完了した日時"
+          },
+          {
+            "name": "請求対象フラグ",
+            "type": "boolean",
+            "required": true,
+            "description": "当該データが請求処理に影響するかどうか"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "検証結果レコード作成日時"
+          },
+          {
+            "name": "更新日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "検証結果レコード最終更新日時"
+          },
+          {
+            "name": "作成者",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "検証を実行したシステムまたはユーザー"
+          }
+        ]
+      },
+      {
+        "tableName": "不足データ通知ログ",
+        "purpose": "営業データの不足項目を検出し、通知履歴を記録・追跡するトランザクションログテーブル。データ品質管理と請求自動化の前提条件となる不足データの可視化と対応状況管理を実現する。",
+        "columns": [
+          {
+            "name": "不足データ通知ログID",
+            "type": "uuid",
+            "required": true,
+            "description": "通知ログの一意識別子"
+          },
+          {
+            "name": "営業データID",
+            "type": "uuid",
+            "required": true,
+            "description": "不足が検出された営業データレコードへの外部キー"
+          },
+          {
+            "name": "不足項目名",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "不足している営業データ項目の名称"
+          },
+          {
+            "name": "検証ルールID",
+            "type": "uuid",
+            "required": true,
+            "description": "不足を検出した営業データ検証ルールへの外部キー"
+          },
+          {
+            "name": "通知ステータス",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "通知状態（未対応/対応中/解決/無視）"
+          },
+          {
+            "name": "通知対象者",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "通知を受け取る担当者またはグループ"
+          },
+          {
+            "name": "通知日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "不足データが検出され通知が発行された日時"
+          },
+          {
+            "name": "対応予定日",
+            "type": "timestamp",
+            "required": false,
+            "description": "不足データの補正予定日"
+          },
+          {
+            "name": "対応完了日時",
+            "type": "timestamp",
+            "required": false,
+            "description": "不足データが補正され対応が完了した日時"
+          },
+          {
+            "name": "補正内容",
+            "type": "text",
+            "required": false,
+            "description": "実施された補正内容の詳細説明"
+          },
+          {
+            "name": "請求影響フラグ",
+            "type": "boolean",
+            "required": true,
+            "description": "この不足データが請求処理に影響を与えるかどうか"
+          },
+          {
+            "name": "重要度レベル",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "不足データの重要度（高/中/低）"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "ログレコード作成日時"
+          },
+          {
+            "name": "更新日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "ログレコード最終更新日時"
+          },
+          {
+            "name": "作成者",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "ログレコード作成者ユーザーID"
+          }
+        ]
+      },
+      {
+        "tableName": "操作履歴",
+        "purpose": "ユーザーによるシステム操作の記録と監査証跡を管理し、データ品質管理・請求自動化システムにおけるすべての重要な操作を追跡する",
+        "columns": [
+          {
+            "name": "操作履歴ID",
+            "type": "uuid",
+            "required": true,
+            "description": "操作履歴の一意識別子"
+          },
+          {
+            "name": "ユーザーID",
+            "type": "uuid",
+            "required": true,
+            "description": "操作を実行したユーザーの識別子（ユーザーテーブルへの外部キー）"
+          },
+          {
+            "name": "操作種別",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "操作の種類（例：CREATE、UPDATE、DELETE、VALIDATE、EXPORT、APPROVE）"
+          },
+          {
+            "name": "対象テーブル名",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "操作対象のテーブル名（例：営業データ、請求対象項目定義）"
+          },
+          {
+            "name": "対象レコードID",
+            "type": "uuid",
+            "required": false,
+            "description": "操作対象のレコード識別子"
+          },
+          {
+            "name": "操作内容",
+            "type": "text",
+            "required": false,
+            "description": "操作の詳細説明または変更内容"
+          },
+          {
+            "name": "変更前値",
+            "type": "text",
+            "required": false,
+            "description": "更新操作の場合の変更前の値"
+          },
+          {
+            "name": "変更後値",
+            "type": "text",
+            "required": false,
+            "description": "更新操作の場合の変更後の値"
+          },
+          {
+            "name": "操作ステータス",
+            "type": "varchar(100)",
+            "required": true,
+            "description": "操作の実行結果（例：SUCCESS、FAILURE、PENDING）"
+          },
+          {
+            "name": "エラーメッセージ",
+            "type": "text",
+            "required": false,
+            "description": "操作失敗時のエラーメッセージ"
+          },
+          {
+            "name": "IPアドレス",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "操作を実行したクライアントのIPアドレス"
+          },
+          {
+            "name": "セッションID",
+            "type": "varchar(100)",
+            "required": false,
+            "description": "ユーザーセッションの識別子"
+          },
+          {
+            "name": "作成日時",
+            "type": "timestamp",
+            "required": true,
+            "description": "操作が実行された日時"
+          }
+        ]
+      }
+    ]
+  }
+]

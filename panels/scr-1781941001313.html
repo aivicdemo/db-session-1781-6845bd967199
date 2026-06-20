@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>請求額計算・割引適用処理 - DB設計を再開してください</title>
+  <script>
+window.AIVIC_API_URL = "https://mkwmoife37uqyv4zhy4yhweozq0oddxn.lambda-url.us-east-1.on.aws/";
+window.AIVIC_APP_ID = "session-1781935010162";
+window.AIVIC_SYSTEM_NAME = "営業データ品質管理・請求自動化システム";
+window.AIVIC_TABLES = [{"tableName":"営業データ","purpose":"営業取引の記録、請求自動化、データ品質管理を支援するトランザクションテーブル","columns":[{"name":"営業データID","type":"uuid","required":true,"description":"営業データの一意識別子"},{"name":"顧客ID","type":"varchar(100)","required":true,"description":"顧客マスタへの外部キー"},{"name":"取引日","type":"timestamp","required":true,"description":"営業取引が発生した日時"},{"name":"取引金額","type":"integer","required":true,"description":"取引の金額（単位：円）"},{"name":"取引種別","type":"varchar(100)","required":true,"description":"取引の種類（例：販売、返品、調整）"},{"name":"商品ID","type":"varchar(100)","required":true,"description":"商品マスタへの外部キー"},{"name":"数量","type":"integer","required":true,"description":"取引の数量"},{"name":"単価","type":"integer","required":true,"description":"商品の単価（単位：円）"},{"name":"請求対象フラグ","type":"boolean","required":true,"description":"請求自動化の対象かどうか"},{"name":"請求済みフラグ","type":"boolean","required":true,"description":"請求処理が完了したかどうか"},{"name":"請求ID","type":"varchar(100)","required":false,"description":"請求マスタへの外部キー（請求済みの場合）"},{"name":"データ品質ステータス","type":"varchar(100)","required":true,"description":"データ品質の状態（例：正常、警告、エラー）"},{"name":"品質エラー内容","type":"text","required":false,"description":"データ品質上の問題の詳細"},{"name":"摘要","type":"text","required":false,"description":"取引に関する備考"},{"name":"作成日時","type":"timestamp","required":true,"description":"レコード作成日時"},{"name":"作成者","type":"varchar(100)","required":true,"description":"レコード作成者のユーザーID"},{"name":"更新日時","type":"timestamp","required":true,"description":"レコード最終更新日時"},{"name":"更新者","type":"varchar(100)","required":true,"description":"レコード最終更新者のユーザーID"}]},{"tableName":"営業データ検証ルール","purpose":"営業データの品質を確保するための検証ルールを管理し、請求自動化システムで使用される営業データの妥当性を定義・運用する","columns":[{"name":"ルールID","type":"uuid","required":true,"description":"検証ルールの一意識別子"},{"name":"ルール名","type":"varchar(100)","required":true,"description":"検証ルールの名称"},{"name":"対象フィールド","type":"varchar(100)","required":true,"description":"検証対象となる営業データのフィールド名"},{"name":"検証タイプ","type":"varchar(100)","required":true,"description":"検証方式（必須チェック/形式チェック/範囲チェック/重複チェック等）"},{"name":"検証条件","type":"text","required":true,"description":"検証ルールの詳細条件・パラメータ"},{"name":"エラーメッセージ","type":"varchar(100)","required":true,"description":"検証失敗時に表示するエラーメッセージ"},{"name":"重要度","type":"varchar(100)","required":true,"description":"ルールの重要度（エラー/警告/情報）"},{"name":"有効フラグ","type":"boolean","required":true,"description":"ルールが有効かどうか"},{"name":"作成日時","type":"timestamp","required":true,"description":"ルール作成日時"},{"name":"更新日時","type":"timestamp","required":true,"description":"ルール最終更新日時"},{"name":"作成者","type":"varchar(100)","required":true,"description":"ルール作成者"},{"name":"更新者","type":"varchar(100)","required":true,"description":"ルール最終更新者"}]},{"tableName":"営業データ異常検出ログ","purpose":"営業データの品質異常を検出・記録し、請求自動化システムの信頼性を確保するための監査ログ","columns":[{"name":"異常検出ログID","type":"uuid","required":true,"description":"異常検出ログの一意識別子"},{"name":"営業データID","type":"uuid","required":true,"description":"異常が検出された営業データの参照ID"},{"name":"検証ルールID","type":"uuid","required":true,"description":"適用された営業データ検証ルールの参照ID"},{"name":"異常タイプ","type":"varchar(100)","required":true,"description":"異常の分類（例：データ型不正、範囲外、必須項目欠落、重複）"},{"name":"異常フィールド名","type":"varchar(100)","required":true,"description":"異常が検出されたフィールド名"},{"name":"検出値","type":"text","required":false,"description":"異常が検出された実際の値"},{"name":"期待値","type":"text","required":false,"description":"検証ルールで期待される値または条件"},{"name":"重要度","type":"varchar(100)","required":true,"description":"異常の重要度レベル（例：高、中、低）"},{"name":"検出日時","type":"timestamp","required":true,"description":"異常が検出された日時"},{"name":"対応状況","type":"varchar(100)","required":true,"description":"異常への対応状況（例：未対応、対応中、解決済み、無視）"},{"name":"対応者","type":"varchar(100)","required":false,"description":"異常に対応したユーザー"},{"name":"対応日時","type":"timestamp","required":false,"description":"異常が対応された日時"},{"name":"対応コメント","type":"text","required":false,"description":"対応内容の詳細説明"},{"name":"請求処理への影響","type":"boolean","required":true,"description":"この異常が請求自動化処理に影響を与えるかどうか"},{"name":"作成日時","type":"timestamp","required":true,"description":"ログレコード作成日時"},{"name":"更新日時","type":"timestamp","required":true,"description":"ログレコード最終更新日時"}]},{"tableName":"請求対象項目定義","purpose":"営業データから請求対象となる項目を定義・管理し、請求自動化システムが正確に請求対象データを抽出・検証するためのマスタテーブル","columns":[{"name":"項目定義ID","type":"uuid","required":true,"description":"請求対象項目定義の一意識別子"},{"name":"項目コード","type":"varchar(100)","required":true,"description":"請求対象項目の業務コード（例：SALES_AMOUNT、SERVICE_FEE）"},{"name":"項目名","type":"varchar(100)","required":true,"description":"請求対象項目の日本語名称"},{"name":"説明","type":"text","required":false,"description":"項目の詳細説明・定義"},{"name":"営業データテーブル名","type":"varchar(100)","required":true,"description":"営業データテーブル内のソーステーブル名"},{"name":"営業データカラム名","type":"varchar(100)","required":true,"description":"営業データテーブル内のソースカラム名"},{"name":"データ型","type":"varchar(50)","required":true,"description":"項目のデータ型（integer/varchar/timestamp等）"},{"name":"請求計算方法","type":"varchar(100)","required":true,"description":"請求額計算方法（SUM/AVG/COUNT/DIRECT等）"},{"name":"検証ルールID","type":"uuid","required":false,"description":"適用する営業データ検証ルールの参照ID"},{"name":"必須フラグ","type":"boolean","required":true,"description":"請求対象として必須かどうか"},{"name":"有効フラグ","type":"boolean","required":true,"description":"項目定義が有効かどうか"},{"name":"開始日","type":"timestamp","required":true,"description":"項目定義の適用開始日時"},{"name":"終了日","type":"timestamp","required":false,"description":"項目定義の適用終了日時（NULL=継続中）"},{"name":"作成日時","type":"timestamp","required":true,"description":"レコード作成日時"},{"name":"作成者","type":"varchar(100)","required":true,"description":"レコード作成者"},{"name":"更新日時","type":"timestamp","required":true,"description":"レコード最終更新日時"},{"name":"更新者","type":"varchar(100)","required":true,"description":"レコード最終更新者"}]},{"tableName":"顧客請求集計","purpose":"営業データから検証・集計した請求対象データを管理し、請求自動化の入力源となる顧客別・期間別の請求集計情報を保持する","columns":[{"name":"請求集計ID","type":"uuid","required":true,"description":"請求集計レコードの一意識別子"},{"name":"顧客ID","type":"varchar(100)","required":true,"description":"請求対象の顧客ID（営業データから参照）"},{"name":"請求年月","type":"varchar(100)","required":true,"description":"請求対象期間（YYYY-MM形式）"},{"name":"請求金額","type":"integer","required":true,"description":"集計された請求対象金額（税抜き）"},{"name":"税額","type":"integer","required":true,"description":"請求金額に対する消費税額"},{"name":"請求金額合計","type":"integer","required":true,"description":"請求金額と税額の合計（税込み）"},{"name":"対象営業データ件数","type":"integer","required":true,"description":"この請求集計に含まれる営業データレコード数"},{"name":"検証ステータス","type":"varchar(100)","required":true,"description":"検証状態（未検証/検証済み/異常検出/承認待ち）"},{"name":"異常フラグ","type":"boolean","required":true,"description":"異常検出ログに該当する異常が存在するか"},{"name":"請求ステータス","type":"varchar(100)","required":true,"description":"請求処理状態（未処理/請求済み/入金確認/キャンセル）"},{"name":"摘要","type":"text","required":false,"description":"請求集計に関する備考・特記事項"},{"name":"作成日時","type":"timestamp","required":true,"description":"請求集計レコード作成日時"},{"name":"更新日時","type":"timestamp","required":true,"description":"請求集計レコード最終更新日時"},{"name":"作成者","type":"varchar(100)","required":true,"description":"請求集計を作成したユーザーID"},{"name":"更新者","type":"varchar(100)","required":false,"description":"請求集計を最後に更新したユーザーID"}]},{"tableName":"サービス請求集計","purpose":"営業データから検証・集計した請求対象データを管理し、顧客別・サービス別の請求額を確定する集計テーブル","columns":[{"name":"請求集計ID","type":"uuid","required":true,"description":"請求集計レコードの一意識別子"},{"name":"顧客ID","type":"varchar(100)","required":true,"description":"請求対象の顧客ID（顧客マスタへの外部キー）"},{"name":"請求年月","type":"varchar(100)","required":true,"description":"請求対象の年月（YYYY-MM形式）"},{"name":"サービスID","type":"varchar(100)","required":true,"description":"請求対象のサービスID"},{"name":"集計対象件数","type":"integer","required":true,"description":"この集計に含まれる営業データレコード数"},{"name":"請求金額","type":"integer","required":true,"description":"確定した請求金額（税抜き）"},{"name":"税額","type":"integer","required":true,"description":"計算された消費税額"},{"name":"請求金額合計","type":"integer","required":true,"description":"請求金額 + 税額"},{"name":"集計ステータス","type":"varchar(100)","required":true,"description":"集計状態（下書き/確定/請求済み/キャンセル）"},{"name":"データ品質スコア","type":"integer","required":false,"description":"この集計に含まれるデータの品質スコア（0-100）"},{"name":"異常検出フラグ","type":"boolean","required":true,"description":"異常検出ログで検出された異常が存在するか"},{"name":"検証ルール適用状況","type":"text","required":false,"description":"適用された検証ルールの結果サマリー"},{"name":"請求確定日時","type":"timestamp","required":false,"description":"請求金額が確定した日時"},{"name":"作成日時","type":"timestamp","required":true,"description":"集計レコード作成日時"},{"name":"更新日時","type":"timestamp","required":true,"description":"集計レコード最終更新日時"},{"name":"作成者","type":"varchar(100)","required":true,"description":"集計レコード作成者のユーザーID"},{"name":"更新者","type":"varchar(100)","required":false,"description":"集計レコード最終更新者のユーザーID"},{"name":"備考","type":"text","required":false,"description":"集計に関する備考・摘要"}]},{"tableName":"営業データメタデータ","purpose":"営業データの構造・品質基準・検証ルール・請求対象項目の定義を一元管理し、データ品質管理と請求自動化の基準となるマスタ情報を提供する","columns":[{"name":"メタデータID","type":"uuid","required":true,"description":"メタデータレコードの一意識別子"},{"name":"データ項目名","type":"varchar(100)","required":true,"description":"営業データ内の項目名（例：受注金額、顧客ID、請求日等）"},{"name":"データ項目説明","type":"text","required":false,"description":"データ項目の詳細説明・ビジネス定義"},{"name":"データ型","type":"varchar(100)","required":true,"description":"データ型（integer、varchar、timestamp等）"},{"name":"必須フラグ","type":"boolean","required":true,"description":"当該項目が必須かどうか"},{"name":"最大文字数","type":"integer","required":false,"description":"varchar型の場合の最大文字数"},{"name":"品質検証ルール適用","type":"boolean","required":true,"description":"営業データ検証ルールを適用するかどうか"},{"name":"異常検出対象フラグ","type":"boolean","required":true,"description":"異常検出ロジックの対象項目かどうか"},{"name":"請求対象フラグ","type":"boolean","required":true,"description":"請求集計に使用する項目かどうか"},{"name":"請求項目カテゴリ","type":"varchar(100)","required":false,"description":"請求対象の場合のカテゴリ（例：サービス料金、手数料、税金等）"},{"name":"集計方法","type":"varchar(100)","required":false,"description":"請求集計時の集計方法（SUM、COUNT、AVG等）"},{"name":"データソース","type":"varchar(100)","required":true,"description":"データの取得元システム・テーブル名"},{"name":"更新頻度","type":"varchar(100)","required":false,"description":"データ更新の頻度（日次、月次等）"},{"name":"有効開始日","type":"timestamp","required":true,"description":"このメタデータ定義の有効開始日時"},{"name":"有効終了日","type":"timestamp","required":false,"description":"このメタデータ定義の有効終了日時（NULL=現在有効）"},{"name":"作成日時","type":"timestamp","required":true,"description":"レコード作成日時"},{"name":"作成者","type":"varchar(100)","required":true,"description":"レコード作成者のユーザーID"},{"name":"更新日時","type":"timestamp","required":true,"description":"レコード最終更新日時"},{"name":"更新者","type":"varchar(100)","required":true,"description":"レコード最終更新者のユーザーID"},{"name":"備考","type":"text","required":false,"description":"その他の注記・運用上の注意事項"}]},{"tableName":"月次サマリーテンプレート","purpose":"営業データと請求データの月次集計結果を標準化されたテンプレート形式で管理し、レポーティングと異常検出の基準となる月次サマリーを保持する","columns":[{"name":"月次サマリーテンプレートID","type":"uuid","required":true,"description":"月次サマリーテンプレートの一意識別子"},{"name":"対象年月","type":"varchar(7)","required":true,"description":"集計対象の年月（YYYY-MM形式）"},{"name":"営業データ集計件数","type":"integer","required":true,"description":"当月の営業データ総件数"},{"name":"営業データ検証成功件数","type":"integer","required":true,"description":"検証ルール合格の営業データ件数"},{"name":"営業データ検証失敗件数","type":"integer","required":true,"description":"検証ルール不合格の営業データ件数"},{"name":"異常検出件数","type":"integer","required":true,"description":"異常検出ログで検出された異常件数"},{"name":"請求対象件数","type":"integer","required":true,"description":"請求対象項目定義に該当する件数"},{"name":"請求集計金額","type":"integer","required":true,"description":"当月の請求集計総額（円）"},{"name":"顧客請求集計件数","type":"integer","required":true,"description":"顧客別請求集計の件数"},{"name":"サービス請求集計件数","type":"integer","required":true,"description":"サービス別請求集計の件数"},{"name":"データ品質スコア","type":"integer","required":true,"description":"当月のデータ品質スコア（0-100）"},{"name":"テンプレートステータス","type":"varchar(20)","required":true,"description":"テンプレートの状態（下書き/確定/承認済み/アーカイブ）"},{"name":"備考","type":"text","required":false,"description":"月次サマリーに関する備考・特記事項"},{"name":"作成日時","type":"timestamp","required":true,"description":"レコード作成日時"},{"name":"更新日時","type":"timestamp","required":true,"description":"レコード最終更新日時"},{"name":"作成者","type":"varchar(100)","required":true,"description":"レコード作成者のユーザーID"},{"name":"更新者","type":"varchar(100)","required":true,"description":"レコード最終更新者のユーザーID"}]},{"tableName":"データ品質検証結果","purpose":"営業データの品質検証実行結果を記録し、検証ルール適用状況、エラー内容、是正状況を追跡管理するトランザクションテーブル","columns":[{"name":"検証結果ID","type":"uuid","required":true,"description":"検証結果の一意識別子"},{"name":"営業データID","type":"uuid","required":true,"description":"検証対象の営業データを特定するID"},{"name":"検証ルールID","type":"uuid","required":true,"description":"適用された検証ルールを特定するID"},{"name":"検証実行日時","type":"timestamp","required":true,"description":"検証が実行された日時"},{"name":"検証ステータス","type":"varchar(100)","required":true,"description":"検証結果ステータス（合格/不合格/警告）"},{"name":"エラー内容","type":"text","required":false,"description":"検証失敗時の詳細エラーメッセージ"},{"name":"エラー重大度","type":"varchar(100)","required":false,"description":"エラーの重大度レベル（致命的/高/中/低）"},{"name":"検証対象フィールド","type":"varchar(100)","required":false,"description":"検証対象となったデータフィールド名"},{"name":"検証対象値","type":"text","required":false,"description":"検証対象となったデータの値"},{"name":"是正状況","type":"varchar(100)","required":true,"description":"是正状況（未対応/対応中/完了/対応不要）"},{"name":"是正完了日時","type":"timestamp","required":false,"description":"データ是正が完了した日時"},{"name":"請求対象フラグ","type":"boolean","required":true,"description":"当該データが請求処理に影響するかどうか"},{"name":"作成日時","type":"timestamp","required":true,"description":"検証結果レコード作成日時"},{"name":"更新日時","type":"timestamp","required":true,"description":"検証結果レコード最終更新日時"},{"name":"作成者","type":"varchar(100)","required":true,"description":"検証を実行したシステムまたはユーザー"}]},{"tableName":"不足データ通知ログ","purpose":"営業データの不足項目を検出し、通知履歴を記録・追跡するトランザクションログテーブル。データ品質管理と請求自動化の前提条件となる不足データの可視化と対応状況管理を実現する。","columns":[{"name":"不足データ通知ログID","type":"uuid","required":true,"description":"通知ログの一意識別子"},{"name":"営業データID","type":"uuid","required":true,"description":"不足が検出された営業データレコードへの外部キー"},{"name":"不足項目名","type":"varchar(100)","required":true,"description":"不足している営業データ項目の名称"},{"name":"検証ルールID","type":"uuid","required":true,"description":"不足を検出した営業データ検証ルールへの外部キー"},{"name":"通知ステータス","type":"varchar(100)","required":true,"description":"通知状態（未対応/対応中/解決/無視）"},{"name":"通知対象者","type":"varchar(100)","required":true,"description":"通知を受け取る担当者またはグループ"},{"name":"通知日時","type":"timestamp","required":true,"description":"不足データが検出され通知が発行された日時"},{"name":"対応予定日","type":"timestamp","required":false,"description":"不足データの補正予定日"},{"name":"対応完了日時","type":"timestamp","required":false,"description":"不足データが補正され対応が完了した日時"},{"name":"補正内容","type":"text","required":false,"description":"実施された補正内容の詳細説明"},{"name":"請求影響フラグ","type":"boolean","required":true,"description":"この不足データが請求処理に影響を与えるかどうか"},{"name":"重要度レベル","type":"varchar(100)","required":true,"description":"不足データの重要度（高/中/低）"},{"name":"作成日時","type":"timestamp","required":true,"description":"ログレコード作成日時"},{"name":"更新日時","type":"timestamp","required":true,"description":"ログレコード最終更新日時"},{"name":"作成者","type":"varchar(100)","required":true,"description":"ログレコード作成者ユーザーID"}]},{"tableName":"操作履歴","purpose":"ユーザーによるシステム操作の記録と監査証跡を管理し、データ品質管理・請求自動化システムにおけるすべての重要な操作を追跡する","columns":[{"name":"操作履歴ID","type":"uuid","required":true,"description":"操作履歴の一意識別子"},{"name":"ユーザーID","type":"uuid","required":true,"description":"操作を実行したユーザーの識別子（ユーザーテーブルへの外部キー）"},{"name":"操作種別","type":"varchar(100)","required":true,"description":"操作の種類（例：CREATE、UPDATE、DELETE、VALIDATE、EXPORT、APPROVE）"},{"name":"対象テーブル名","type":"varchar(100)","required":true,"description":"操作対象のテーブル名（例：営業データ、請求対象項目定義）"},{"name":"対象レコードID","type":"uuid","required":false,"description":"操作対象のレコード識別子"},{"name":"操作内容","type":"text","required":false,"description":"操作の詳細説明または変更内容"},{"name":"変更前値","type":"text","required":false,"description":"更新操作の場合の変更前の値"},{"name":"変更後値","type":"text","required":false,"description":"更新操作の場合の変更後の値"},{"name":"操作ステータス","type":"varchar(100)","required":true,"description":"操作の実行結果（例：SUCCESS、FAILURE、PENDING）"},{"name":"エラーメッセージ","type":"text","required":false,"description":"操作失敗時のエラーメッセージ"},{"name":"IPアドレス","type":"varchar(100)","required":false,"description":"操作を実行したクライアントのIPアドレス"},{"name":"セッションID","type":"varchar(100)","required":false,"description":"ユーザーセッションの識別子"},{"name":"作成日時","type":"timestamp","required":true,"description":"操作が実行された日時"}]}];
+window.AIVIC_PRESET_SEED = {};
+window.AIVIC_PAGE_SCREEN_ID = "scr-1781941001313";
+window.AIVIC_PAGE_INIT_JS = "function(container, apiUrl, tables) {\n  // テーブルインデックス\n  const SALES_DATA_IDX = 0;           // 営業データ\n  const VALIDATION_RULES_IDX = 1;     // 営業データ検証ルール\n  const ANOMALY_LOG_IDX = 2;          // 営業データ異常検出ログ\n  const BILLING_ITEMS_IDX = 3;        // 請求対象項目定義\n  const CUSTOMER_BILLING_IDX = 4;     // 顧客請求集計\n  const SERVICE_BILLING_IDX = 5;      // サービス請求集計\n  const METADATA_IDX = 6;             // 営業データメタデータ\n  const MONTHLY_SUMMARY_IDX = 7;      // 月次サマリーテンプレート\n  const VALIDATION_RESULT_IDX = 8;    // データ品質検証結果\n  const MISSING_DATA_IDX = 9;         // 不足データ通知ログ\n\n  let currentFilteredData = [];\n  let currentDiscountConfig = { type: '', value: 0, reason: '' };\n  let baseAmount = 0;\n  let baseTax = 0;\n  let baseCount = 0;\n\n  // ========== 1. 再描画・計算関数 ==========\n\n  function formatCurrency(amount) {\n    return '¥' + Math.floor(amount).toLocaleString('ja-JP');\n  }\n\n  function calculateTax(amount) {\n    return Math.floor(amount * 0.1);\n  }\n\n  async function loadDiscountRules() {\n    const rules = tables[BILLING_ITEMS_IDX]?.records || [];\n    const rulesHtml = rules\n      .filter(r => r.請求計算方法 && r.請求計算方法.includes('割引'))\n      .slice(0, 5)\n      .map(r => `\n        <div style=\"padding: 8px; border-bottom: 1px solid rgba(255,255,255,0.08); cursor: pointer; font-size: 10px; color: var(--text-muted);\">\n          <div style=\"font-weight: 600; color: var(--text);\">${r.項目名 || 'ルール'}</div>\n          <div>${r.説明 || '割引ルール'}</div>\n        </div>\n      `).join('');\n    \n    container.querySelector('#discount-rules-list').innerHTML = rulesHtml || '<div style=\"padding: 8px; font-size: 11px; color: var(--text-muted); text-align: center;\">割引ルールなし</div>';\n  }\n\n  async function loadAnomalyLogs() {\n    const logs = tables[ANOMALY_LOG_IDX]?.records || [];\n    const relevantLogs = logs.filter(l => l.請求処理への影響 === true).slice(0, 4);\n    \n    if (relevantLogs.length === 0) {\n      container.querySelector('#anomaly-log-list').innerHTML = '<div style=\"padding: 8px; font-size: 11px; color: var(--text-muted); text-align: center;\">異常なし</div>';\n      return;\n    }\n\n    const logsHtml = relevantLogs.map(l => `\n      <div style=\"padding: 8px; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 9px;\">\n        <div style=\"color: ${l.重要度 === '高' ? '#ef4444' : l.重要度 === '中' ? '#f59e0b' : '#3b82f6'}; font-weight: 600;\">\n          [${l.重要度}] ${l.異常タイプ}\n        </div>\n        <div style=\"color: var(--text-muted); margin-top: 2px;\">${l.異常フィールド名}: ${l.検出値}</div>\n      </div>\n    `).join('');\n    \n    container.querySelector('#anomaly-log-list').innerHTML = logsHtml;\n  }\n\n  async function loadMissingDataAlerts() {\n    const missing = tables[MISSING_DATA_IDX]?.records || [];\n    const criticalMissing = missing.filter(m => m.請求影響フラグ === true && m.通知ステータス === '未対応').slice(0, 3);\n    \n    if (criticalMissing.length === 0) {\n      container.querySelector('#missing-data-alert').style.display = 'none';\n      return;\n    }\n\n    container.querySelector('#missing-data-alert').style.display = 'block';\n    const details = criticalMissing.map(m => `<div>• ${m.不足項目名} (${m.重要度レベル})</div>`).join('');\n    container.querySelector('#missing-data-details').innerHTML = details;\n  }\n\n  function updateQualityScore(passCount, totalCount) {\n    const score = totalCount > 0 ? Math.round((passCount / totalCount) * 100) : 0;\n    container.querySelector('[data-testid=\"quality-score\"]').textContent = `${score}/100`;\n    container.querySelector('#quality-score-bar').style.width = score + '%';\n  }\n\n  function updateValidationCounts() {\n    const validationResults = tables[VALIDATION_RESULT_IDX]?.records || [];\n    const passCount = validationResults.filter(r => r.検証ステータス === '合格').length;\n    const failCount = validationResults.filter(r => r.検証ステータス === '不合格').length;\n    \n    container.querySelector('[data-testid=\"validation-pass\"]').textContent = passCount;\n    container.querySelector('[data-testid=\"validation-fail\"]').textContent = failCount;\n    updateQualityScore(passCount, passCount + failCount);\n  }\n\n  function updateAmountDisplay() {\n    const beforeTotal = baseAmount + baseTax;\n    let afterAmount = baseAmount;\n    let afterTax = baseTax;\n    let discountAmount = 0;\n\n    if (currentDiscountConfig.type === 'RATE') {\n      discountAmount = Math.floor(baseAmount * (currentDiscountConfig.value / 100));\n      afterAmount = baseAmount - discountAmount;\n      afterTax = calculateTax(afterAmount);\n    } else if (currentDiscountConfig.type === 'FIXED') {\n      discountAmount = Math.min(currentDiscountConfig.value, baseAmount);\n      afterAmount = baseAmount - discountAmount;\n      afterTax = calculateTax(afterAmount);\n    }\n\n    const afterTotal = afterAmount + afterTax;\n    const discountRate = baseAmount > 0 ? ((discountAmount / baseAmount) * 100).toFixed(1) : 0;\n\n    container.querySelector('[data-testid=\"before-total\"]').textContent = formatCurrency(beforeTotal);\n    container.querySelector('[data-testid=\"before-amount\"]').textContent = formatCurrency(baseAmount);\n    container.querySelector('[data-testid=\"before-tax\"]').textContent = formatCurrency(baseTax);\n\n    container.querySelector('[data-testid=\"after-total\"]').textContent = formatCurrency(afterTotal);\n    container.querySelector('[data-testid=\"after-amount\"]').textContent = formatCurrency(afterAmount);\n    container.querySelector('[data-testid=\"after-tax\"]').textContent = formatCurrency(afterTax);\n    container.querySelector('[data-testid=\"discount-amount\"]').textContent = formatCurrency(discountAmount);\n    container.querySelector('[data-testid=\"discount-rate\"]').textContent = discountRate + '%';\n  }\n\n  // ========== 2. 初期データ読み込み ==========\n\n  async function initializeScreen() {\n    await loadDiscountRules();\n    await loadAnomalyLogs();\n    await loadMissingDataAlerts();\n    updateValidationCounts();\n    updateAmountDisplay();\n  }\n\n  // ========== 3. フィルター適用 ==========\n\n  container.querySelector('[data-testid=\"filter-apply-btn\"]').addEventListener('click', async () => {\n    const month = container.querySelector('[data-testid=\"billing-month\"]').value;\n    const customerId = container.querySelector('[data-testid=\"customer-filter\"]').value;\n    const serviceType = container.querySelector('[data-testid=\"service-type-filter\"]').value;\n\n    const salesData = tables[SALES_DATA_IDX]?.records || [];\n    currentFilteredData = salesData.filter(s => {\n      const matches = (s.請求対象フラグ === true || s.請求対象フラグ === 'true');\n      const customerMatch = !customerId || s.顧客ID === customerId;\n      const serviceMatch = !serviceType || s.商品ID?.includes(serviceType);\n      return matches && customerMatch && serviceMatch;\n    });\n\n    baseAmount = currentFilteredData.reduce((sum, s) => sum + (s.取引金額 || 0), 0);\n    baseTax = calculateTax(baseAmount);\n    baseCount = currentFilteredData.length;\n\n    container.querySelector('[data-testid=\"base-amount\"]').textContent = formatCurrency(baseAmount);\n    container.querySelector('[data-testid=\"base-tax\"]').textContent = formatCurrency(baseTax);\n    container.querySelector('[data-testid=\"base-count\"]').textContent = baseCount;\n\n    currentDiscountConfig = { type: '', value: 0, reason: '' };\n    container.querySelector('[data-testid=\"discount-type\"]').value = '';\n    container.querySelector('[data-testid=\"discount-value\"]').value = '';\n    container.querySelector('[data-testid=\"discount-reason\"]').value = '';\n\n    updateAmountDisplay();\n  });\n\n  // ========== 4. 割引適用 ==========\n\n  container.querySelector('[data-testid=\"apply-discount-btn\"]').addEventListener('click', () => {\n    const type = container.querySelector('[data-testid=\"discount-type\"]').value;\n    const value = parseFloat(container.querySelector('[data-testid=\"discount-value\"]').value) || 0;\n    const reason = container.querySelector('[data-testid=\"discount-reason\"]').value;\n\n    if (!type || value <= 0) {\n      alert('割引種別と割引値を入力してください');\n      return;\n    }\n\n    currentDiscountConfig = { type, value, reason };\n    updateAmountDisplay();\n  });\n\n  // ========== 5. 請求確定 ==========\n\n  container.querySelector('[data-testid=\"confirm-billing-btn\"]').addEventListener('click', async () => {\n    if (baseAmount === 0) {\n      alert('請求対象データがありません');\n      return;\n    }\n\n    const afterAmount = currentDiscountConfig.type === 'RATE'\n      ? baseAmount - Math.floor(baseAmount * (currentDiscountConfig.value / 100))\n      : currentDiscountConfig.type === 'FIXED'\n      ? baseAmount - Math.min(currentDiscountConfig.value, baseAmount)\n      : baseAmount;\n\n    const afterTax = calculateTax(afterAmount);\n\n    const billingRecord = {\n      顧客ID: container.querySelector('[data-testid=\"customer-filter\"]').value || 'ALL',\n      請求年月: container.querySelector('[data-testid=\"billing-month\"]').value || new Date().toISOString().slice(0, 7),\n      請求金額: afterAmount,\n      税額: afterTax,\n      請求金額合計: afterAmount + afterTax,\n      対象営業データ件数: baseCount,\n      検証ステータス: '検証済み',\n      異常フラグ: false,\n      請求ステータス: '未処理',\n      摘要: currentDiscountConfig.reason || '割引適用済み'\n    };\n\n    const saved = await window.aivicApi.save(CUSTOMER_BILLING_IDX, billingRecord);\n    if (saved) {\n      alert('請求が確定されました');\n      window.showScreen('scr-1781940712852');\n    }\n  });\n\n  // ========== 6. ナビゲーション ==========\n\n  container.querySelector('[data-testid=\"back-to-data-btn\"]').addEventListener('click', () => {\n    window.showScreen('scr-1781940688155');\n  });\n\n  container.querySelector('[data-testid=\"go-to-summary-btn\"]').addEventListener('click', () => {\n    window.showScreen('scr-1781940712852');\n  });\n\n  container.querySelector('[data-testid=\"preview-invoice-btn\"]').addEventListener('click', () => {\n    window.showScreen('scr-1781940940693');\n  });\n\n  // ========== 7. 初期化実行 ==========\n\n  initializeScreen();\n}";
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+```css
+:root {
+  --primary: #4a7c8c;
+  --primary-hover: #3a6578;
+  --bg-main: #1a1f2e;
+  --bg-card: #232d3f;
+  --bg-sidebar: #1f2937;
+  --border: #3a4556;
+  --text: #e8eef5;
+  --text-muted: #9ca3af;
+  --top-bar-bg: #0f1419;
+  --top-bar-border: #2d3748;
+}
+```
+*, *::before, *::after { box-sizing: border-box; }
+body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; background:var(--bg-main); color:var(--text); display:flex; flex-direction:column; height:100vh; overflow:hidden; }
+.top-bar { display:flex; align-items:center; gap:0; background:var(--top-bar-bg, var(--bg-sidebar)); border-bottom:1px solid var(--top-bar-border, var(--border)); padding:0 16px; height:48px; flex-shrink:0; }
+.top-bar .app-name { font-size:14px; font-weight:700; color:var(--text); margin-right:20px; white-space:nowrap; }
+.sys-tab { background:transparent; color:var(--text); opacity:0.6; border:none; border-bottom:2px solid transparent; padding:0 16px; height:48px; cursor:pointer; font-size:13px; white-space:nowrap; transition:color .15s, border-color .15s, opacity .15s; text-decoration:none; display:flex; align-items:center; }
+.sys-tab:hover { opacity:0.85; }
+.sys-tab.active, .sys-tab.aivic-active { color:var(--text); opacity:1; border-bottom-color:var(--primary); font-weight:600; }
+.app-body { display:flex; flex:1; overflow:hidden; }
+.sidebar { width:220px; background:var(--bg-sidebar); border-right:1px solid var(--border); padding:12px 8px; overflow-y:auto; flex-shrink:0; }
+.sidebar-sys-name { margin:0 0 8px; padding:4px 8px; font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:.06em; }
+.nav-btn { display:block; width:100%; text-align:left; background:transparent; color:var(--text); opacity:0.65; border:none; border-radius:8px; padding:8px 12px; cursor:pointer; font-size:13px; margin-bottom:2px; transition:opacity .15s,background .15s; text-decoration:none; }
+.nav-btn:hover { background:var(--border); opacity:0.9; }
+.nav-btn.active, .nav-btn.aivic-active { background:var(--primary); color:#fff; opacity:1; }
+.main { flex:1; padding:16px; overflow-y:auto; }
+.card { border:1px solid var(--border); border-radius:12px; padding:16px; background:var(--bg-card); margin-bottom:12px; }
+.hidden { display:none !important; }
+.action-btn { background:var(--primary); color:#fff; border:0; border-radius:8px; padding:8px 14px; cursor:pointer; font-size:13px; }
+.action-btn:hover { background:var(--primary-hover, #1a55ef); }
+.action-btn.secondary { background:var(--border); color:var(--text); }
+.input { background:var(--bg-main); border:1px solid var(--border); color:var(--text); border-radius:8px; padding:7px 10px; font-size:13px; }
+.muted { color:var(--text-muted); font-size:13px; }
+.table-wrap { overflow:auto; border:1px solid var(--border); border-radius:8px; }
+table { width:100%; border-collapse:collapse; }
+th, td { border-bottom:1px solid var(--border); padding:8px 10px; text-align:left; font-size:13px; }
+th { color:var(--text); background:var(--bg-sidebar); position:sticky; top:0; font-weight:600; }
+tr:hover { background:var(--bg-sidebar); cursor:pointer; }
+canvas { display:block; max-height:280px !important; }
+.chart-wrap, .chart-container, [class*="chart"] { position:relative; height:260px; max-height:280px; }
+@media (max-width:768px) {
+  .top-bar { overflow-x:auto; }
+  .app-body { flex-direction:column; }
+  .sidebar { width:100%; height:auto; display:flex; flex-wrap:wrap; gap:4px; padding:8px; }
+  .sidebar-sys-name { display:none; }
+  .nav-btn { width:auto; border-radius:999px; padding:5px 12px; }
+}
+  </style>
+</head>
+<body>
+<header class="top-bar">
+  <span class="app-name">DB設計を再開してください</span>
+    <a href="./scr-1781943098977.html" class="sys-tab" data-aivic-nav-system="itg-3">契約・提案資料管理システム</a>
+    <a href="./scr-1781943451070.html" class="sys-tab" data-aivic-nav-system="itg-4">顧客企業向け契約・成果管理ポータル</a>
+    <a href="./scr-1781943762164.html" class="sys-tab" data-aivic-nav-system="itg-5">契約変更・請求検証管理システム</a>
+    <a href="./scr-1781940688155.html" class="sys-tab active" data-aivic-nav-system="itg-1">営業データ品質管理・請求自動化システム</a>
+</header>
+<div class="app-body">
+  <aside class="sidebar">
+    <p class="sidebar-sys-name">営業データ品質管理・請求自動化システム</p>
+      <a href="./scr-1781940688155.html" class="nav-btn" data-aivic-nav="scr-1781940688155">営業データ入力・検証画面</a>
+      <a href="./scr-1781940699943.html" class="nav-btn" data-aivic-nav="scr-1781940699943">営業データ異常検出・確認画面</a>
+      <a href="./scr-1781940712852.html" class="nav-btn" data-aivic-nav="scr-1781940712852">請求額集計・確認画面</a>
+      <a href="./scr-1781940724596.html" class="nav-btn" data-aivic-nav="scr-1781940724596">営業データメタデータ管理画面</a>
+      <a href="./scr-1781940736575.html" class="nav-btn" data-aivic-nav="scr-1781940736575">月次サマリー生成・確認画面</a>
+      <a href="./scr-1781940749476.html" class="nav-btn" data-aivic-nav="scr-1781940749476">データ品質検証結果ダッシュボード</a>
+      <a href="./scr-1781940761242.html" class="nav-btn" data-aivic-nav="scr-1781940761242">不足データ・エラー通知画面</a>
+      <a href="./scr-1781940773858.html" class="nav-btn" data-aivic-nav="scr-1781940773858">営業データ品質検証処理</a>
+      <a href="./scr-1781940785933.html" class="nav-btn" data-aivic-nav="scr-1781940785933">請求対象項目抽出処理</a>
+      <a href="./scr-1781940797608.html" class="nav-btn" data-aivic-nav="scr-1781940797608">顧客ごと・サービスごと請求額自動計算処理</a>
+      <a href="./scr-1781940809038.html" class="nav-btn" data-aivic-nav="scr-1781940809038">営業データ品質検証画面</a>
+      <a href="./scr-1781940820681.html" class="nav-btn" data-aivic-nav="scr-1781940820681">データ品質スコア計算処理</a>
+      <a href="./scr-1781940832252.html" class="nav-btn" data-aivic-nav="scr-1781940832252">営業データ入力画面</a>
+      <a href="./scr-1781940846173.html" class="nav-btn" data-aivic-nav="scr-1781940846173">データ品質検証・エラー検出処理</a>
+      <a href="./scr-1781940859451.html" class="nav-btn" data-aivic-nav="scr-1781940859451">修正データ再検証処理</a>
+      <a href="./scr-1781940870338.html" class="nav-btn" data-aivic-nav="scr-1781940870338">営業データ完全性・正確性検証処理</a>
+      <a href="./scr-1781940880972.html" class="nav-btn" data-aivic-nav="scr-1781940880972">請求自動化処理</a>
+      <a href="./scr-1781940893302.html" class="nav-btn" data-aivic-nav="scr-1781940893302">請求ロジック定義・検証画面</a>
+      <a href="./scr-1781940905547.html" class="nav-btn" data-aivic-nav="scr-1781940905547">請求額自動計算処理</a>
+      <a href="./scr-1781940916612.html" class="nav-btn" data-aivic-nav="scr-1781940916612">請求書生成・配信処理</a>
+      <a href="./scr-1781940929119.html" class="nav-btn" data-aivic-nav="scr-1781940929119">請求ロジック・割引基準定義</a>
+      <a href="./scr-1781940940693.html" class="nav-btn" data-aivic-nav="scr-1781940940693">請求書作成画面</a>
+      <a href="./scr-1781940952745.html" class="nav-btn" data-aivic-nav="scr-1781940952745">営業データ品質チェック画面</a>
+      <a href="./scr-1781940964903.html" class="nav-btn" data-aivic-nav="scr-1781940964903">営業データ検索・照会画面</a>
+      <a href="./scr-1781940977578.html" class="nav-btn" data-aivic-nav="scr-1781940977578">請求対象項目自動抽出処理</a>
+      <a href="./scr-1781940989732.html" class="nav-btn" data-aivic-nav="scr-1781940989732">請求情報検証画面</a>
+      <a href="./scr-1781941001313.html" class="nav-btn active" data-aivic-nav="scr-1781941001313">請求額計算・割引適用処理</a>
+      <a href="./scr-1781941013440.html" class="nav-btn" data-aivic-nav="scr-1781941013440">会計システム連携処理</a>
+      <a href="./scr-1781941025237.html" class="nav-btn" data-aivic-nav="scr-1781941025237">営業データ品質スコア計算処理</a>
+  </aside>
+  <main class="main">
+    <section class="card" data-aivic-panel="scr-1781941001313" style="margin-top:0">
+<div style="display: flex; flex-direction: column; height: 100%; gap: 0;">
+  <!-- ヘッダー領域 -->
+  <div style="padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,0.08); background: var(--bg-card);">
+    <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 6px;">DB設計を再開してください・営業データ品質管理・請求自動化システム・請求額計算・割引適用処理</div>
+    <h1 style="font-size: 18px; font-weight: 600; color: var(--text); margin: 0;">請求額計算・割引適用処理</h1>
+  </div>
+
+  <!-- メインコンテンツ -->
+  <div style="flex: 1; overflow-y: auto; display: flex; gap: 0;">
+    
+    <!-- 左パネル：期間・顧客・割引設定 -->
+    <div style="width: 45%; padding: 14px; border-right: 1px solid rgba(255,255,255,0.08); overflow-y: auto;">
+      
+      <!-- 期間・フィルター -->
+      <div class="card" style="margin-bottom: 12px; padding: 12px;">
+        <div style="font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 10px;">請求対象期間・フィルター</div>
+        
+        <div style="margin-bottom: 10px;">
+          <label style="display: block; font-size: 11px; color: var(--text-muted); margin-bottom: 4px;">請求年月</label>
+          <input type="month" data-testid="billing-month" style="width: 100%; padding: 6px 8px; border: 1px solid rgba(255,255,255,0.18); background: rgba(0,0,0,0.25); border-radius: 3px; color: var(--text); font-size: 12px;" />
+        </div>
+
+        <div style="margin-bottom: 10px;">
+          <label style="display: block; font-size: 11px; color: var(--text-muted); margin-bottom: 4px;">顧客ID</label>
+          <input type="text" data-testid="customer-filter" placeholder="全顧客 / 顧客ID入力" style="width: 100%; padding: 6px 8px; border: 1px solid rgba(255,255,255,0.18); background: rgba(0,0,0,0.25); border-radius: 3px; color: var(--text); font-size: 12px;" />
+        </div>
+
+        <div style="margin-bottom: 10px;">
+          <label style="display: block; font-size: 11px; color: var(--text-muted); margin-bottom: 4px;">サービス種別</label>
+          <select data-testid="service-type-filter" style="width: 100%; padding: 6px 8px; border: 1px solid rgba(255,255,255,0.18); background: rgba(0,0,0,0.25); border-radius: 3px; color: var(--text); font-size: 12px;">
+            <option value="">全サービス</option>
+            <option value="BASIC">基本サービス</option>
+            <option value="PREMIUM">プレミアムサービス</option>
+            <option value="SUPPORT">サポートサービス</option>
+            <option value="CONSULTING">コンサルティング</option>
+          </select>
+        </div>
+
+        <button data-testid="filter-apply-btn" class="action-btn" style="width: 100%; padding: 6px; font-size: 12px; margin-top: 8px;">フィルター適用・集計</button>
+      </div>
+
+      <!-- 基本請求額表示 -->
+      <div class="card" style="margin-bottom: 12px; padding: 12px; background: rgba(79, 172, 254, 0.08); border-left: 3px solid var(--primary);">
+        <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 8px;">基本請求額（税抜き）</div>
+        <div style="font-size: 24px; font-weight: 700; color: var(--primary); margin-bottom: 6px;" data-testid="base-amount">¥0</div>
+        <div style="font-size: 10px; color: var(--text-muted);">
+          <div>対象件数: <span data-testid="base-count">0</span> 件</div>
+          <div>税額: <span data-testid="base-tax">¥0</span></div>
+        </div>
+      </div>
+
+      <!-- 適用可能割引ルール一覧 -->
+      <div class="card" style="margin-bottom: 12px; padding: 12px;">
+        <div style="font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 10px;">適用可能割引ルール</div>
+        <div id="discount-rules-list" style="max-height: 180px; overflow-y: auto; border: 1px solid rgba(255,255,255,0.08); border-radius: 3px; background: rgba(0,0,0,0.15);">
+          <div style="padding: 8px; font-size: 11px; color: var(--text-muted); text-align: center;">読込中...</div>
+        </div>
+      </div>
+
+      <!-- 割引設定 -->
+      <div class="card" style="padding: 12px; background: rgba(34, 197, 94, 0.08); border-left: 3px solid #22c55e;">
+        <div style="font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 10px;">割引適用設定</div>
+        
+        <div style="margin-bottom: 10px;">
+          <label style="display: block; font-size: 11px; color: var(--text-muted); margin-bottom: 4px;">割引種別</label>
+          <select data-testid="discount-type" style="width: 100%; padding: 6px 8px; border: 1px solid rgba(255,255,255,0.18); background: rgba(0,0,0,0.25); border-radius: 3px; color: var(--text); font-size: 12px;">
+            <option value="">選択してください</option>
+            <option value="RATE">割引率（%）</option>
+            <option value="FIXED">固定割引額（円）</option>
+            <option value="TIERED">段階割引</option>
+            <option value="VOLUME">数量割引</option>
+            <option value="LOYALTY">顧客ロイヤルティ割引</option>
+          </select>
+        </div>
+
+        <div style="margin-bottom: 10px;">
+          <label style="display: block; font-size: 11px; color: var(--text-muted); margin-bottom: 4px;">割引値</label>
+          <input type="number" data-testid="discount-value" placeholder="0" min="0" style="width: 100%; padding: 6px 8px; border: 1px solid rgba(255,255,255,0.18); background: rgba(0,0,0,0.25); border-radius: 3px; color: var(--text); font-size: 12px;" />
+        </div>
+
+        <div style="margin-bottom: 10px;">
+          <label style="display: block; font-size: 11px; color: var(--text-muted); margin-bottom: 4px;">割引理由・備考</label>
+          <textarea data-testid="discount-reason" placeholder="割引適用の理由を記入" style="width: 100%; padding: 6px 8px; border: 1px solid rgba(255,255,255,0.18); background: rgba(0,0,0,0.25); border-radius: 3px; color: var(--text); font-size: 12px; resize: vertical; height: 60px;"></textarea>
+        </div>
+
+        <button data-testid="apply-discount-btn" class="action-btn" style="width: 100%; padding: 8px; font-size: 12px; background: #22c55e; border: none; color: #fff;">割引を適用・計算</button>
+      </div>
+    </div>
+
+    <!-- 右パネン：金額比較・検証結果 -->
+    <div style="flex: 1; padding: 14px; overflow-y: auto;">
+      
+      <!-- 金額比較（Before/After） -->
+      <div class="card" style="margin-bottom: 12px; padding: 12px;">
+        <div style="font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 10px;">割引適用前後の金額比較</div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+          <!-- Before -->
+          <div style="padding: 10px; background: rgba(0,0,0,0.15); border-radius: 3px;">
+            <div style="font-size: 10px; color: var(--text-muted); margin-bottom: 6px;">適用前</div>
+            <div style="font-size: 18px; font-weight: 700; color: var(--text);" data-testid="before-total">¥0</div>
+            <div style="font-size: 9px; color: var(--text-muted); margin-top: 4px;">
+              <div>請求額: <span data-testid="before-amount">¥0</span></div>
+              <div>税額: <span data-testid="before-tax">¥0</span></div>
+            </div>
+          </div>
+          <!-- After -->
+          <div style="padding: 10px; background: rgba(34, 197, 94, 0.12); border-radius: 3px; border: 1px solid rgba(34, 197, 94, 0.3);">
+            <div style="font-size: 10px; color: var(--text-muted); margin-bottom: 6px;">適用後</div>
+            <div style="font-size: 18px; font-weight: 700; color: #22c55e;" data-testid="after-total">¥0</div>
+            <div style="font-size: 9px; color: var(--text-muted); margin-top: 4px;">
+              <div>請求額: <span data-testid="after-amount">¥0</span></div>
+              <div>税額: <span data-testid="after-tax">¥0</span></div>
+              <div style="margin-top: 4px; color: #22c55e; font-weight: 600;">割引額: <span data-testid="discount-amount">¥0</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div style="padding: 8px; background: rgba(0,0,0,0.25); border-radius: 3px; border-left: 2px solid var(--primary);">
+          <div style="font-size: 10px; color: var(--text-muted); margin-bottom: 2px;">割引率</div>
+          <div style="font-size: 14px; font-weight: 600; color: var(--primary);" data-testid="discount-rate">0.0%</div>
+        </div>
+      </div>
+
+      <!-- データ品質検証結果 -->
+      <div class="card" style="margin-bottom: 12px; padding: 12px;">
+        <div style="font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 10px;">データ品質検証結果</div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px;">
+          <div style="padding: 8px; background: rgba(79, 172, 254, 0.08); border-radius: 3px; border-left: 2px solid var(--primary);">
+            <div style="font-size: 9px; color: var(--text-muted);">検証成功</div>
+            <div style="font-size: 16px; font-weight: 700; color: var(--primary);" data-testid="validation-pass">0</div>
+          </div>
+          <div style="padding: 8px; background: rgba(239, 68, 68, 0.08); border-radius: 3px; border-left: 2px solid #ef4444;">
+            <div style="font-size: 9px; color: var(--text-muted);">検証失敗</div>
+            <div style="font-size: 16px; font-weight: 700; color: #ef4444;" data-testid="validation-fail">0</div>
+          </div>
+        </div>
+
+        <div style="padding: 8px; background: rgba(0,0,0,0.15); border-radius: 3px;">
+          <div style="font-size: 10px; color: var(--text-muted); margin-bottom: 4px;">品質スコア</div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <div style="flex: 1; height: 6px; background: rgba(0,0,0,0.3); border-radius: 3px; overflow: hidden;">
+              <div id="quality-score-bar" style="height: 100%; background: var(--primary); width: 0%; transition: width 0.3s;"></div>
+            </div>
+            <div style="font-size: 12px; font-weight: 600; color: var(--text);" data-testid="quality-score">0/100</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 異常検出ログ -->
+      <div class="card" style="margin-bottom: 12px; padding: 12px;">
+        <div style="font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 10px;">異常検出ログ</div>
+        <div id="anomaly-log-list" style="max-height: 150px; overflow-y: auto; border: 1px solid rgba(255,255,255,0.08); border-radius: 3px; background: rgba(0,0,0,0.15);">
+          <div style="padding: 8px; font-size: 11px; color: var(--text-muted); text-align: center;">異常なし</div>
+        </div>
+      </div>
+
+      <!-- 不足データ警告 -->
+      <div id="missing-data-alert" style="display: none; padding: 10px; background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 3px; margin-bottom: 12px;">
+        <div style="font-size: 11px; font-weight: 600; color: #f59e0b; margin-bottom: 6px;">⚠ 不足データ検出</div>
+        <div id="missing-data-details" style="font-size: 10px; color: var(--text-muted); line-height: 1.4;"></div>
+      </div>
+
+      <!-- 請求確定ボタン -->
+      <div style="display: flex; gap: 8px;">
+        <button data-testid="confirm-billing-btn" class="action-btn" style="flex: 1; padding: 10px; font-size: 12px;">請求を確定・保存</button>
+        <button data-testid="preview-invoice-btn" class="action-btn secondary" style="flex: 1; padding: 10px; font-size: 12px;">請求書プレビュー</button>
+      </div>
+
+      <!-- ナビゲーション -->
+      <div style="display: flex; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.08);">
+        <button data-testid="back-to-data-btn" class="action-btn secondary" style="flex: 1; padding: 8px; font-size: 11px;">営業データ確認へ</button>
+        <button data-testid="go-to-summary-btn" class="action-btn secondary" style="flex: 1; padding: 8px; font-size: 11px;">請求集計確認へ</button>
+      </div>
+    </div>
+  </div>
+</div>
+    </section>
+  </main>
+</div>
+<script>
+(function() {
+  var TABLE_DEFS = window.AIVIC_TABLES || [];
+  var PRESET_SEED = window.AIVIC_PRESET_SEED || {};
+  var SYSTEM_NAME = window.AIVIC_SYSTEM_NAME || "";
+  var APP_ID = window.AIVIC_APP_ID || "";
+  var API_URL = (window.AIVIC_API_URL && window.AIVIC_API_URL !== "REPLACE_WITH_API_URL")
+    ? window.AIVIC_API_URL : window.location.origin;
+
+  // 通知 helper ( SPA 版と同じ )
+  window.aivicNotify = (function() {
+    function ensureContainer() {
+      var c = document.getElementById("aivic-toast-container");
+      if (c) return c;
+      c = document.createElement("div");
+      c.id = "aivic-toast-container";
+      c.style.cssText = "position:fixed;top:16px;right:16px;z-index:9999;display:flex;flex-direction:column;gap:8px;pointer-events:none;max-width:360px;";
+      document.body.appendChild(c);
+      return c;
+    }
+    function show(msg, type) {
+      var c = ensureContainer();
+      var el = document.createElement("div");
+      el.textContent = msg;
+      el.style.cssText = "padding:10px 16px;border-radius:8px;font-size:13px;line-height:1.4;pointer-events:auto;color:#fff;background:" + (type === "error" ? "#dc2626" : "#d97706");
+      c.appendChild(el);
+      setTimeout(function() {
+        el.style.transition = "opacity .3s";
+        el.style.opacity = "0";
+        setTimeout(function() { if (el.parentNode) el.parentNode.removeChild(el); }, 320);
+      }, type === "error" ? 6000 : 4500);
+    }
+    return {
+      error: function(msg) { show("❌ " + msg, "error"); },
+      warn:  function(msg) { show("⚠️ " + msg, "warn"); },
+    };
+  })();
+
+  // CRUD API ( SPA 版と同じ )
+  window.aivicApi = (function() {
+    function dbErr(op) { window.aivicNotify.error("データベースエラー ( " + op + " ): APIサーバーに接続できません。"); }
+    function newId() { return typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : "id-" + Date.now() + "-" + Math.random().toString(36).slice(2); }
+    function q(i) {
+      var t = TABLE_DEFS[i];
+      var dbP = (window.AIVIC_DB_TYPE && window.AIVIC_DB_TYPE !== "dynamodb") ? "&db=" + encodeURIComponent(window.AIVIC_DB_TYPE) : "";
+      return "?app=" + encodeURIComponent(APP_ID) + "&system=" + encodeURIComponent(SYSTEM_NAME) + "&table=" + encodeURIComponent(t ? t.tableName : "table" + i) + dbP;
+    }
+    return {
+      list: async function(tableIndex) {
+        if (!API_URL) return [];
+        try { var r = await fetch(API_URL + "/api/" + tableIndex + q(tableIndex)); var d = await r.json(); return Array.isArray(d) ? d : (d.items || []); }
+        catch(e) { dbErr("データ取得"); return []; }
+      },
+      save: async function(tableIndex, item) {
+        if (!API_URL) { dbErr("保存"); return null; }
+        var now = new Date().toISOString();
+        var rec = Object.assign({}, item, { id: item.id || newId(), createdAt: item.createdAt || now, updatedAt: now });
+        try { var r = await fetch(API_URL + "/api/" + tableIndex + q(tableIndex), { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(rec) }); return await r.json(); }
+        catch(e) { dbErr("保存"); return null; }
+      },
+      update: async function(tableIndex, id, changes) {
+        if (!API_URL) { dbErr("更新"); return null; }
+        try { var r = await fetch(API_URL + "/api/" + tableIndex + "/" + id + q(tableIndex), { method:"PUT", headers:{"Content-Type":"application/json"}, body:JSON.stringify(Object.assign({}, changes, {updatedAt: new Date().toISOString()})) }); return await r.json(); }
+        catch(e) { dbErr("更新"); return null; }
+      },
+      delete: async function(tableIndex, id) {
+        if (!API_URL) { dbErr("削除"); return {deleted:false}; }
+        try { await fetch(API_URL + "/api/" + tableIndex + "/" + id + q(tableIndex), {method:"DELETE"}); return {deleted:true}; }
+        catch(e) { dbErr("削除"); return {deleted:false}; }
+      },
+    };
+  })();
+
+  // showScreen はマルチページ構成ではページ遷移として動く。
+  var _aivicNavLastTime = 0;
+  var _aivicNavLastTarget = "";
+  var _aivicReady = false;
+  window.showScreen = function(screenId) {
+    if (!screenId) return;
+    if (screenId === window.AIVIC_PAGE_SCREEN_ID) return;
+    var targetPath = './' + encodeURIComponent(screenId) + '.html';
+    var currentName = (window.location.pathname.split('/').pop() || '');
+    if (currentName === (encodeURIComponent(screenId) + '.html') ||
+        currentName === (screenId + '.html')) {
+      return;
+    }
+    var now = Date.now();
+    if (_aivicNavLastTarget === targetPath && (now - _aivicNavLastTime) < 100) {
+      console.warn('[aivic] showScreen 連続呼び出し検知。 無限ループ防止のため抑制:', screenId);
+      return;
+    }
+    if (!_aivicReady) {
+      console.warn('[aivic] DOMContentLoaded 前の showScreen 呼び出し。 抑制:', screenId);
+      return;
+    }
+    _aivicNavLastTime = now;
+    _aivicNavLastTarget = targetPath;
+    window.location.href = targetPath;
+  };
+
+  function seedAllIfEmpty() {
+    if (!API_URL) return Promise.resolve();
+    return Promise.all(TABLE_DEFS.map(function(t, i) {
+      var preset = PRESET_SEED[t.tableName];
+      if (!Array.isArray(preset) || preset.length === 0) return Promise.resolve();
+      return window.aivicApi.list(i).then(function(existing) {
+        if (existing && existing.length > 0) return;
+        return Promise.all(preset.map(function(row) { return window.aivicApi.save(i, row); }));
+      }).catch(function() {});
+    }));
+  }
+
+  // ── 初期表示: このページ専用の panel に initFn を実行 ──
+  document.addEventListener("DOMContentLoaded", function() {
+    setTimeout(function() { _aivicReady = true; }, 1500);
+    var pageScreenId = window.AIVIC_PAGE_SCREEN_ID;
+    if (!pageScreenId) return;
+
+    document.querySelectorAll('[data-aivic-nav]').forEach(function(btn) {
+      var isActive = btn.getAttribute("data-aivic-nav") === pageScreenId;
+      btn.classList.toggle("aivic-active", isActive);
+      btn.setAttribute("aria-current", isActive ? "page" : "false");
+    });
+
+    var container = document.querySelector('[data-aivic-panel="' + pageScreenId + '"]');
+    if (!container) return;
+
+    // content 要素の hidden 強制除去 ( 2026-05-24 Playwright 大量 fail 対応 )
+    var isModalLike = function(el) {
+      if (!el || !el.classList) return false;
+      var cn = String(el.className || "");
+      if (/\bmodal\b|\bdialog\b|\boverlay\b|\bpopup\b|\bdropdown\b|\btooltip\b/i.test(cn)) return true;
+      var role = el.getAttribute && el.getAttribute("role");
+      if (role === "dialog" || role === "alertdialog" || role === "tooltip" || role === "menu") return true;
+      if (el.hasAttribute && (el.hasAttribute("data-modal") || el.hasAttribute("data-dropdown") || el.hasAttribute("data-popup"))) return true;
+      return false;
+    };
+    var unhideContentElements = function(root) {
+      var all = root.querySelectorAll('.hidden, [hidden], [style*="display:none"], [style*="display: none"]');
+      for (var k = 0; k < all.length; k++) {
+        var el = all[k];
+        if (isModalLike(el)) continue;
+        var p = el.parentElement;
+        var insideModal = false;
+        while (p && p !== root) {
+          if (isModalLike(p)) { insideModal = true; break; }
+          p = p.parentElement;
+        }
+        if (insideModal) continue;
+        el.classList.remove('hidden');
+        el.removeAttribute('hidden');
+        if (el.style && el.style.display === 'none') el.style.display = '';
+      }
+    };
+    try { unhideContentElements(container); } catch (e) { console.warn('[aivic] unhideContent failed:', e); }
+
+    var initJsSource = window.AIVIC_PAGE_INIT_JS;
+    if (!initJsSource) {
+      seedAllIfEmpty();
+      return;
+    }
+    var initFn = null;
+    try {
+      initFn = (new Function("return (" + initJsSource + ")"))();
+    } catch (e) {
+      console.error("[aivic] initJs compile error:", pageScreenId, e);
+      return;
+    }
+    if (typeof initFn !== "function") return;
+
+    seedAllIfEmpty().then(function() {
+      return Promise.all(TABLE_DEFS.map(function(t, i) {
+        return window.aivicApi.list(i)
+          .then(function(records) { return Object.assign({}, t, { records: records }); })
+          .catch(function() { return Object.assign({}, t, { records: [] }); });
+      }));
+    }).then(function(tables) {
+      try { initFn(container, API_URL, tables); } catch (e) { console.error("[aivic] initFn error:", pageScreenId, e); }
+      _aivicReady = true;
+    });
+  });
+})();
+
+</script>
+</body>
+</html>
