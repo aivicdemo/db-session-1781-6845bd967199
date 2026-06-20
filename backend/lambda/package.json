@@ -1,0 +1,10 @@
+{
+  "name": "aivic-backend-lambda",
+  "version": "1.0.0",
+  "description": "AIVIC Backend Lambda — 営業データ品質管理・請求自動化システム",
+  "main": "handler.js",
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.0.0",
+    "@aws-sdk/lib-dynamodb": "^3.0.0"
+  }
+}
