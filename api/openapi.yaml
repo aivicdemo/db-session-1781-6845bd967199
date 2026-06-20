@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: 契約・提案資料管理システム API
+  title: 営業データ品質管理・請求自動化システム API
   version: 0.1.0
 paths:
   /resources:
