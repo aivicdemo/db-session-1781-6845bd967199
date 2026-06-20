@@ -1,58 +1,85 @@
 import { APIGatewayProxyEvent } from 'aws-lambda';
 
-export type UserRole = 'admin' | 'operator' | 'viewer';
+export type Role = 'admin' | 'operator' | 'viewer';
 
 export interface AuthContext {
   userId: string;
-  role: UserRole;
-  timestamp: number;
+  role: Role;
+  email: string;
 }
 
-export interface RBACPolicy {
-  [endpoint: string]: UserRole[];
-}
-
-const policies: RBACPolicy = {
-  'GET /resources': ['admin', 'operator', 'viewer'],
-  'POST /api/resources/bulk': ['admin', 'operator'],
-  'POST /resources': ['admin', 'operator'],
-  'PUT /resources': ['admin', 'operator'],
-  'DELETE /resources': ['admin'],
+export const ROLE_PERMISSIONS: Record<Role, Set<string>> = {
+  admin: new Set([
+    'GET_RESOURCES',
+    'POST_BULK_IMPORT',
+    'CREATE_RECORD',
+    'UPDATE_RECORD',
+    'DELETE_RECORD',
+    'VALIDATE_DATA',
+    'EXPORT_DATA',
+    'APPROVE_BILLING',
+  ]),
+  operator: new Set([
+    'GET_RESOURCES',
+    'POST_BULK_IMPORT',
+    'CREATE_RECORD',
+    'UPDATE_RECORD',
+    'VALIDATE_DATA',
+    'EXPORT_DATA',
+  ]),
+  viewer: new Set([
+    'GET_RESOURCES',
+  ]),
 };
 
 export function extractAuthContext(event: APIGatewayProxyEvent): AuthContext {
-  const authHeader = event.headers['Authorization'] || '';
-  const roleHeader = event.headers['X-User-Role'] || 'viewer';
-  const userIdHeader = event.headers['X-User-Id'] || 'unknown';
-
-  const role = validateRole(roleHeader);
-
-  return {
-    userId: userIdHeader,
-    role,
-    timestamp: Date.now(),
-  };
-}
-
-function validateRole(role: string): UserRole {
-  const validRoles: UserRole[] = ['admin', 'operator', 'viewer'];
-  if (validRoles.includes(role as UserRole)) {
-    return role as UserRole;
+  const authHeader = event.headers?.Authorization || event.headers?.authorization || '';
+  const token = authHeader.replace('Bearer ', '');
+  
+  // Mock token parsing - in production, verify JWT
+  try {
+    const decoded = JSON.parse(Buffer.from(token.split('.')[1] || '', 'base64').toString());
+    return {
+      userId: decoded.sub || 'unknown',
+      role: (decoded.role || 'viewer') as Role,
+      email: decoded.email || 'unknown@example.com',
+    };
+  } catch {
+    return {
+      userId: 'anonymous',
+      role: 'viewer',
+      email: 'anonymous@example.com',
+    };
   }
-  return 'viewer';
 }
 
-export function checkPermission(method: string, path: string, role: UserRole): boolean {
-  const endpoint = `${method} ${path}`;
-  const allowedRoles = policies[endpoint];
+export function hasPermission(auth: AuthContext, permission: string): boolean {
+  return ROLE_PERMISSIONS[auth.role]?.has(permission) ?? false;
+}
 
-  if (!allowedRoles) {
-    return false;
+export function requirePermission(auth: AuthContext, permission: string): void {
+  if (!hasPermission(auth, permission)) {
+    throw new ForbiddenError(`Permission denied: ${permission}`);
   }
-
-  return allowedRoles.includes(role);
 }
 
-export function requireRole(requiredRoles: UserRole[], userRole: UserRole): boolean {
-  return requiredRoles.includes(userRole);
+export class ForbiddenError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'ForbiddenError';
+  }
+}
+
+export class NotFoundError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'NotFoundError';
+  }
+}
+
+export class ValidationError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'ValidationError';
+  }
 }
